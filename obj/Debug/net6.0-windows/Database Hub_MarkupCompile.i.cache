@@ -1,0 +1,20 @@
+﻿Database Hub
+1.0.0.0
+
+winexe
+C#
+.cs
+D:\My Projects\Database Hub\obj\Debug\net6.0-windows\
+Database_Hub
+none
+false
+TRACE;DEBUG;NET;NET6_0;NETCOREAPP
+D:\My Projects\Database Hub\App.xaml
+101571773602
+
+20966550156
+216-1393316651
+MainWindow.xaml;Views\Common\ConfirmActionDialog.xaml;Views\Common\StyledMessageDialog.xaml;Views\Common\ToastNotificationWindow.xaml;Views\ConnectedMode\ConnectedHomeView.xaml;Views\ConnectedMode\Pages\MainFunctionHomeView.xaml;Views\ConnectedMode\Utils\AddServerDialog.xaml;Views\ConnectedMode\Utils\EditServerDialog.xaml;Views\DatabaseConnectionView.xaml;Views\LoginView.xaml;
+
+False
+

@@ -1,0 +1,82 @@
+D:\My Projects\Database Hub\obj\Debug\net6.0-windows\Database Hub.csproj.AssemblyReference.cache
+D:\My Projects\Database Hub\obj\Debug\net6.0-windows\MainWindow.g.cs
+D:\My Projects\Database Hub\obj\Debug\net6.0-windows\Views\LoginView.g.cs
+D:\My Projects\Database Hub\obj\Debug\net6.0-windows\App.g.cs
+D:\My Projects\Database Hub\obj\Debug\net6.0-windows\Database Hub_MarkupCompile.cache
+D:\My Projects\Database Hub\obj\Debug\net6.0-windows\Database Hub_MarkupCompile.lref
+D:\My Projects\Database Hub\bin\Debug\net6.0-windows\Database Hub.exe
+D:\My Projects\Database Hub\bin\Debug\net6.0-windows\Database Hub.deps.json
+D:\My Projects\Database Hub\bin\Debug\net6.0-windows\Database Hub.runtimeconfig.json
+D:\My Projects\Database Hub\bin\Debug\net6.0-windows\Database Hub.dll
+D:\My Projects\Database Hub\bin\Debug\net6.0-windows\Database Hub.pdb
+D:\My Projects\Database Hub\bin\Debug\net6.0-windows\Microsoft.Xaml.Behaviors.dll
+D:\My Projects\Database Hub\bin\Debug\net6.0-windows\Prism.dll
+D:\My Projects\Database Hub\bin\Debug\net6.0-windows\Prism.Unity.Wpf.dll
+D:\My Projects\Database Hub\bin\Debug\net6.0-windows\Prism.Wpf.dll
+D:\My Projects\Database Hub\bin\Debug\net6.0-windows\Unity.Abstractions.dll
+D:\My Projects\Database Hub\bin\Debug\net6.0-windows\Unity.Container.dll
+D:\My Projects\Database Hub\obj\Debug\net6.0-windows\MainWindow.baml
+D:\My Projects\Database Hub\obj\Debug\net6.0-windows\Views\LoginView.baml
+D:\My Projects\Database Hub\obj\Debug\net6.0-windows\Database Hub.g.resources
+D:\My Projects\Database Hub\obj\Debug\net6.0-windows\Database Hub.GeneratedMSBuildEditorConfig.editorconfig
+D:\My Projects\Database Hub\obj\Debug\net6.0-windows\Database Hub.AssemblyInfoInputs.cache
+D:\My Projects\Database Hub\obj\Debug\net6.0-windows\Database Hub.AssemblyInfo.cs
+D:\My Projects\Database Hub\obj\Debug\net6.0-windows\Database Hub.csproj.CoreCompileInputs.cache
+D:\My Projects\Database Hub\obj\Debug\net6.0-windows\Database Hub.csproj.CopyComplete
+D:\My Projects\Database Hub\obj\Debug\net6.0-windows\Database Hub.dll
+D:\My Projects\Database Hub\obj\Debug\net6.0-windows\refint\Database Hub.dll
+D:\My Projects\Database Hub\obj\Debug\net6.0-windows\Database Hub.pdb
+D:\My Projects\Database Hub\obj\Debug\net6.0-windows\Database Hub.genruntimeconfig.cache
+D:\My Projects\Database Hub\obj\Debug\net6.0-windows\ref\Database Hub.dll
+D:\My Projects\Database Hub\obj\Debug\net6.0-windows\Views\ConnectedMode\ConnectedHomeView.g.cs
+D:\My Projects\Database Hub\obj\Debug\net6.0-windows\Views\ConnectedMode\ConnectedHomeView.baml
+D:\My Projects\Database Hub\obj\Debug\net6.0-windows\Views\ConnectedMode\Utils\AddServerDialog.baml
+D:\My Projects\Database Hub\obj\Debug\net6.0-windows\Views\ConnectedMode\Utils\EditServerDialog.baml
+D:\My Projects\Database Hub\obj\Debug\net6.0-windows\Views\ConnectedMode\Utils\AddServerDialog.g.cs
+D:\My Projects\Database Hub\obj\Debug\net6.0-windows\Views\ConnectedMode\Utils\EditServerDialog.g.cs
+D:\My Projects\Database Hub\obj\Debug\net6.0-windows\Views\ConnectedMode\Pages\MainFunctionHomeView.g.cs
+D:\My Projects\Database Hub\obj\Debug\net6.0-windows\Views\ConnectedMode\Pages\MainFunctionHomeView.baml
+D:\My Projects\Database Hub\obj\Debug\net6.0-windows\Views\DatabaseConnectionView.g.cs
+D:\My Projects\Database Hub\obj\Debug\net6.0-windows\Views\DatabaseConnectionView.baml
+D:\My Projects\Database Hub\bin\Debug\net6.0-windows\Microsoft.Bcl.AsyncInterfaces.dll
+D:\My Projects\Database Hub\bin\Debug\net6.0-windows\Microsoft.Data.SqlClient.dll
+D:\My Projects\Database Hub\bin\Debug\net6.0-windows\Microsoft.IdentityModel.Abstractions.dll
+D:\My Projects\Database Hub\bin\Debug\net6.0-windows\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\My Projects\Database Hub\bin\Debug\net6.0-windows\Microsoft.IdentityModel.Logging.dll
+D:\My Projects\Database Hub\bin\Debug\net6.0-windows\Microsoft.IdentityModel.Protocols.dll
+D:\My Projects\Database Hub\bin\Debug\net6.0-windows\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+D:\My Projects\Database Hub\bin\Debug\net6.0-windows\Microsoft.IdentityModel.Tokens.dll
+D:\My Projects\Database Hub\bin\Debug\net6.0-windows\Microsoft.SqlServer.Server.dll
+D:\My Projects\Database Hub\bin\Debug\net6.0-windows\System.Configuration.ConfigurationManager.dll
+D:\My Projects\Database Hub\bin\Debug\net6.0-windows\System.Diagnostics.DiagnosticSource.dll
+D:\My Projects\Database Hub\bin\Debug\net6.0-windows\System.IdentityModel.Tokens.Jwt.dll
+D:\My Projects\Database Hub\bin\Debug\net6.0-windows\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+D:\My Projects\Database Hub\bin\Debug\net6.0-windows\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+D:\My Projects\Database Hub\bin\Debug\net6.0-windows\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+D:\My Projects\Database Hub\bin\Debug\net6.0-windows\Azure.Core.dll
+D:\My Projects\Database Hub\bin\Debug\net6.0-windows\Azure.Identity.dll
+D:\My Projects\Database Hub\bin\Debug\net6.0-windows\Microsoft.Identity.Client.dll
+D:\My Projects\Database Hub\bin\Debug\net6.0-windows\Microsoft.Identity.Client.Extensions.Msal.dll
+D:\My Projects\Database Hub\bin\Debug\net6.0-windows\System.ClientModel.dll
+D:\My Projects\Database Hub\bin\Debug\net6.0-windows\System.Memory.Data.dll
+D:\My Projects\Database Hub\bin\Debug\net6.0-windows\System.Runtime.Caching.dll
+D:\My Projects\Database Hub\bin\Debug\net6.0-windows\de\Microsoft.Data.SqlClient.resources.dll
+D:\My Projects\Database Hub\bin\Debug\net6.0-windows\es\Microsoft.Data.SqlClient.resources.dll
+D:\My Projects\Database Hub\bin\Debug\net6.0-windows\fr\Microsoft.Data.SqlClient.resources.dll
+D:\My Projects\Database Hub\bin\Debug\net6.0-windows\it\Microsoft.Data.SqlClient.resources.dll
+D:\My Projects\Database Hub\bin\Debug\net6.0-windows\ja\Microsoft.Data.SqlClient.resources.dll
+D:\My Projects\Database Hub\bin\Debug\net6.0-windows\ko\Microsoft.Data.SqlClient.resources.dll
+D:\My Projects\Database Hub\bin\Debug\net6.0-windows\pt-BR\Microsoft.Data.SqlClient.resources.dll
+D:\My Projects\Database Hub\bin\Debug\net6.0-windows\ru\Microsoft.Data.SqlClient.resources.dll
+D:\My Projects\Database Hub\bin\Debug\net6.0-windows\zh-Hans\Microsoft.Data.SqlClient.resources.dll
+D:\My Projects\Database Hub\bin\Debug\net6.0-windows\zh-Hant\Microsoft.Data.SqlClient.resources.dll
+D:\My Projects\Database Hub\bin\Debug\net6.0-windows\runtimes\unix\lib\net6.0\Microsoft.Data.SqlClient.dll
+D:\My Projects\Database Hub\bin\Debug\net6.0-windows\runtimes\win\lib\net6.0\Microsoft.Data.SqlClient.dll
+D:\My Projects\Database Hub\bin\Debug\net6.0-windows\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
+D:\My Projects\Database Hub\bin\Debug\net6.0-windows\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
+D:\My Projects\Database Hub\obj\Debug\net6.0-windows\Views\Common\StyledMessageDialog.baml
+D:\My Projects\Database Hub\obj\Debug\net6.0-windows\Views\Common\StyledMessageDialog.g.cs
+D:\My Projects\Database Hub\obj\Debug\net6.0-windows\Views\Common\ToastNotificationWindow.baml
+D:\My Projects\Database Hub\obj\Debug\net6.0-windows\Views\Common\ToastNotificationWindow.g.cs
+D:\My Projects\Database Hub\obj\Debug\net6.0-windows\Views\Common\ConfirmActionDialog.baml
+D:\My Projects\Database Hub\obj\Debug\net6.0-windows\Views\Common\ConfirmActionDialog.g.cs

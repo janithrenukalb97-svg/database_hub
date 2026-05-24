@@ -1,0 +1,7 @@
+[2026-05-24 14:35:36.797] [INFO] Logger initialized. Log file: D:\My Projects\Database Hub\bin\Debug\net6.0-windows\logs\database-hub-20260524-143536.log
+[2026-05-24 14:35:41.614] [DEBUG] Connect called. ServerName: SQLNPROD01A\SQLIDEV,30401
+[2026-05-24 14:35:41.615] [DEBUG] Using address: 'SQLNPROD01A\SQLIDEV,30401'
+[2026-05-24 14:35:41.617] [DEBUG] IsConnecting set to true
+[2026-05-24 14:35:41.639] [DEBUG] Connection string: Data Source=tcp:SQLNPROD01A\SQLIDEV,30401;Integrated Security=True;Connect Timeout=5;Encrypt=False;Trust Server Certificate=True
+[2026-05-24 14:35:41.640] [ERROR] Connection string is invalid: Data Source=tcp:SQLNPROD01A\SQLIDEV,30401;Integrated Security=True;Connect Timeout=5;Encrypt=False;Trust Server Certificate=True
+[2026-05-24 14:36:03.466] [DEBUG] IsConnecting set to false

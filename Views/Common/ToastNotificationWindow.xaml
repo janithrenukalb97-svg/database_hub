@@ -1,0 +1,32 @@
+<Window x:Class="Database_Hub.Views.Common.ToastNotificationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        ResizeMode="NoResize"
+        ShowInTaskbar="False"
+        ShowActivated="False"
+        Topmost="True"
+        Width="360"
+        Height="84"
+        Background="Transparent"
+        Title="Toast">
+    <Border x:Name="ToastBorder" CornerRadius="14" BorderBrush="#16A34A" BorderThickness="1" Background="#ECFDF3" Padding="0">
+        <Grid Margin="12,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Border x:Name="IconCircle" Grid.Column="0" Width="30" Height="30" CornerRadius="15" Background="#16A34A" VerticalAlignment="Center">
+                <TextBlock x:Name="IconTextBlock" Text="✓" Foreground="White" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+
+            <StackPanel Grid.Column="2" VerticalAlignment="Center">
+                <TextBlock x:Name="TitleTextBlock" Text="Success" FontSize="14" FontWeight="SemiBold" Foreground="#065F46"/>
+                <TextBlock x:Name="MessageTextBlock" Margin="0,2,0,0" Text="Operation completed." TextWrapping="Wrap" FontSize="12.5" Foreground="#14532D"/>
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>
