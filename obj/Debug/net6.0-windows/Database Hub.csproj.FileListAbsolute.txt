@@ -80,3 +80,12 @@ D:\My Projects\Database Hub\obj\Debug\net6.0-windows\Views\Common\ToastNotificat
 D:\My Projects\Database Hub\obj\Debug\net6.0-windows\Views\Common\ToastNotificationWindow.g.cs
 D:\My Projects\Database Hub\obj\Debug\net6.0-windows\Views\Common\ConfirmActionDialog.baml
 D:\My Projects\Database Hub\obj\Debug\net6.0-windows\Views\Common\ConfirmActionDialog.g.cs
+D:\My Projects\Database Hub\obj\Debug\net6.0-windows\Views\ConnectedMode\Pages\ComparisonToolView.baml
+D:\My Projects\Database Hub\obj\Debug\net6.0-windows\Views\ConnectedMode\Pages\FileExplorerView.baml
+D:\My Projects\Database Hub\obj\Debug\net6.0-windows\Views\ConnectedMode\Pages\ObjectExplorerView.baml
+D:\My Projects\Database Hub\obj\Debug\net6.0-windows\Views\ConnectedMode\Pages\ReleaseExecutorView.baml
+D:\My Projects\Database Hub\obj\Debug\net6.0-windows\Views\ConnectedMode\Pages\ComparisonToolView.g.cs
+D:\My Projects\Database Hub\obj\Debug\net6.0-windows\Views\ConnectedMode\Pages\FileExplorerView.g.cs
+D:\My Projects\Database Hub\obj\Debug\net6.0-windows\Views\ConnectedMode\Pages\ObjectExplorerView.g.cs
+D:\My Projects\Database Hub\obj\Debug\net6.0-windows\Views\ConnectedMode\Pages\ReleaseExecutorView.g.cs
+D:\My Projects\Database Hub\obj\Debug\net6.0-windows\GeneratedInternalTypeHelper.g.cs

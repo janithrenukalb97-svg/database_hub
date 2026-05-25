@@ -18,25 +18,27 @@
         <Style x:Key="MinimizeButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="BorderBrush" Value="#7CCF2F"/>
-            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#B0B6BE"/>
+            <Setter Property="Foreground" Value="#23272F"/>
             <Setter Property="FontSize" Value="20"/>
             <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="Width" Value="52"/>
-            <Setter Property="Height" Value="42"/>
+            <Setter Property="Width" Value="40"/>
+            <Setter Property="Height" Value="30"/>
             <Setter Property="Margin" Value="0,0,2,0"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border x:Name="ButtonBorder" Background="{TemplateBinding Background}">
+                        <Border x:Name="ButtonBorder" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="ButtonBorder" Property="Background" Value="#84CC16"/>
+                                <Setter TargetName="ButtonBorder" Property="Background" Value="#818896"/>
+                                <Setter TargetName="ButtonBorder" Property="BorderBrush" Value="#6C7378"/>
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="ButtonBorder" Property="Background" Value="#65A30D"/>
+                                <Setter TargetName="ButtonBorder" Property="Background" Value="#7D8285"/>
+                                <Setter TargetName="ButtonBorder" Property="BorderBrush" Value="#6B7280"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -45,15 +47,16 @@
         </Style>
 
         <Style x:Key="MaximizeButtonStyle" TargetType="Button" BasedOn="{StaticResource MinimizeButtonStyle}">
-            <Setter Property="BorderBrush" Value="#A3E635"/>
+            <Setter Property="BorderBrush" Value="#7A7A7A"/>
             <Setter Property="FontSize" Value="18"/>
         </Style>
 
         <Style x:Key="CloseButtonStyle" TargetType="Button" BasedOn="{StaticResource MinimizeButtonStyle}">
-            <Setter Property="Background" Value="#DC2626"/>
-            <Setter Property="BorderBrush" Value="#EF4444"/>
+            <Setter Property="Background" Value="#868787"/>
+            <Setter Property="BorderBrush" Value="#9FA0A1"/>
             <Setter Property="FontSize" Value="20"/>
-            <Setter Property="Width" Value="56"/>
+            <Setter Property="Width" Value="40"/>
+            <Setter Property="Foreground" Value="#DC2626"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
@@ -62,10 +65,14 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="CloseBorder" Property="Background" Value="#EF4444"/>
+                                <Setter TargetName="CloseBorder" Property="Background" Value="#F87171"/>
+                                <Setter TargetName="CloseBorder" Property="BorderBrush" Value="#DC2626"/>
+                                <Setter Property="Foreground" Value="#B91C1C"/>
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="CloseBorder" Property="Background" Value="#B91C1C"/>
+                                <Setter TargetName="CloseBorder" Property="Background" Value="#DC2626"/>
+                                <Setter TargetName="CloseBorder" Property="BorderBrush" Value="#B91C1C"/>
+                                <Setter Property="Foreground" Value="#FFF"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -76,11 +83,11 @@
     <Border x:Name="WindowRootBorder" BorderBrush="#D0D7DE" BorderThickness="1" Background="#F5F5F5">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="42"/>
+                <RowDefinition Height="35"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Grid Grid.Row="0" Background="#65A30D" MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
+            <Grid Grid.Row="0" Background="#919191" MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>

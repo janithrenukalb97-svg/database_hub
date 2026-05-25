@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP
 D:\My Projects\Database Hub\App.xaml
-101571773602
+141073513301
 
-18-207999049
-216-1393316651
-MainWindow.xaml;Views\Common\ConfirmActionDialog.xaml;Views\Common\StyledMessageDialog.xaml;Views\Common\ToastNotificationWindow.xaml;Views\ConnectedMode\ConnectedHomeView.xaml;Views\ConnectedMode\Pages\MainFunctionHomeView.xaml;Views\ConnectedMode\Utils\AddServerDialog.xaml;Views\ConnectedMode\Utils\EditServerDialog.xaml;Views\DatabaseConnectionView.xaml;Views\LoginView.xaml;
+22835654491
+22563098651
+MainWindow.xaml;Views\Common\ConfirmActionDialog.xaml;Views\Common\StyledMessageDialog.xaml;Views\Common\ToastNotificationWindow.xaml;Views\ConnectedMode\ConnectedHomeView.xaml;Views\ConnectedMode\Pages\ComparisonToolView.xaml;Views\ConnectedMode\Pages\FileExplorerView.xaml;Views\ConnectedMode\Pages\MainFunctionHomeView.xaml;Views\ConnectedMode\Pages\ObjectExplorerView.xaml;Views\ConnectedMode\Pages\ReleaseExecutorView.xaml;Views\ConnectedMode\Utils\AddServerDialog.xaml;Views\ConnectedMode\Utils\EditServerDialog.xaml;Views\DatabaseConnectionView.xaml;Views\LoginView.xaml;
 
 False
 

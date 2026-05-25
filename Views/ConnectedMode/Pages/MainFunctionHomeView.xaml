@@ -6,6 +6,36 @@
              xmlns:local="clr-namespace:Database_Hub.Views.ConnectedMode.Pages"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+
+        <Style x:Key="NavButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="#1F1F1F" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="12,10" />
+            <Setter Property="Margin" Value="0,0,0,6" />
+            <Setter Property="HorizontalContentAlignment" Value="Left" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="6" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#E6F4EA" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
     <Grid Background="#F5F5F5">
         <DockPanel>
             <!-- Header with connection info -->
@@ -55,11 +85,104 @@
                     </Button>
                 </Grid>
             </Border>
+
             <!-- Main Content -->
-            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" DockPanel.Dock="Bottom">
-                <TextBlock Text="Main Function Home" FontSize="28" FontWeight="Bold" Margin="0,0,0,20"/>
-                <TextBlock Text="This is the main function home page for connected mode." FontSize="16"/>
-            </StackPanel>
+            <Grid DockPanel.Dock="Bottom">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="7*"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0" Background="White" BorderBrush="#DDDDDD" BorderThickness="0,0,1,0">
+                    <StackPanel Margin="10,16">
+
+                        <Button Content="Home"
+                                Command="{Binding NavigateMenuCommand}"
+                                CommandParameter="Home">
+                            <Button.Style>
+                                <Style TargetType="Button" BasedOn="{StaticResource NavButtonStyle}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsHomeSelected}" Value="True">
+                                            <Setter Property="Background" Value="#107C10" />
+                                            <Setter Property="Foreground" Value="White" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                        <Button Content="Object Explorer"
+                                Command="{Binding NavigateMenuCommand}"
+                                CommandParameter="Object Explorer">
+                            <Button.Style>
+                                <Style TargetType="Button" BasedOn="{StaticResource NavButtonStyle}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsObjectExplorerSelected}" Value="True">
+                                            <Setter Property="Background" Value="#107C10" />
+                                            <Setter Property="Foreground" Value="White" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                        <Button Content="Release Executor"
+                                Command="{Binding NavigateMenuCommand}"
+                                CommandParameter="Release Executor">
+                            <Button.Style>
+                                <Style TargetType="Button" BasedOn="{StaticResource NavButtonStyle}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsReleaseExecutorSelected}" Value="True">
+                                            <Setter Property="Background" Value="#107C10" />
+                                            <Setter Property="Foreground" Value="White" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                        <Button Content="File Explorer"
+                                Command="{Binding NavigateMenuCommand}"
+                                CommandParameter="File Explorer">
+                            <Button.Style>
+                                <Style TargetType="Button" BasedOn="{StaticResource NavButtonStyle}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsFileExplorerSelected}" Value="True">
+                                            <Setter Property="Background" Value="#107C10" />
+                                            <Setter Property="Foreground" Value="White" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                        <Button Content="Comparison Tool"
+                                Command="{Binding NavigateMenuCommand}"
+                                CommandParameter="Comparison Tool">
+                            <Button.Style>
+                                <Style TargetType="Button" BasedOn="{StaticResource NavButtonStyle}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsComparisonToolSelected}" Value="True">
+                                            <Setter Property="Background" Value="#107C10" />
+                                            <Setter Property="Foreground" Value="White" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                    </StackPanel>
+                </Border>
+
+                <Grid Grid.Column="1">
+                    <Grid Visibility="{Binding IsHomeSelected, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <TextBlock Text="Main Function Home" FontSize="28" FontWeight="Bold" Margin="0,0,0,20"/>
+                            <TextBlock Text="This is the main function home page for connected mode." FontSize="16"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <local:ObjectExplorerView Visibility="{Binding IsObjectExplorerSelected, Converter={StaticResource BoolToVisibilityConverter}}" />
+                    <local:ReleaseExecutorView Visibility="{Binding IsReleaseExecutorSelected, Converter={StaticResource BoolToVisibilityConverter}}" />
+                    <local:FileExplorerView Visibility="{Binding IsFileExplorerSelected, Converter={StaticResource BoolToVisibilityConverter}}" />
+                    <local:ComparisonToolView Visibility="{Binding IsComparisonToolSelected, Converter={StaticResource BoolToVisibilityConverter}}" />
+                </Grid>
+            </Grid>
         </DockPanel>
     </Grid>
 </UserControl>
