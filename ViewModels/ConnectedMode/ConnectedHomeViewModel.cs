@@ -59,6 +59,8 @@ namespace Database_Hub.ViewModels.ConnectedMode
 
         private void Logout()
         {
+            _sessionService.CurrentServerName = string.Empty;
+            _sessionService.CurrentServerAddress = string.Empty;
             _regionManager.RequestNavigate("MainRegion", "LoginView");
         }
 

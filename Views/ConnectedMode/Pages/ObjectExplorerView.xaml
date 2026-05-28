@@ -52,9 +52,9 @@
             <Setter Property="BorderBrush" Value="#D0D7DE"/>
             <Setter Property="BorderThickness" Value="1.5"/>
             <Setter Property="Foreground" Value="#1F2328"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Padding" Value="10,6"/>
-            <Setter Property="Height" Value="44"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Padding" Value="8,4"/>
+            <Setter Property="Height" Value="38"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ComboBox">
@@ -155,7 +155,7 @@
                         </Grid>
                         <ControlTemplate.Triggers>
                             <Trigger Property="HasItems" Value="False">
-                                <Setter TargetName="DropDownBorder" Property="MinHeight" Value="44"/>
+                                <Setter TargetName="DropDownBorder" Property="MinHeight" Value="38"/>
                             </Trigger>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="RootBorder" Property="BorderBrush" Value="#A4B1C0"/>
@@ -211,12 +211,12 @@
             <Setter Property="BorderBrush" Value="#D0D7DE"/>
             <Setter Property="BorderThickness" Value="1.5"/>
             <Setter Property="CornerRadius" Value="12"/>
-            <Setter Property="Padding" Value="10,4"/>
+            <Setter Property="Padding" Value="8,2"/>
         </Style>
 
         <Style x:Key="ModernTextBoxStyle" TargetType="TextBox">
-            <Setter Property="Height" Value="34"/>
-            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="FontSize" Value="13"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -224,8 +224,8 @@
         </Style>
 
         <Style x:Key="ModernComboStyle" TargetType="ComboBox">
-            <Setter Property="Height" Value="34"/>
-            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="FontSize" Value="13"/>
             <Setter Property="Padding" Value="8,2"/>
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
@@ -233,10 +233,11 @@
         </Style>
 
         <Style x:Key="RoundedButtonStyle" TargetType="Button">
-            <Setter Property="Height" Value="34"/>
-            <Setter Property="Padding" Value="14,6"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Padding" Value="12,4"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="12"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>
@@ -333,6 +334,7 @@
                             <Trigger Property="Orientation" Value="Horizontal">
                                 <Setter Property="Height" Value="12"/>
                                 <Setter Property="Width" Value="Auto"/>
+                                <Setter TargetName="PART_Track" Property="IsDirectionReversed" Value="False"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -378,174 +380,169 @@
         </Style>
     </UserControl.Resources>
 
-    <Grid Background="White" Margin="16">
+    <Grid Background="#F8F8F8" Margin="8">
         <Border Background="#F8F8F8" CornerRadius="12" Padding="20" BorderBrush="#E3E8EF" BorderThickness="1">
-            <Border.Effect>
-                <DropShadowEffect BlurRadius="10" ShadowDepth="1" Opacity="0.08"/>
-            </Border.Effect>
             <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
+                <Grid Margin="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
 
-                <StackPanel Grid.Row="0" Margin="0,0,0,14">
-                    <TextBlock Text="Object Explorer" FontSize="28" FontWeight="Bold" Margin="0,0,0,6"/>
-                    <TextBlock Text="Browse and inspect objects in a selected database." FontSize="14" Foreground="#555555"/>
-                </StackPanel>
+                        <Grid Grid.Row="0" Margin="0,0,0,8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="20" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
 
-                <Grid Grid.Row="1" Margin="0,0,0,12">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="20" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0">
+                                <TextBlock FontSize="12" Margin="0,0,0,3">
+                                    <Run Text="Database" />
+                                    <Run Text=" *" Foreground="#C62828" />
+                                </TextBlock>
+                                <Border Margin="0,0,0,2" Background="#FFFFFF" BorderBrush="#D0D7DE" BorderThickness="1" CornerRadius="12" Padding="6">
+                                    <Border.Effect>
+                                        <DropShadowEffect BlurRadius="8" ShadowDepth="1" Opacity="0.06"/>
+                                    </Border.Effect>
+                                    <ComboBox Style="{StaticResource ServerComboStyle}"
+                                            ItemsSource="{Binding DatabaseList}"
+                                            SelectedItem="{Binding SelectedDatabase, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                            IsEditable="True"
+                                            ItemContainerStyle="{StaticResource ModernComboItemStyle}">
+                                    </ComboBox>
+                                </Border>
+                            </StackPanel>
 
-                    <StackPanel Grid.Column="0">
-                        <TextBlock Margin="0,0,0,4">
-                            <Run Text="Database" />
-                            <Run Text=" *" Foreground="#C62828" />
-                        </TextBlock>
-                        <Border Margin="0,0,0,4" Background="#FFFFFF" BorderBrush="#D0D7DE" BorderThickness="1" CornerRadius="14" Padding="8">
-                            <Border.Effect>
-                                <DropShadowEffect BlurRadius="8" ShadowDepth="1" Opacity="0.06"/>
-                            </Border.Effect>
-                            <ComboBox Style="{StaticResource ServerComboStyle}"
-                                      ItemsSource="{Binding DatabaseList}"
-                                      SelectedItem="{Binding SelectedDatabase, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                      IsEditable="True"
-                                      ItemContainerStyle="{StaticResource ModernComboItemStyle}">
-                            </ComboBox>
-                        </Border>
-                    </StackPanel>
+                            <StackPanel Grid.Column="2">
+                                <TextBlock Text="Schema (Optional)" FontSize="12" Margin="0,0,0,3" />
+                                <Border Style="{StaticResource ModernInputBorderStyle}">
+                                    <TextBox Text="{Binding SchemaFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                            Style="{StaticResource ModernTextBoxStyle}" />
+                                </Border>
+                            </StackPanel>
+                        </Grid>
 
-                    <StackPanel Grid.Column="2">
-                        <TextBlock Text="Schema (Optional)" Margin="0,0,0,4" />
-                        <Border Style="{StaticResource ModernInputBorderStyle}">
-                            <TextBox Text="{Binding SchemaFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                     Style="{StaticResource ModernTextBoxStyle}" />
-                        </Border>
-                    </StackPanel>
+                        <Grid Grid.Row="1" Margin="0,0,0,10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="8" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="Keyword (Optional)" FontSize="12" Margin="0,0,0,3" />
+                                <Border Style="{StaticResource ModernInputBorderStyle}">
+                                    <TextBox Text="{Binding KeywordFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                            Style="{StaticResource ModernTextBoxStyle}" />
+                                </Border>
+                            </StackPanel>
+
+                            <Button Grid.Column="1"
+                                    Content="Search"
+                                    Width="90"
+                                    Margin="8,18,0,0"
+                                    Background="#1D4ED8"
+                                    Foreground="White"
+                                    BorderBrush="#1D4ED8"
+                                    Style="{StaticResource RoundedButtonStyle}"
+                                    Command="{Binding SearchObjectsCommand}" />
+
+                            <Button Grid.Column="3"
+                                    Content="Cancel"
+                                    Width="90"
+                                    Margin="0,18,0,0"
+                                    Background="#D92D20"
+                                    Foreground="White"
+                                    BorderBrush="#D92D20"
+                                    Style="{StaticResource RoundedButtonStyle}"
+                                    Command="{Binding CancelSearchCommand}" />
+                        </Grid>
+
+                        <DataGrid Grid.Row="2"
+                                ItemsSource="{Binding DatabaseObjects}"
+                                AutoGenerateColumns="False"
+                                IsReadOnly="True"
+                                Style="{StaticResource StyledDataGridStyle}"
+                                CanUserAddRows="False"
+                                SelectionMode="Extended"
+                                GridLinesVisibility="Horizontal"
+                            ScrollViewer.VerticalScrollBarVisibility="Auto"
+                            ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                                Margin="0,0,0,10">
+                            <DataGrid.Resources>
+                                <Style TargetType="ScrollBar" BasedOn="{StaticResource TableScrollBarStyle}"/>
+                            </DataGrid.Resources>
+                            <DataGrid.Columns>
+                                <DataGridTemplateColumn Header="" Width="70">
+                                    <DataGridTemplateColumn.HeaderTemplate>
+                                        <DataTemplate>
+                                            <CheckBox Style="{StaticResource RoundedCheckBoxStyle}"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    IsChecked="{Binding DataContext.IsAllObjectsSelected, RelativeSource={RelativeSource AncestorType=DataGrid}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.HeaderTemplate>
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <CheckBox Style="{StaticResource RoundedCheckBoxStyle}"
+                                                    IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTextColumn Header="Schema" Binding="{Binding SchemaName}" Width="*" />
+                                <DataGridTextColumn Header="Object" Binding="{Binding ObjectName}" Width="2*" />
+                                <DataGridTextColumn Header="Type" Binding="{Binding ObjectType}" Width="*" />
+                                <DataGridTemplateColumn Header="Action" Width="90">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Content="⬇"
+                                                    Width="34"
+                                                    Height="28"
+                                                    Background="#F8FAFC"
+                                                    Foreground="#1D4ED8"
+                                                    BorderBrush="#CBD5E1"
+                                                    Style="{StaticResource RoundedButtonStyle}"
+                                                    ToolTip="Download create script"
+                                                    Command="{Binding DataContext.DownloadObjectScriptCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                                    CommandParameter="{Binding}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,5">
+                            <Button Content="Reset"
+                                Width="88"
+                                    Background="#6B7280"
+                                    Foreground="White"
+                                    BorderBrush="#6B7280"
+                                    Style="{StaticResource RoundedButtonStyle}"
+                                    Command="{Binding ResetSelectionCommand}" />
+
+                            <Button Content="Download"
+                                Width="96"
+                                Margin="8,0,0,0"
+                                    Background="#0F766E"
+                                    Foreground="White"
+                                    BorderBrush="#0F766E"
+                                    Style="{StaticResource RoundedButtonStyle}"
+                                    Visibility="{Binding HasSelectedObjects, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                    Command="{Binding DownloadSelectedScriptsCommand}" />
+                        </StackPanel>
+
+                        <TextBlock Grid.Row="4"
+                                Text="{Binding ObjectExplorerStatus}"
+                                Foreground="#555555"
+                                FontStyle="Italic" />
                 </Grid>
-
-                <Grid Grid.Row="2" Margin="0,0,0,16">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="8" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-
-                    <StackPanel Grid.Column="0">
-                        <TextBlock Text="Keyword (Optional)" Margin="0,0,0,4" />
-                        <Border Style="{StaticResource ModernInputBorderStyle}">
-                            <TextBox Text="{Binding KeywordFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                     Style="{StaticResource ModernTextBoxStyle}" />
-                        </Border>
-                    </StackPanel>
-
-                    <Button Grid.Column="1"
-                            Content="Search"
-                            Width="100"
-                            Margin="10,20,0,0"
-                            Background="#1D4ED8"
-                            Foreground="White"
-                            BorderBrush="#1D4ED8"
-                            Style="{StaticResource RoundedButtonStyle}"
-                            Command="{Binding SearchObjectsCommand}" />
-
-                    <Button Grid.Column="3"
-                            Content="Cancel"
-                            Width="100"
-                            Margin="0,20,0,0"
-                            Background="#D92D20"
-                            Foreground="White"
-                            BorderBrush="#D92D20"
-                            Style="{StaticResource RoundedButtonStyle}"
-                            Command="{Binding CancelSearchCommand}" />
-                </Grid>
-
-                <DataGrid Grid.Row="3"
-                          ItemsSource="{Binding DatabaseObjects}"
-                          AutoGenerateColumns="False"
-                          IsReadOnly="True"
-                          Style="{StaticResource StyledDataGridStyle}"
-                          CanUserAddRows="False"
-                          SelectionMode="Extended"
-                          GridLinesVisibility="Horizontal"
-                          Margin="0,0,0,10">
-                    <DataGrid.Resources>
-                        <Style TargetType="ScrollBar" BasedOn="{StaticResource TableScrollBarStyle}"/>
-                    </DataGrid.Resources>
-                    <DataGrid.Columns>
-                        <DataGridTemplateColumn Header="" Width="70">
-                            <DataGridTemplateColumn.HeaderTemplate>
-                                <DataTemplate>
-                                    <CheckBox Style="{StaticResource RoundedCheckBoxStyle}"
-                                              HorizontalAlignment="Center"
-                                              VerticalAlignment="Center"
-                                              IsChecked="{Binding DataContext.IsAllObjectsSelected, RelativeSource={RelativeSource AncestorType=DataGrid}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.HeaderTemplate>
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <CheckBox Style="{StaticResource RoundedCheckBoxStyle}"
-                                              IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                              HorizontalAlignment="Center"
-                                              VerticalAlignment="Center"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTextColumn Header="Schema" Binding="{Binding SchemaName}" Width="*" />
-                        <DataGridTextColumn Header="Object" Binding="{Binding ObjectName}" Width="2*" />
-                        <DataGridTextColumn Header="Type" Binding="{Binding ObjectType}" Width="*" />
-                        <DataGridTemplateColumn Header="Action" Width="90">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Button Content="⬇"
-                                            Width="34"
-                                            Height="28"
-                                            Background="#F8FAFC"
-                                            Foreground="#1D4ED8"
-                                            BorderBrush="#CBD5E1"
-                                            Style="{StaticResource RoundedButtonStyle}"
-                                            ToolTip="Download create script"
-                                            Command="{Binding DataContext.DownloadObjectScriptCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
-                                            CommandParameter="{Binding}" />
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                    </DataGrid.Columns>
-                </DataGrid>
-
-                <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,10">
-                    <Button Content="Reset"
-                            Width="100"
-                            Background="#6B7280"
-                            Foreground="White"
-                            BorderBrush="#6B7280"
-                            Style="{StaticResource RoundedButtonStyle}"
-                            Command="{Binding ResetSelectionCommand}" />
-
-                    <Button Content="Download"
-                            Width="110"
-                            Margin="10,0,0,0"
-                            Background="#0F766E"
-                            Foreground="White"
-                            BorderBrush="#0F766E"
-                            Style="{StaticResource RoundedButtonStyle}"
-                            Visibility="{Binding HasSelectedObjects, Converter={StaticResource BooleanToVisibilityConverter}}"
-                            Command="{Binding DownloadSelectedScriptsCommand}" />
-                </StackPanel>
-
-                <TextBlock Grid.Row="5"
-                           Text="{Binding ObjectExplorerStatus}"
-                           Foreground="#555555"
-                           FontStyle="Italic" />
             </Grid>
         </Border>
     </Grid>

@@ -3,14 +3,409 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:vm="clr-namespace:Database_Hub.ViewModels.ConnectedMode"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="White" Margin="16">
-        <Border Background="#F8F8F8" CornerRadius="8" Padding="24">
-            <StackPanel>
-                <TextBlock Text="Release Executor" FontSize="28" FontWeight="Bold" Margin="0,0,0,12"/>
-                <TextBlock Text="Execute release scripts and track execution results here." FontSize="15" Foreground="#555555" TextWrapping="Wrap"/>
+    <UserControl.Resources>
+    <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+
+        <Style x:Key="ActionButtonStyle" TargetType="Button">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Padding" Value="12,4"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="TreeScrollThumbStyle" TargetType="Thumb">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Thumb">
+                        <Border Background="#93C5FD" CornerRadius="6" Margin="2"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="TreeScrollBarStyle" TargetType="ScrollBar">
+            <Setter Property="Width" Value="12"/>
+            <Setter Property="Background" Value="#EFF6FF"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ScrollBar">
+                        <Grid Background="{TemplateBinding Background}">
+                            <Track x:Name="PART_Track" IsDirectionReversed="True">
+                                <Track.DecreaseRepeatButton>
+                                    <RepeatButton Command="ScrollBar.PageUpCommand" Opacity="0" Focusable="False"/>
+                                </Track.DecreaseRepeatButton>
+                                <Track.Thumb>
+                                    <Thumb Style="{StaticResource TreeScrollThumbStyle}"/>
+                                </Track.Thumb>
+                                <Track.IncreaseRepeatButton>
+                                    <RepeatButton Command="ScrollBar.PageDownCommand" Opacity="0" Focusable="False"/>
+                                </Track.IncreaseRepeatButton>
+                            </Track>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="Orientation" Value="Horizontal">
+                                <Setter Property="Height" Value="12"/>
+                                <Setter Property="Width" Value="Auto"/>
+                                <Setter TargetName="PART_Track" Property="IsDirectionReversed" Value="False"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ReleaseGridStyle" TargetType="DataGrid">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#D0D7DE"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="RowBackground" Value="White"/>
+            <Setter Property="AlternatingRowBackground" Value="#F8FAFC"/>
+            <Setter Property="AlternationCount" Value="2"/>
+            <Setter Property="HorizontalGridLinesBrush" Value="#E5E7EB"/>
+            <Setter Property="VerticalGridLinesBrush" Value="#EEF2F7"/>
+            <Setter Property="HeadersVisibility" Value="Column"/>
+            <Setter Property="ColumnHeaderStyle">
+                <Setter.Value>
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="Background" Value="#EAF2FF"/>
+                        <Setter Property="Foreground" Value="#1E3A8A"/>
+                        <Setter Property="FontWeight" Value="SemiBold"/>
+                        <Setter Property="Padding" Value="8,6"/>
+                        <Setter Property="BorderBrush" Value="#C7D2FE"/>
+                        <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ReleaseTreeItemStyle" TargetType="TreeViewItem">
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="Padding" Value="4,2"/>
+            <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}"/>
+        </Style>
+
+        <HierarchicalDataTemplate x:Key="ReleaseTreeNodeTemplate"
+                                  DataType="{x:Type vm:ReleaseTreeNode}"
+                                  ItemsSource="{Binding Children}">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Margin="0,0,6,0">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Text" Value="📄"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsFolder}" Value="True">
+                                    <Setter Property="Text" Value="📁"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+                <Grid>
+                    <TextBlock Text="{Binding Name}" Foreground="#1F2937">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="FontSize" Value="13"/>
+                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsFolder}" Value="True">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+
+                    <Button Content="{Binding Name}"
+                            Command="{Binding DataContext.PreviewScriptCommand, RelativeSource={RelativeSource AncestorType=TreeView}}"
+                            CommandParameter="{Binding}"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Padding="0"
+                            Foreground="#1F2937"
+                            HorizontalAlignment="Left"
+                            Cursor="Hand">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Visibility" Value="Visible"/>
+                                <Setter Property="FontSize" Value="13"/>
+                                <Setter Property="FontWeight" Value="Normal"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsFolder}" Value="True">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                </Grid>
             </StackPanel>
+        </HierarchicalDataTemplate>
+    </UserControl.Resources>
+
+    <!-- <Grid Background="#F8F8F8" Margin="8"> -->
+        <Border Background="#F8F8F8"
+            Margin="8"
+            CornerRadius="12"
+            Padding="20"
+            BorderBrush="#E3E8EF"
+            BorderThickness="1">
+            <Grid>
+                <Grid Margin="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                        <Grid Grid.Row="0" Margin="0,0,0,8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Button Grid.Column="0"
+                                    Width="128"
+                                    HorizontalAlignment="Left"
+                                    Background="#1D4ED8"
+                                    Foreground="White"
+                                    BorderBrush="#1D4ED8"
+                                    Style="{StaticResource ActionButtonStyle}"
+                                    Command="{Binding OpenReleaseFolderCommand}">
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <TextBlock Text="📂" Margin="0,0,6,0"/>
+                                    <TextBlock Text="Open Folder"/>
+                                </StackPanel>
+                            </Button>
+
+                            <Border Grid.Column="2"
+                                    Height="30"
+                                    Background="White"
+                                    BorderBrush="#D0D7DE"
+                                    BorderThickness="1"
+                                    CornerRadius="8"
+                                    Padding="8,2">
+                                <TextBox Text="{Binding ManualFolderPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        BorderThickness="0"
+                                        Background="Transparent"
+                                        VerticalContentAlignment="Center"
+                                        FontSize="12"
+                                        Foreground="#1F2937"/>
+                            </Border>
+
+                            <Button Grid.Column="4"
+                                    Width="110"
+                                    Background="#0F766E"
+                                    Foreground="White"
+                                    BorderBrush="#0F766E"
+                                    Style="{StaticResource ActionButtonStyle}"
+                                    Command="{Binding LoadScriptsFromPathCommand}">
+                                <TextBlock Text="Load Scripts"/>
+                            </Button>
+                        </Grid>
+
+                        <TextBlock Grid.Row="1"
+                                Margin="0,0,0,8"
+                                Text="{Binding ReleaseSelectedFolder}"
+                                FontSize="12"
+                                Foreground="#4B5563"
+                                TextTrimming="CharacterEllipsis"/>
+
+                        <Border Grid.Row="2"
+                                Background="White"
+                                BorderBrush="#D0D7DE"
+                                BorderThickness="1"
+                                CornerRadius="10"
+                                Padding="8">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="8"/>
+                                    <ColumnDefinition Width="2*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Grid Grid.Column="0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+
+                                    <TreeView Grid.Row="0"
+                                            ItemsSource="{Binding ReleaseRootNodes}"
+                                            ItemTemplate="{StaticResource ReleaseTreeNodeTemplate}"
+                                            ItemContainerStyle="{StaticResource ReleaseTreeItemStyle}"
+                                            BorderThickness="0"
+                                            Background="Transparent"
+                                            ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                            ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                                        <TreeView.Resources>
+                                            <Style TargetType="ScrollBar" BasedOn="{StaticResource TreeScrollBarStyle}"/>
+                                        </TreeView.Resources>
+                                    </TreeView>
+
+                                    <Border Grid.Row="1"
+                                            Margin="0,8,0,0"
+                                            Height="{Binding ExecutionPanelHeight}"
+                                            Background="#0F172A"
+                                            BorderBrush="#1E293B"
+                                            BorderThickness="1"
+                                            CornerRadius="8"
+                                            Visibility="{Binding IsExecutionConsoleVisible, Converter={StaticResource BoolToVisibilityConverter}}">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="*"/>
+                                            </Grid.RowDefinitions>
+
+                                            <TextBlock Grid.Row="0"
+                                                    Margin="10,8,10,6"
+                                                    Text="Execution Console"
+                                                    FontWeight="SemiBold"
+                                                    Foreground="#BFDBFE"/>
+
+                                            <ListBox Grid.Row="1"
+                                                    Margin="8,0,8,8"
+                                                    ItemsSource="{Binding ExecutionConsoleLines}"
+                                                    Background="#0B1220"
+                                                    BorderBrush="#334155"
+                                                    BorderThickness="1"
+                                                    Foreground="#E2E8F0"
+                                                    FontFamily="Consolas"
+                                                    FontSize="12"
+                                                    ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                                    ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                                                <ListBox.Resources>
+                                                    <Style TargetType="ScrollBar" BasedOn="{StaticResource TreeScrollBarStyle}"/>
+                                                </ListBox.Resources>
+                                            </ListBox>
+                                        </Grid>
+                                    </Border>
+                                </Grid>
+
+                                <Border Grid.Column="2"
+                                        Background="#F8FAFC"
+                                        BorderBrush="#D0D7DE"
+                                        BorderThickness="1"
+                                        CornerRadius="8"
+                                        Padding="8"
+                                        Visibility="{Binding IsPreviewVisible, Converter={StaticResource BoolToVisibilityConverter}}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+
+                                        <Grid Grid.Row="0" Margin="0,0,0,6">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <TextBlock Grid.Column="0"
+                                                    Text="{Binding PreviewScriptTitle}"
+                                                    FontWeight="SemiBold"
+                                                    FontSize="13"
+                                                    Foreground="#0F172A"
+                                                    VerticalAlignment="Center"
+                                                    TextTrimming="CharacterEllipsis"/>
+
+                                            <Button Grid.Column="1"
+                                                    Width="20"
+                                                    Height="20"
+                                                    Padding="0"
+                                                    Content="✕"
+                                                    ToolTip="Close preview"
+                                                    Background="Transparent"
+                                                    BorderBrush="#CBD5E1"
+                                                    BorderThickness="1"
+                                                    Foreground="#475569"
+                                                    Command="{Binding ClosePreviewCommand}"/>
+                                        </Grid>
+
+                                        <TextBox Grid.Row="1"
+                                                Text="{Binding PreviewScriptContent}"
+                                                IsReadOnly="True"
+                                                AcceptsReturn="True"
+                                                AcceptsTab="True"
+                                                TextWrapping="NoWrap"
+                                                VerticalScrollBarVisibility="Auto"
+                                                HorizontalScrollBarVisibility="Auto"
+                                                FontFamily="Consolas"
+                                                FontSize="12"
+                                                Background="White"
+                                                BorderBrush="#CBD5E1"
+                                                BorderThickness="1"
+                                                Padding="8">
+                                            <TextBox.Resources>
+                                                <Style TargetType="ScrollBar" BasedOn="{StaticResource TreeScrollBarStyle}"/>
+                                            </TextBox.Resources>
+                                        </TextBox>
+                                    </Grid>
+                                </Border>
+                            </Grid>
+                        </Border>
+
+                        <TextBlock Grid.Row="3"
+                                Margin="0,8,0,0"
+                                Text="{Binding ReleaseExecutorStatus}"
+                                Foreground="#555555"
+                                FontStyle="Italic" />
+
+                        <StackPanel Grid.Row="4"
+                                    Margin="0,10,0,0"
+                                    Orientation="Horizontal"
+                                    HorizontalAlignment="Right">
+                            <Button Content="Download Log"
+                                    Width="120"
+                                    Margin="0,0,8,0"
+                                    Background="#334155"
+                                    Foreground="White"
+                                    BorderBrush="#334155"
+                                    Style="{StaticResource ActionButtonStyle}"
+                                    Visibility="{Binding HasExecutionLog, Converter={StaticResource BoolToVisibilityConverter}}"
+                                    Command="{Binding DownloadExecutionLogCommand}"/>
+
+                            <Button Content="Execute"
+                                    Width="110"
+                                    Margin="0,0,8,0"
+                                    Background="#107C10"
+                                    Foreground="White"
+                                    BorderBrush="#107C10"
+                                    Style="{StaticResource ActionButtonStyle}"
+                                    Command="{Binding ExecuteScriptsCommand}"/>
+
+                                <Button Content="Reset"
+                                    Width="100"
+                                    Background="#6B7280"
+                                    Foreground="White"
+                                    BorderBrush="#6B7280"
+                                    Style="{StaticResource ActionButtonStyle}"
+                                    Command="{Binding ResetReleaseViewCommand}"/>
+                        </StackPanel>
+                </Grid>
+            </Grid>
         </Border>
-    </Grid>
+    <!-- </Grid> -->
 </UserControl>

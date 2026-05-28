@@ -12,13 +12,17 @@ namespace Database_Hub
     {
         protected override DependencyObject CreateShell()
         {
-            return Container.Resolve<MainWindow>();
+            var shell = Container.Resolve<MainWindow>();
+            var sessionService = Container.Resolve<Database_Hub.Services.SessionService>();
+            shell.InitializeSession(sessionService);
+            return shell;
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             // Register SessionService as singleton
             containerRegistry.RegisterSingleton<Database_Hub.Services.SessionService, Database_Hub.Services.SessionService>();
+            containerRegistry.RegisterSingleton<Database_Hub.Services.ActionLoggerService, Database_Hub.Services.ActionLoggerService>();
             // Authentication Views
             containerRegistry.RegisterForNavigation<LoginView, LoginViewModel>();
             containerRegistry.RegisterForNavigation<DatabaseConnectionView, DatabaseConnectionViewModel>();

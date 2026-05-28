@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Database_Hub.Services;
+using System.ComponentModel;
 
 namespace Database_Hub
 {
@@ -22,11 +24,47 @@ namespace Database_Hub
     {
         private bool _isWindowedMaximized;
         private Rect _restoreBounds;
+        private SessionService? _sessionService;
 
         public MainWindow()
         {
             InitializeComponent();
             Loaded += (_, __) => UpdateWindowChromeForState();
+        }
+
+        public void InitializeSession(SessionService sessionService)
+        {
+            if (_sessionService != null)
+            {
+                _sessionService.PropertyChanged -= SessionService_PropertyChanged;
+            }
+
+            _sessionService = sessionService;
+            _sessionService.PropertyChanged += SessionService_PropertyChanged;
+            UpdateConnectionStatusText();
+        }
+
+        private void SessionService_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(SessionService.CurrentServerName) ||
+                e.PropertyName == nameof(SessionService.CurrentServerAddress))
+            {
+                Dispatcher.Invoke(UpdateConnectionStatusText);
+            }
+        }
+
+        private void UpdateConnectionStatusText()
+        {
+            var serverName = _sessionService?.CurrentServerName;
+            if (string.IsNullOrWhiteSpace(serverName))
+            {
+                ConnectionStatusText.Text = string.Empty;
+                ConnectionStatusText.Visibility = Visibility.Collapsed;
+                return;
+            }
+
+            ConnectionStatusText.Text = $"| Connected Mode - {serverName}";
+            ConnectionStatusText.Visibility = Visibility.Visible;
         }
 
         private void TitleBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

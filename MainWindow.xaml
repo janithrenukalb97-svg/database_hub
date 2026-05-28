@@ -9,6 +9,8 @@
         Title="Database Hub"
         Width="1280"
         Height="800"
+        MinWidth="1000"
+        MinHeight="650"
         WindowStartupLocation="CenterScreen"
         WindowState="Normal"
         WindowStyle="None"
@@ -93,13 +95,21 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Column="0"
-                           Text="Database Hub"
-                           Margin="14,0,0,0"
-                           VerticalAlignment="Center"
-                           Foreground="White"
-                           FontSize="15"
-                           FontWeight="SemiBold"/>
+                <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="14,0,0,0">
+                    <TextBlock Text="Database Hub"
+                               VerticalAlignment="Center"
+                               Foreground="White"
+                               FontSize="15"
+                               FontWeight="SemiBold"/>
+
+                    <TextBlock x:Name="ConnectionStatusText"
+                               Margin="12,0,0,0"
+                               VerticalAlignment="Center"
+                               Foreground="#E2FBE2"
+                               FontSize="13"
+                               FontWeight="SemiBold"
+                               Visibility="Collapsed"/>
+                </StackPanel>
 
                 <StackPanel Grid.Column="1" Orientation="Horizontal">
                     <Button Style="{StaticResource MinimizeButtonStyle}" Click="MinimizeButton_Click" ToolTip="Minimize" Content="−"/>

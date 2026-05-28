@@ -14,10 +14,10 @@
             <Setter Property="Foreground" Value="#1F1F1F" />
             <Setter Property="BorderBrush" Value="Transparent" />
             <Setter Property="BorderThickness" Value="0" />
-            <Setter Property="Padding" Value="12,10" />
+            <Setter Property="Padding" Value="14,12" />
             <Setter Property="Margin" Value="0,0,0,6" />
             <Setter Property="HorizontalContentAlignment" Value="Left" />
-            <Setter Property="FontSize" Value="14" />
+            <Setter Property="FontSize" Value="15" />
             <Setter Property="FontWeight" Value="SemiBold" />
             <Setter Property="Template">
                 <Setter.Value>
@@ -32,113 +32,102 @@
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Background" Value="#E6F4EA" />
                 </Trigger>
+                <DataTrigger Binding="{Binding IsNavCollapsed}" Value="True">
+                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                    <Setter Property="Padding" Value="12" />
+                </DataTrigger>
             </Style.Triggers>
+        </Style>
+
+        <Style x:Key="ToggleNavButtonStyle" TargetType="Button">
+            <Setter Property="Width" Value="38"/>
+            <Setter Property="Height" Value="38"/>
+            <Setter Property="FontSize" Value="17"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#0F172A"/>
+            <Setter Property="Background" Value="#E2E8F0"/>
+            <Setter Property="BorderBrush" Value="#CBD5E1"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="ToggleRoot"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="18">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ToggleRoot" Property="Background" Value="#D1E3FF"/>
+                                <Setter TargetName="ToggleRoot" Property="BorderBrush" Value="#93C5FD"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="ToggleRoot" Property="Background" Value="#BFDBFE"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
     </UserControl.Resources>
 
     <Grid Background="#F5F5F5">
-        <DockPanel>
-            <!-- Header with connection info -->
-            <Border DockPanel.Dock="Top" Background="#107C10" Padding="10">
-                <Grid>
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <TextBlock Text="🔗 Connected Mode" FontSize="24" FontWeight="Bold" Foreground="White" VerticalAlignment="Center" Margin="0,0,20,0"/>
-                        <TextBlock Text="{Binding ServerName}" FontSize="14" Foreground="White" VerticalAlignment="Center" Opacity="0.9"/>
-                    </StackPanel>
-
-                    <Button Width="120"
-                            Height="40"
-                            HorizontalAlignment="Right"
-                            Background="Transparent"
-                            Foreground="White"
-                            BorderThickness="1"
-                            BorderBrush="White"
-                            FontSize="15"
-                            Command="{Binding LogoutCommand}">
-
-                        <Button.Template>
-                            <ControlTemplate TargetType="Button">
-                                <Border Background="{TemplateBinding Background}"
-                                        BorderBrush="{TemplateBinding BorderBrush}"
-                                        BorderThickness="{TemplateBinding BorderThickness}"
-                                        CornerRadius="15"
-                                        Padding="5">
-
-                                    <StackPanel Orientation="Horizontal"
-                                                HorizontalAlignment="Center"
-                                                VerticalAlignment="Center">
-                                        <!-- Text -->
-                                        <TextBlock Text="Logout"
-                                                Foreground="{TemplateBinding Foreground}"
-                                                VerticalAlignment="Center"/>
-                                        <!-- Space -->
-                                        <TextBlock Width="6"/>
-                                        <!-- Icon -->
-                                        <TextBlock Text="➜]"
-                                                FontSize="16"
-                                                Foreground="{TemplateBinding Foreground}"
-                                                VerticalAlignment="Center"/>
-                                    </StackPanel>
-                                </Border>
-                            </ControlTemplate>
-                        </Button.Template>
-                    </Button>
-                </Grid>
-            </Border>
-
-            <!-- Main Content -->
-            <Grid DockPanel.Dock="Bottom">
+            <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition>
+                        <ColumnDefinition.Style>
+                            <Style TargetType="ColumnDefinition">
+                                <Setter Property="Width" Value="1*"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsNavCollapsed}" Value="True">
+                                        <Setter Property="Width" Value="70"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ColumnDefinition.Style>
+                    </ColumnDefinition>
                     <ColumnDefinition Width="7*"/>
                 </Grid.ColumnDefinitions>
 
                 <Border Grid.Column="0" Background="White" BorderBrush="#DDDDDD" BorderThickness="0,0,1,0">
-                    <StackPanel Margin="10,16">
+                    <DockPanel Margin="10,16">
+                        <Button DockPanel.Dock="Bottom"
+                            Content="{Binding LogoutNavContent}"
+                                Margin="0,10,0,0"
+                                FontSize="16"
+                                HorizontalContentAlignment="Center"
+                                VerticalContentAlignment="Center"
+                                Command="{Binding LogoutCommand}">
+                            <Button.Style>
+                                <Style TargetType="Button" BasedOn="{StaticResource NavButtonStyle}">
+                                    <Setter Property="Background" Value="#D92D20" />
+                                    <Setter Property="Foreground" Value="White" />
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="#B42318" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
 
-                        <Button Content="Home"
-                                Command="{Binding NavigateMenuCommand}"
-                                CommandParameter="Home">
-                            <Button.Style>
-                                <Style TargetType="Button" BasedOn="{StaticResource NavButtonStyle}">
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding IsHomeSelected}" Value="True">
-                                            <Setter Property="Background" Value="#107C10" />
-                                            <Setter Property="Foreground" Value="White" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Button.Style>
-                        </Button>
-                        <Button Content="Object Explorer"
-                                Command="{Binding NavigateMenuCommand}"
-                                CommandParameter="Object Explorer">
-                            <Button.Style>
-                                <Style TargetType="Button" BasedOn="{StaticResource NavButtonStyle}">
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding IsObjectExplorerSelected}" Value="True">
-                                            <Setter Property="Background" Value="#107C10" />
-                                            <Setter Property="Foreground" Value="White" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Button.Style>
-                        </Button>
-                        <Button Content="Release Executor"
-                                Command="{Binding NavigateMenuCommand}"
-                                CommandParameter="Release Executor">
-                            <Button.Style>
-                                <Style TargetType="Button" BasedOn="{StaticResource NavButtonStyle}">
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding IsReleaseExecutorSelected}" Value="True">
-                                            <Setter Property="Background" Value="#107C10" />
-                                            <Setter Property="Foreground" Value="White" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Button.Style>
-                        </Button>
-                        <Button Content="File Explorer"
+                        <StackPanel>
+
+            <Button Content="{Binding ToggleNavIcon}"
+                Style="{StaticResource ToggleNavButtonStyle}"
+                Command="{Binding ToggleNavCommand}"
+                HorizontalAlignment="Left"
+                Margin="2,0,0,10"
+                ToolTip="Expand/Collapse"/>
+
+            <Border BorderBrush="#E5E7EB"
+                BorderThickness="0,0,0,1"
+                Margin="0,0,0,10"/>
+
+            <Button Content="{Binding FileExplorerNavContent}"
                                 Command="{Binding NavigateMenuCommand}"
                                 CommandParameter="File Explorer">
                             <Button.Style>
@@ -152,7 +141,35 @@
                                 </Style>
                             </Button.Style>
                         </Button>
-                        <Button Content="Comparison Tool"
+                        <Button Content="{Binding ObjectExplorerNavContent}"
+                                Command="{Binding NavigateMenuCommand}"
+                                CommandParameter="Object Explorer">
+                            <Button.Style>
+                                <Style TargetType="Button" BasedOn="{StaticResource NavButtonStyle}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsObjectExplorerSelected}" Value="True">
+                                            <Setter Property="Background" Value="#107C10" />
+                                            <Setter Property="Foreground" Value="White" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                        <Button Content="{Binding ReleaseExecutorNavContent}"
+                                Command="{Binding NavigateMenuCommand}"
+                                CommandParameter="Release Executor">
+                            <Button.Style>
+                                <Style TargetType="Button" BasedOn="{StaticResource NavButtonStyle}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsReleaseExecutorSelected}" Value="True">
+                                            <Setter Property="Background" Value="#107C10" />
+                                            <Setter Property="Foreground" Value="White" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                        <Button Content="{Binding ComparisonToolNavContent}"
                                 Command="{Binding NavigateMenuCommand}"
                                 CommandParameter="Comparison Tool">
                             <Button.Style>
@@ -166,23 +183,25 @@
                                 </Style>
                             </Button.Style>
                         </Button>
-                    </StackPanel>
+                        </StackPanel>
+                    </DockPanel>
                 </Border>
 
                 <Grid Grid.Column="1">
-                    <Grid Visibility="{Binding IsHomeSelected, Converter={StaticResource BoolToVisibilityConverter}}">
-                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <TextBlock Text="Main Function Home" FontSize="28" FontWeight="Bold" Margin="0,0,0,20"/>
-                            <TextBlock Text="This is the main function home page for connected mode." FontSize="16"/>
-                        </StackPanel>
-                    </Grid>
+                    <local:FileExplorerView
+                        DataContext="{Binding FileExplorerViewModel}"
+                        Visibility="{Binding DataContext.IsFileExplorerSelected, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVisibilityConverter}}" />
 
-                    <local:ObjectExplorerView Visibility="{Binding IsObjectExplorerSelected, Converter={StaticResource BoolToVisibilityConverter}}" />
-                    <local:ReleaseExecutorView Visibility="{Binding IsReleaseExecutorSelected, Converter={StaticResource BoolToVisibilityConverter}}" />
-                    <local:FileExplorerView Visibility="{Binding IsFileExplorerSelected, Converter={StaticResource BoolToVisibilityConverter}}" />
-                    <local:ComparisonToolView Visibility="{Binding IsComparisonToolSelected, Converter={StaticResource BoolToVisibilityConverter}}" />
+                    <local:ObjectExplorerView
+                        DataContext="{Binding ObjectExplorerViewModel}"
+                        Visibility="{Binding DataContext.IsObjectExplorerSelected, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVisibilityConverter}}" />
+                    <local:ReleaseExecutorView
+                        DataContext="{Binding ReleaseExecutorViewModel}"
+                        Visibility="{Binding DataContext.IsReleaseExecutorSelected, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVisibilityConverter}}" />
+                    <local:ComparisonToolView
+                        DataContext="{Binding ComparisonToolViewModel}"
+                        Visibility="{Binding DataContext.IsComparisonToolSelected, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVisibilityConverter}}" />
                 </Grid>
             </Grid>
-        </DockPanel>
     </Grid>
 </UserControl>

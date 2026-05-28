@@ -26,11 +26,7 @@ namespace Database_Hub.ViewModels
     public class DatabaseConnectionViewModel : BindableBase, INavigationAware
     {
         private readonly IRegionManager _regionManager;
-        private static readonly object LogLock = new object();
-        private static readonly string LogFilePath = Path.Combine(
-            AppDomain.CurrentDomain.BaseDirectory,
-            "logs",
-            $"database-hub-{DateTime.Now:yyyyMMdd-HHmmss}.log");
+        private readonly ActionLoggerService _actionLogger;
 
         private const string ServerListFile = "serverlist.json";
 
@@ -84,10 +80,11 @@ namespace Database_Hub.ViewModels
 
         private readonly SessionService _sessionService;
 
-        public DatabaseConnectionViewModel(IRegionManager regionManager, SessionService sessionService)
+        public DatabaseConnectionViewModel(IRegionManager regionManager, SessionService sessionService, ActionLoggerService actionLogger)
         {
             _regionManager = regionManager;
             _sessionService = sessionService;
+            _actionLogger = actionLogger;
             ConnectCommand = new DelegateCommand(Connect);
             BackCommand = new DelegateCommand(NavigateBack);
             AddServerCommand = new DelegateCommand(AddServer);
@@ -102,34 +99,6 @@ namespace Database_Hub.ViewModels
         {
             SelectedServer = null;
             ServerName = string.Empty;
-        }
-
-        private static void Log(string message)
-        {
-            try
-            {
-                string? logDirectory = Path.GetDirectoryName(LogFilePath);
-                if (!string.IsNullOrWhiteSpace(logDirectory))
-                {
-                    Directory.CreateDirectory(logDirectory);
-                }
-
-                string line = $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}] {message}{Environment.NewLine}";
-                lock (LogLock)
-                {
-                    File.AppendAllText(LogFilePath, line);
-                }
-            }
-            catch
-            {
-                // Avoid breaking app flow if logging fails.
-            }
-        }
-
-        private static void LogException(string prefix, Exception ex)
-        {
-            Log($"{prefix}: {ex.Message}");
-            Log(ex.StackTrace ?? "(no stack trace)");
         }
 
         private static void ShowErrorDialog(string message, string title = "Error")
@@ -148,7 +117,7 @@ namespace Database_Hub.ViewModels
         {
             try
             {
-                var logsDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs");
+                var logsDirectory = _actionLogger.LogDirectory;
                 if (!Directory.Exists(logsDirectory))
                 {
                     ShowErrorDialog("No log folder found yet. Try connecting once to create a log file.", "Logs");
@@ -156,7 +125,7 @@ namespace Database_Hub.ViewModels
                 }
 
                 var latestLog = new DirectoryInfo(logsDirectory)
-                    .GetFiles("*.log")
+                    .GetFiles("*.txt")
                     .OrderByDescending(f => f.LastWriteTime)
                     .FirstOrDefault();
 
@@ -174,7 +143,7 @@ namespace Database_Hub.ViewModels
             }
             catch (Exception ex)
             {
-                LogException("[ERROR] Failed to open latest log", ex);
+                _actionLogger.LogException("VIEW_LOG", ex, "Failed to open latest log");
                 ShowErrorDialog($"Could not open the latest log file. {ex.Message}", "Logs");
             }
         }
@@ -216,25 +185,28 @@ namespace Database_Hub.ViewModels
 
         private async void Connect()
         {
+            string addressForLog = (SelectedServer?.Address ?? ServerName)?.Trim() ?? string.Empty;
+            _actionLogger.LogAction("CONNECT", "STARTED", $"Server={addressForLog}");
+
             try
             {
                 string? address = (SelectedServer?.Address ?? ServerName)?.Trim();
                 if (address == null)
                 {
-                    Log("[ERROR] Address is null after trimming.");
+                    _actionLogger.LogAction("CONNECT", "FAILED", "Address is null after trimming.");
                     ShowErrorDialog("Please select or enter a server name.");
                     return;
                 }
                 if (string.IsNullOrWhiteSpace(address))
                 {
-                    Log("[ERROR] Address is empty or whitespace.");
+                    _actionLogger.LogAction("CONNECT", "FAILED", "Address is empty or whitespace.");
                     ShowErrorDialog("Please select or enter a server name.");
                     return;
                 }
                 // Basic validation: must contain at least a letter or digit
                 if (!address.Any(char.IsLetterOrDigit))
                 {
-                    Log($"[ERROR] Address '{address}' does not contain any letters or digits.");
+                    _actionLogger.LogAction("CONNECT", "FAILED", $"Address '{address}' does not contain letters or digits.");
                     ShowErrorDialog("The server address appears invalid.");
                     return;
                 }
@@ -246,7 +218,7 @@ namespace Database_Hub.ViewModels
                     : address;
                 if (string.IsNullOrWhiteSpace(formattedAddress))
                 {
-                    Log("[ERROR] Formatted address is null or whitespace.");
+                    _actionLogger.LogAction("CONNECT", "FAILED", "Formatted address is null or whitespace.");
                     ShowErrorDialog("The formatted server address is invalid.");
                     return;
                 }
@@ -261,7 +233,7 @@ namespace Database_Hub.ViewModels
                 string connectionString = builder.ConnectionString;
                 if (string.IsNullOrWhiteSpace(connectionString) || string.IsNullOrWhiteSpace(builder.DataSource))
                 {
-                    Log("[ERROR] Connection string is invalid: " + connectionString);
+                    _actionLogger.LogAction("CONNECT", "FAILED", "Connection string is invalid.");
                     ShowErrorDialog("The connection string is invalid.");
                     return;
                 }
@@ -273,25 +245,26 @@ namespace Database_Hub.ViewModels
                     }
                     catch (NullReferenceException ex)
                     {
-                        Log("[WARN] OpenAsync hit NullReferenceException, retrying with Open(). " + ex.Message);
+                        _actionLogger.LogAction("CONNECT", "INFO", "OpenAsync NullReferenceException, retrying with Open().");
                         conn.Open();
                     }
                 }
                 // Store connection info for future use
                 _sessionService.CurrentServerName = address;
                 _sessionService.CurrentServerAddress = address;
+                _actionLogger.LogAction("CONNECT", "SUCCESS", $"Connected to {address}");
                 var navigationParameters = new NavigationParameters();
                 navigationParameters.Add("serverName", address);
-                _regionManager.RequestNavigate("MainRegion", "ConnectedHomeView", navigationParameters);
+                _regionManager.RequestNavigate("MainRegion", "MainFunctionHomeView", navigationParameters);
             }
             catch (SqlException ex)
             {
-                LogException("[ERROR] Connection failed", ex);
+                _actionLogger.LogException("CONNECT", ex, "SqlException");
                 ShowErrorDialog($"Connection failed: {ex.Message}", "Connection Error");
             }
             catch (Exception ex)
             {
-                LogException("[ERROR] Unexpected error", ex);
+                _actionLogger.LogException("CONNECT", ex, "Unexpected error");
                 ShowErrorDialog($"Unexpected error: {ex.Message}");
             }
             finally

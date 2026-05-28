@@ -1,0 +1,230 @@
+[2026-05-28 00:20:28.587] ACTION=CONNECT; STATUS=STARTED; DETAILS=Server=SQLQA,30402
+[2026-05-28 00:20:29.280] ACTION=CONNECT; STATUS=SUCCESS; DETAILS=Connected to SQLQA,30402
+[2026-05-28 00:20:36.176] ACTION=RELEASE_FOLDER; STATUS=SUCCESS; DETAILS=Folder=D:\User Story\45 -- FEATURE 143451 - Money Exchange OLD GL\DDL DML SP; Files=16
+[2026-05-28 00:25:59.755] ACTION=CONNECT; STATUS=STARTED; DETAILS=Server=SQLQA,30402
+[2026-05-28 00:26:00.264] ACTION=CONNECT; STATUS=SUCCESS; DETAILS=Connected to SQLQA,30402
+[2026-05-28 00:26:07.432] ACTION=RELEASE_FOLDER; STATUS=SUCCESS; DETAILS=Folder=D:\User Story\45 -- FEATURE 143451 - Money Exchange OLD GL\DDL DML SP; Files=16
+[2026-05-28 00:26:09.409] ACTION=RELEASE_RESET; STATUS=SUCCESS; DETAILS=Release Executor view reset by user.
+[2026-05-28 00:27:36.898] ACTION=RELEASE_FOLDER; STATUS=SUCCESS; DETAILS=Folder=D:\User Story\Insurance Module\RELEASED\API Integrations with Ins Company - Insurance External API\DDL DML SP; Files=39
+[2026-05-28 01:03:27.652] ACTION=CONNECT; STATUS=STARTED; DETAILS=Server=SQLNPROD01A\SQLIDEV,30401
+[2026-05-28 01:03:28.156] ACTION=CONNECT; STATUS=SUCCESS; DETAILS=Connected to SQLNPROD01A\SQLIDEV,30401
+[2026-05-28 01:03:45.994] ACTION=RELEASE_FOLDER; STATUS=SUCCESS; DETAILS=Folder=D:\User Story\37 -- US 220770 Savings  GL Bulk External  add mCash GL account with approval process; Files=3
+[2026-05-28 01:03:49.809] ACTION=RELEASE_EXECUTE; STATUS=STARTED; DETAILS=Folder=D:\User Story\37 -- US 220770 Savings  GL Bulk External  add mCash GL account with approval process; Files=3
+[2026-05-28 01:03:50.034] ACTION=RELEASE_EXECUTE_FILE; STATUS=FAILED; DETAILS=File=1.Manual Insert account.sql Message=Could not find stored procedure 'dep.Insert_GLAccountAndVirtualAccount'.
+[2026-05-28 01:03:50.034] EXCEPTION=RELEASE_EXECUTE_FILE; STACK=   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, SqlCommand command, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlCommand.InternalEndExecuteNonQuery(IAsyncResult asyncResult, Boolean isInternal, String endMethod)
+   at Microsoft.Data.SqlClient.SqlCommand.EndExecuteNonQueryInternal(IAsyncResult asyncResult)
+   at Microsoft.Data.SqlClient.SqlCommand.EndExecuteNonQueryAsync(IAsyncResult asyncResult)
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<InternalExecuteNonQueryAsync>b__193_1(IAsyncResult asyncResult)
+   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)
+--- End of stack trace from previous location ---
+   at Database_Hub.ViewModels.ConnectedMode.ReleaseExecutorViewModel.ExecuteSqlFileAsync(String filePath, String serverAddress) in D:\My Projects\Database Hub\ViewModels\ConnectedMode\ReleaseExecutorViewModel.cs:line 369
+   at Database_Hub.ViewModels.ConnectedMode.ReleaseExecutorViewModel.ExecuteScriptsAsync() in D:\My Projects\Database Hub\ViewModels\ConnectedMode\ReleaseExecutorViewModel.cs:line 233
+[2026-05-28 01:03:50.137] ACTION=RELEASE_EXECUTE_FILE; STATUS=FAILED; DETAILS=File=2.workflow_level_1_level_2.sql Message=Invalid object name 'wfm.TargetParameter'.
+[2026-05-28 01:03:50.138] EXCEPTION=RELEASE_EXECUTE_FILE; STACK=   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, SqlCommand command, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlCommand.InternalEndExecuteNonQuery(IAsyncResult asyncResult, Boolean isInternal, String endMethod)
+   at Microsoft.Data.SqlClient.SqlCommand.EndExecuteNonQueryInternal(IAsyncResult asyncResult)
+   at Microsoft.Data.SqlClient.SqlCommand.EndExecuteNonQueryAsync(IAsyncResult asyncResult)
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<InternalExecuteNonQueryAsync>b__193_1(IAsyncResult asyncResult)
+   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)
+--- End of stack trace from previous location ---
+   at Database_Hub.ViewModels.ConnectedMode.ReleaseExecutorViewModel.ExecuteSqlFileAsync(String filePath, String serverAddress) in D:\My Projects\Database Hub\ViewModels\ConnectedMode\ReleaseExecutorViewModel.cs:line 369
+   at Database_Hub.ViewModels.ConnectedMode.ReleaseExecutorViewModel.ExecuteScriptsAsync() in D:\My Projects\Database Hub\ViewModels\ConnectedMode\ReleaseExecutorViewModel.cs:line 233
+[2026-05-28 01:03:50.216] ACTION=RELEASE_EXECUTE_FILE; STATUS=FAILED; DETAILS=File=3.business_process_bill_collection_dialog_tv.sql Message=Invalid object name 'msd.BusinessProcess'.
+[2026-05-28 01:03:50.217] EXCEPTION=RELEASE_EXECUTE_FILE; STACK=   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, SqlCommand command, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlCommand.InternalEndExecuteNonQuery(IAsyncResult asyncResult, Boolean isInternal, String endMethod)
+   at Microsoft.Data.SqlClient.SqlCommand.EndExecuteNonQueryInternal(IAsyncResult asyncResult)
+   at Microsoft.Data.SqlClient.SqlCommand.EndExecuteNonQueryAsync(IAsyncResult asyncResult)
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<InternalExecuteNonQueryAsync>b__193_1(IAsyncResult asyncResult)
+   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)
+--- End of stack trace from previous location ---
+   at Database_Hub.ViewModels.ConnectedMode.ReleaseExecutorViewModel.ExecuteSqlFileAsync(String filePath, String serverAddress) in D:\My Projects\Database Hub\ViewModels\ConnectedMode\ReleaseExecutorViewModel.cs:line 369
+   at Database_Hub.ViewModels.ConnectedMode.ReleaseExecutorViewModel.ExecuteScriptsAsync() in D:\My Projects\Database Hub\ViewModels\ConnectedMode\ReleaseExecutorViewModel.cs:line 233
+[2026-05-28 01:03:50.219] ACTION=RELEASE_EXECUTE; STATUS=PARTIAL; DETAILS=Folder=D:\User Story\37 -- US 220770 Savings  GL Bulk External  add mCash GL account with approval process; Success=0; Failed=3
+[2026-05-28 01:04:09.113] ACTION=RELEASE_EXEC_LOG; STATUS=SUCCESS; DETAILS=Saved=C:\Users\janithk\Downloads\release-execution-log-20260528-010404.txt; Lines=3
+[2026-05-28 01:04:37.012] ACTION=RELEASE_RESET; STATUS=SUCCESS; DETAILS=Release Executor view reset by user.
+[2026-05-28 01:04:43.462] ACTION=RELEASE_FOLDER; STATUS=CANCELED; DETAILS=Folder selection canceled.
+[2026-05-28 01:10:27.209] ACTION=CONNECT; STATUS=STARTED; DETAILS=Server=SQLNPROD01A\SQLIDEV,30401
+[2026-05-28 01:10:27.633] ACTION=CONNECT; STATUS=SUCCESS; DETAILS=Connected to SQLNPROD01A\SQLIDEV,30401
+[2026-05-28 01:10:44.456] ACTION=RELEASE_LOAD_PATH; STATUS=SUCCESS; DETAILS=Folder=D:\User Story\72 -- US 433844 Add New AMF Direct GL Account for Bulk Fund Transfer Process; Files=7
+[2026-05-28 01:11:00.345] ACTION=RELEASE_FOLDER; STATUS=SUCCESS; DETAILS=Folder=D:\User Story\37 -- US 220770 Savings  GL Bulk External  add mCash GL account with approval process; Files=3
+[2026-05-28 01:11:13.524] ACTION=RELEASE_LOAD_PATH; STATUS=SUCCESS; DETAILS=Folder=D:\User Story\37 -- US 220770 Savings  GL Bulk External  add mCash GL account with approval process; Files=3
+[2026-05-28 01:11:21.436] ACTION=RELEASE_LOAD_PATH; STATUS=SUCCESS; DETAILS=Folder=D:\User Story\72 -- US 433844 Add New AMF Direct GL Account for Bulk Fund Transfer Process; Files=7
+[2026-05-28 01:15:26.731] ACTION=CONNECT; STATUS=STARTED; DETAILS=Server=SQLNPROD01A\SQLIDEV,30401
+[2026-05-28 01:15:27.157] ACTION=CONNECT; STATUS=SUCCESS; DETAILS=Connected to SQLNPROD01A\SQLIDEV,30401
+[2026-05-28 01:15:34.371] ACTION=RELEASE_LOAD_PATH; STATUS=SUCCESS; DETAILS=Folder=D:\User Story\72 -- US 433844 Add New AMF Direct GL Account for Bulk Fund Transfer Process; Files=7
+[2026-05-28 01:16:07.670] ACTION=RELEASE_RESET; STATUS=SUCCESS; DETAILS=Release Executor view reset by user.
+[2026-05-28 01:16:10.565] ACTION=RELEASE_FOLDER; STATUS=SUCCESS; DETAILS=Folder=D:\User Story\37 -- US 220770 Savings  GL Bulk External  add mCash GL account with approval process; Files=3
+[2026-05-28 01:16:41.644] ACTION=RELEASE_LOAD_PATH; STATUS=SUCCESS; DETAILS=Folder=D:\User Story\37 -- US 220770 Savings  GL Bulk External  add mCash GL account with approval process; Files=3
+[2026-05-28 01:16:44.374] ACTION=RELEASE_EXECUTE; STATUS=STARTED; DETAILS=Folder=D:\User Story\37 -- US 220770 Savings  GL Bulk External  add mCash GL account with approval process; Files=3
+[2026-05-28 01:16:44.625] ACTION=RELEASE_EXECUTE_FILE; STATUS=FAILED; DETAILS=File=1.Manual Insert account.sql Message=Could not find stored procedure 'dep.Insert_GLAccountAndVirtualAccount'.
+[2026-05-28 01:16:44.625] EXCEPTION=RELEASE_EXECUTE_FILE; STACK=   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, SqlCommand command, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlCommand.InternalEndExecuteNonQuery(IAsyncResult asyncResult, Boolean isInternal, String endMethod)
+   at Microsoft.Data.SqlClient.SqlCommand.EndExecuteNonQueryInternal(IAsyncResult asyncResult)
+   at Microsoft.Data.SqlClient.SqlCommand.EndExecuteNonQueryAsync(IAsyncResult asyncResult)
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<InternalExecuteNonQueryAsync>b__193_1(IAsyncResult asyncResult)
+   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)
+--- End of stack trace from previous location ---
+   at Database_Hub.ViewModels.ConnectedMode.ReleaseExecutorViewModel.ExecuteSqlFileAsync(String filePath, String serverAddress) in D:\My Projects\Database Hub\ViewModels\ConnectedMode\ReleaseExecutorViewModel.cs:line 509
+   at Database_Hub.ViewModels.ConnectedMode.ReleaseExecutorViewModel.ExecuteScriptsAsync() in D:\My Projects\Database Hub\ViewModels\ConnectedMode\ReleaseExecutorViewModel.cs:line 373
+[2026-05-28 01:16:44.716] ACTION=RELEASE_EXECUTE_FILE; STATUS=FAILED; DETAILS=File=2.workflow_level_1_level_2.sql Message=Invalid object name 'wfm.TargetParameter'.
+[2026-05-28 01:16:44.716] EXCEPTION=RELEASE_EXECUTE_FILE; STACK=   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, SqlCommand command, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlCommand.InternalEndExecuteNonQuery(IAsyncResult asyncResult, Boolean isInternal, String endMethod)
+   at Microsoft.Data.SqlClient.SqlCommand.EndExecuteNonQueryInternal(IAsyncResult asyncResult)
+   at Microsoft.Data.SqlClient.SqlCommand.EndExecuteNonQueryAsync(IAsyncResult asyncResult)
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<InternalExecuteNonQueryAsync>b__193_1(IAsyncResult asyncResult)
+   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)
+--- End of stack trace from previous location ---
+   at Database_Hub.ViewModels.ConnectedMode.ReleaseExecutorViewModel.ExecuteSqlFileAsync(String filePath, String serverAddress) in D:\My Projects\Database Hub\ViewModels\ConnectedMode\ReleaseExecutorViewModel.cs:line 509
+   at Database_Hub.ViewModels.ConnectedMode.ReleaseExecutorViewModel.ExecuteScriptsAsync() in D:\My Projects\Database Hub\ViewModels\ConnectedMode\ReleaseExecutorViewModel.cs:line 373
+[2026-05-28 01:16:44.772] ACTION=RELEASE_EXECUTE_FILE; STATUS=FAILED; DETAILS=File=3.business_process_bill_collection_dialog_tv.sql Message=Invalid object name 'msd.BusinessProcess'.
+[2026-05-28 01:16:44.773] EXCEPTION=RELEASE_EXECUTE_FILE; STACK=   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, SqlCommand command, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlCommand.InternalEndExecuteNonQuery(IAsyncResult asyncResult, Boolean isInternal, String endMethod)
+   at Microsoft.Data.SqlClient.SqlCommand.EndExecuteNonQueryInternal(IAsyncResult asyncResult)
+   at Microsoft.Data.SqlClient.SqlCommand.EndExecuteNonQueryAsync(IAsyncResult asyncResult)
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<InternalExecuteNonQueryAsync>b__193_1(IAsyncResult asyncResult)
+   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)
+--- End of stack trace from previous location ---
+   at Database_Hub.ViewModels.ConnectedMode.ReleaseExecutorViewModel.ExecuteSqlFileAsync(String filePath, String serverAddress) in D:\My Projects\Database Hub\ViewModels\ConnectedMode\ReleaseExecutorViewModel.cs:line 509
+   at Database_Hub.ViewModels.ConnectedMode.ReleaseExecutorViewModel.ExecuteScriptsAsync() in D:\My Projects\Database Hub\ViewModels\ConnectedMode\ReleaseExecutorViewModel.cs:line 373
+[2026-05-28 01:16:44.775] ACTION=RELEASE_EXECUTE; STATUS=PARTIAL; DETAILS=Folder=D:\User Story\37 -- US 220770 Savings  GL Bulk External  add mCash GL account with approval process; Success=0; Failed=3
+[2026-05-28 08:28:10.581] ACTION=RELEASE_EXEC_LOG; STATUS=CANCELED; DETAILS=Execution log download canceled.
+[2026-05-28 10:45:13.900] ACTION=RELEASE_EXEC_LOG; STATUS=CANCELED; DETAILS=Execution log download canceled.
+[2026-05-28 10:46:01.839] ACTION=RELEASE_EXEC_LOG; STATUS=SUCCESS; DETAILS=Saved=D:\User Story\37 -- US 220770 Savings  GL Bulk External  add mCash GL account with approval process\release-execution-log-20260528-104559.txt; Lines=3
+[2026-05-28 11:08:28.110] ACTION=CONNECT; STATUS=STARTED; DETAILS=Server=SQLNPROD01A\SQLIDEV,30401
+[2026-05-28 11:08:29.575] ACTION=CONNECT; STATUS=SUCCESS; DETAILS=Connected to SQLNPROD01A\SQLIDEV,30401
+[2026-05-28 11:09:05.774] ACTION=RELEASE_FOLDER; STATUS=SUCCESS; DETAILS=Folder=D:\User Story\37 -- US 220770 Savings  GL Bulk External  add mCash GL account with approval process; Files=3
+[2026-05-28 11:09:38.613] ACTION=RELEASE_EXECUTE; STATUS=STARTED; DETAILS=Folder=D:\User Story\37 -- US 220770 Savings  GL Bulk External  add mCash GL account with approval process; Files=3
+[2026-05-28 11:09:39.436] ACTION=RELEASE_EXECUTE_FILE; STATUS=FAILED; DETAILS=File=1.Manual Insert account.sql Message=Could not find stored procedure 'dep.Insert_GLAccountAndVirtualAccount'.
+[2026-05-28 11:09:39.437] EXCEPTION=RELEASE_EXECUTE_FILE; STACK=   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, SqlCommand command, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlCommand.InternalEndExecuteNonQuery(IAsyncResult asyncResult, Boolean isInternal, String endMethod)
+   at Microsoft.Data.SqlClient.SqlCommand.EndExecuteNonQueryInternal(IAsyncResult asyncResult)
+   at Microsoft.Data.SqlClient.SqlCommand.EndExecuteNonQueryAsync(IAsyncResult asyncResult)
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<InternalExecuteNonQueryAsync>b__193_1(IAsyncResult asyncResult)
+   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)
+--- End of stack trace from previous location ---
+   at Database_Hub.ViewModels.ConnectedMode.ReleaseExecutorViewModel.ExecuteSqlFileAsync(String filePath, String serverAddress) in D:\My Projects\Database Hub\ViewModels\ConnectedMode\ReleaseExecutorViewModel.cs:line 509
+   at Database_Hub.ViewModels.ConnectedMode.ReleaseExecutorViewModel.ExecuteScriptsAsync() in D:\My Projects\Database Hub\ViewModels\ConnectedMode\ReleaseExecutorViewModel.cs:line 373
+[2026-05-28 11:09:39.657] ACTION=RELEASE_EXECUTE_FILE; STATUS=FAILED; DETAILS=File=2.workflow_level_1_level_2.sql Message=Invalid object name 'wfm.TargetParameter'.
+[2026-05-28 11:09:39.658] EXCEPTION=RELEASE_EXECUTE_FILE; STACK=   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, SqlCommand command, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlCommand.InternalEndExecuteNonQuery(IAsyncResult asyncResult, Boolean isInternal, String endMethod)
+   at Microsoft.Data.SqlClient.SqlCommand.EndExecuteNonQueryInternal(IAsyncResult asyncResult)
+   at Microsoft.Data.SqlClient.SqlCommand.EndExecuteNonQueryAsync(IAsyncResult asyncResult)
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<InternalExecuteNonQueryAsync>b__193_1(IAsyncResult asyncResult)
+   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)
+--- End of stack trace from previous location ---
+   at Database_Hub.ViewModels.ConnectedMode.ReleaseExecutorViewModel.ExecuteSqlFileAsync(String filePath, String serverAddress) in D:\My Projects\Database Hub\ViewModels\ConnectedMode\ReleaseExecutorViewModel.cs:line 509
+   at Database_Hub.ViewModels.ConnectedMode.ReleaseExecutorViewModel.ExecuteScriptsAsync() in D:\My Projects\Database Hub\ViewModels\ConnectedMode\ReleaseExecutorViewModel.cs:line 373
+[2026-05-28 11:09:39.834] ACTION=RELEASE_EXECUTE_FILE; STATUS=FAILED; DETAILS=File=3.business_process_bill_collection_dialog_tv.sql Message=Invalid object name 'msd.BusinessProcess'.
+[2026-05-28 11:09:39.835] EXCEPTION=RELEASE_EXECUTE_FILE; STACK=   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, SqlCommand command, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlCommand.InternalEndExecuteNonQuery(IAsyncResult asyncResult, Boolean isInternal, String endMethod)
+   at Microsoft.Data.SqlClient.SqlCommand.EndExecuteNonQueryInternal(IAsyncResult asyncResult)
+   at Microsoft.Data.SqlClient.SqlCommand.EndExecuteNonQueryAsync(IAsyncResult asyncResult)
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<InternalExecuteNonQueryAsync>b__193_1(IAsyncResult asyncResult)
+   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)
+--- End of stack trace from previous location ---
+   at Database_Hub.ViewModels.ConnectedMode.ReleaseExecutorViewModel.ExecuteSqlFileAsync(String filePath, String serverAddress) in D:\My Projects\Database Hub\ViewModels\ConnectedMode\ReleaseExecutorViewModel.cs:line 509
+   at Database_Hub.ViewModels.ConnectedMode.ReleaseExecutorViewModel.ExecuteScriptsAsync() in D:\My Projects\Database Hub\ViewModels\ConnectedMode\ReleaseExecutorViewModel.cs:line 373
+[2026-05-28 11:09:39.837] ACTION=RELEASE_EXECUTE; STATUS=PARTIAL; DETAILS=Folder=D:\User Story\37 -- US 220770 Savings  GL Bulk External  add mCash GL account with approval process; Success=0; Failed=3
+[2026-05-28 11:16:52.628] ACTION=RELEASE_LOAD_PATH; STATUS=SUCCESS; DETAILS=Folder=D:\User Story\37 -- US 220770 Savings  GL Bulk External  add mCash GL account with approval process; Files=3
+[2026-05-28 11:16:53.580] ACTION=RELEASE_LOAD_PATH; STATUS=SUCCESS; DETAILS=Folder=D:\User Story\37 -- US 220770 Savings  GL Bulk External  add mCash GL account with approval process; Files=3
+[2026-05-28 11:16:54.876] ACTION=RELEASE_LOAD_PATH; STATUS=SUCCESS; DETAILS=Folder=D:\User Story\37 -- US 220770 Savings  GL Bulk External  add mCash GL account with approval process; Files=3
+[2026-05-28 11:16:57.099] ACTION=RELEASE_LOAD_PATH; STATUS=SUCCESS; DETAILS=Folder=D:\User Story\37 -- US 220770 Savings  GL Bulk External  add mCash GL account with approval process; Files=3
+[2026-05-28 11:18:23.948] ACTION=RELEASE_RESET; STATUS=SUCCESS; DETAILS=Release Executor view reset by user.
+[2026-05-28 11:18:27.036] ACTION=RELEASE_FOLDER; STATUS=SUCCESS; DETAILS=Folder=D:\User Story\37 -- US 220770 Savings  GL Bulk External  add mCash GL account with approval process; Files=1
+[2026-05-28 11:18:31.363] ACTION=RELEASE_EXECUTE; STATUS=STARTED; DETAILS=Folder=D:\User Story\37 -- US 220770 Savings  GL Bulk External  add mCash GL account with approval process; Files=1
+[2026-05-28 11:18:31.864] ACTION=RELEASE_EXECUTE; STATUS=SUCCESS; DETAILS=Folder=D:\User Story\37 -- US 220770 Savings  GL Bulk External  add mCash GL account with approval process; Success=1; Failed=0
+[2026-05-28 11:19:08.187] ACTION=RELEASE_EXEC_LOG; STATUS=SUCCESS; DETAILS=Saved=D:\User Story\37 -- US 220770 Savings  GL Bulk External  add mCash GL account with approval process\release-execution-log-20260528-111905.txt; Lines=5
+[2026-05-28 11:19:38.258] ACTION=RELEASE_RESET; STATUS=SUCCESS; DETAILS=Release Executor view reset by user.
+[2026-05-28 11:20:10.625] ACTION=RELEASE_RESET; STATUS=SUCCESS; DETAILS=Release Executor view reset by user.
+[2026-05-28 11:20:11.129] ACTION=RELEASE_RESET; STATUS=SUCCESS; DETAILS=Release Executor view reset by user.
+[2026-05-28 11:20:11.545] ACTION=RELEASE_RESET; STATUS=SUCCESS; DETAILS=Release Executor view reset by user.
+[2026-05-28 11:26:59.154] ACTION=CONNECT; STATUS=STARTED; DETAILS=Server=SQLNPROD01A\SQLIDEV,30401
+[2026-05-28 11:27:00.151] ACTION=CONNECT; STATUS=SUCCESS; DETAILS=Connected to SQLNPROD01A\SQLIDEV,30401
+[2026-05-28 11:44:18.001] ACTION=CONNECT; STATUS=STARTED; DETAILS=Server=SQLNPROD01A\SQLIDEV,30401
+[2026-05-28 11:44:18.744] ACTION=CONNECT; STATUS=SUCCESS; DETAILS=Connected to SQLNPROD01A\SQLIDEV,30401
+[2026-05-28 11:53:31.423] ACTION=CONNECT; STATUS=STARTED; DETAILS=Server=SQLNPROD01A\SQLIDEV,30401
+[2026-05-28 11:53:31.949] ACTION=CONNECT; STATUS=SUCCESS; DETAILS=Connected to SQLNPROD01A\SQLIDEV,30401
+[2026-05-28 11:54:13.098] ACTION=CONNECT; STATUS=STARTED; DETAILS=Server=SQLNPROD01A\SQLIDEV,30401
+[2026-05-28 11:54:13.755] ACTION=CONNECT; STATUS=SUCCESS; DETAILS=Connected to SQLNPROD01A\SQLIDEV,30401
+[2026-05-28 11:55:43.369] ACTION=CONNECT; STATUS=STARTED; DETAILS=Server=SQLNPROD01A\SQLIDEV,30401
+[2026-05-28 11:55:43.933] ACTION=CONNECT; STATUS=SUCCESS; DETAILS=Connected to SQLNPROD01A\SQLIDEV,30401
+[2026-05-28 14:29:32.908] ACTION=CONNECT; STATUS=STARTED; DETAILS=Server=SQLNPROD01A\SQLIDEV,30401
+[2026-05-28 14:29:33.815] ACTION=CONNECT; STATUS=SUCCESS; DETAILS=Connected to SQLNPROD01A\SQLIDEV,30401
+[2026-05-28 22:38:03.844] ACTION=CONNECT; STATUS=STARTED; DETAILS=Server=SQLNPROD01A\SQLIDEV,30401
+[2026-05-28 22:38:06.957] ACTION=CONNECT; STATUS=SUCCESS; DETAILS=Connected to SQLNPROD01A\SQLIDEV,30401
+[2026-05-28 22:39:38.578] ACTION=FILTER; STATUS=SUCCESS; DETAILS=Filters cleared by user cancel action.
+[2026-05-28 22:39:40.083] ACTION=SEARCH; STATUS=STARTED; DETAILS=Database=EclipseDev; Schema=(none); Keyword=(none)
+[2026-05-28 22:39:40.083] ACTION=FILTER; STATUS=APPLIED; DETAILS=Database=EclipseDev; Schema=(none); Keyword=(none)
+[2026-05-28 22:39:47.309] ACTION=SEARCH; STATUS=SUCCESS; DETAILS=Database=EclipseDev; Count=12296
+[2026-05-28 22:39:49.917] ACTION=RELEASE_FOLDER; STATUS=SUCCESS; DETAILS=Folder=D:\User Story\37 -- US 220770 Savings  GL Bulk External  add mCash GL account with approval process; Files=3
+[2026-05-28 22:40:59.859] ACTION=RELEASE_LOAD_PATH; STATUS=SUCCESS; DETAILS=Folder=D:\User Story\37 -- US 220770 Savings  GL Bulk External  add mCash GL account with approval process; Files=3
+[2026-05-28 22:41:01.843] ACTION=RELEASE_RESET; STATUS=SUCCESS; DETAILS=Release Executor view reset by user.
+[2026-05-28 22:41:04.822] ACTION=RELEASE_FOLDER; STATUS=SUCCESS; DETAILS=Folder=D:\User Story\37 -- US 220770 Savings  GL Bulk External  add mCash GL account with approval process; Files=3
+[2026-05-28 22:51:17.304] ACTION=CONNECT; STATUS=STARTED; DETAILS=Server=SQLNPROD01A\SQLIDEV,30401
+[2026-05-28 22:51:17.784] ACTION=CONNECT; STATUS=SUCCESS; DETAILS=Connected to SQLNPROD01A\SQLIDEV,30401
+[2026-05-28 22:51:26.487] ACTION=FILE_EXPLORER_FOLDER; STATUS=SUCCESS; DETAILS=Folder=D:\User Story\37 -- US 220770 Savings  GL Bulk External  add mCash GL account with approval process
+[2026-05-28 22:51:49.412] ACTION=FILE_EXPLORER_FOLDER; STATUS=SUCCESS; DETAILS=Folder=D:\User Story\Insurance Module
+[2026-05-28 23:00:09.521] ACTION=CONNECT; STATUS=STARTED; DETAILS=Server=SQLNPROD01A\SQLIDEV,30401
+[2026-05-28 23:00:10.026] ACTION=CONNECT; STATUS=SUCCESS; DETAILS=Connected to SQLNPROD01A\SQLIDEV,30401
+[2026-05-28 23:04:54.212] ACTION=CONNECT; STATUS=STARTED; DETAILS=Server=SQLNPROD01A\SQLIDEV,30401
+[2026-05-28 23:04:54.722] ACTION=CONNECT; STATUS=SUCCESS; DETAILS=Connected to SQLNPROD01A\SQLIDEV,30401
+[2026-05-28 23:05:11.287] ACTION=FILE_EXPLORER_FOLDER; STATUS=SUCCESS; DETAILS=Folder=D:\User Story\Insurance Module
+[2026-05-28 23:15:40.420] ACTION=CONNECT; STATUS=STARTED; DETAILS=Server=SQLNPROD01A\SQLIDEV,30401
+[2026-05-28 23:15:40.932] ACTION=CONNECT; STATUS=SUCCESS; DETAILS=Connected to SQLNPROD01A\SQLIDEV,30401
+[2026-05-28 23:17:19.904] ACTION=CONNECT; STATUS=STARTED; DETAILS=Server=SQLNPROD01A\SQLIDEV,30401
+[2026-05-28 23:17:20.302] ACTION=CONNECT; STATUS=SUCCESS; DETAILS=Connected to SQLNPROD01A\SQLIDEV,30401
+[2026-05-28 23:17:37.871] ACTION=FILE_EXPLORER_FOLDER; STATUS=SUCCESS; DETAILS=Folder=D:\User Story\Insurance Module
+[2026-05-28 23:18:35.514] ACTION=CONNECT; STATUS=STARTED; DETAILS=Server=SQLNPROD01A\SQLIDEV,30401
+[2026-05-28 23:18:35.919] ACTION=CONNECT; STATUS=SUCCESS; DETAILS=Connected to SQLNPROD01A\SQLIDEV,30401
+[2026-05-28 23:19:56.608] ACTION=CONNECT; STATUS=STARTED; DETAILS=Server=SQLNPROD01A\SQLIDEV,30401
+[2026-05-28 23:19:57.037] ACTION=CONNECT; STATUS=SUCCESS; DETAILS=Connected to SQLNPROD01A\SQLIDEV,30401
+[2026-05-28 23:22:04.213] ACTION=CONNECT; STATUS=STARTED; DETAILS=Server=SQLNPROD01A\SQLIDEV,30401
+[2026-05-28 23:22:04.607] ACTION=CONNECT; STATUS=SUCCESS; DETAILS=Connected to SQLNPROD01A\SQLIDEV,30401
+[2026-05-28 23:25:03.669] ACTION=CONNECT; STATUS=STARTED; DETAILS=Server=SQLNPROD01A\SQLIDEV,30401
+[2026-05-28 23:25:04.110] ACTION=CONNECT; STATUS=SUCCESS; DETAILS=Connected to SQLNPROD01A\SQLIDEV,30401
+[2026-05-28 23:25:15.375] ACTION=FILE_EXPLORER_FOLDER; STATUS=SUCCESS; DETAILS=Folder=D:\User Story\Insurance Module
+[2026-05-28 23:29:16.328] ACTION=CONNECT; STATUS=STARTED; DETAILS=Server=SQLNPROD01A\SQLIDEV,30401
+[2026-05-28 23:29:16.762] ACTION=CONNECT; STATUS=SUCCESS; DETAILS=Connected to SQLNPROD01A\SQLIDEV,30401
+[2026-05-28 23:29:20.540] ACTION=FILE_EXPLORER_FOLDER; STATUS=SUCCESS; DETAILS=Folder=D:\User Story\Insurance Module
+[2026-05-28 23:39:04.089] ACTION=CONNECT; STATUS=STARTED; DETAILS=Server=SQLNPROD01A\SQLIDEV,30401
+[2026-05-28 23:39:04.521] ACTION=CONNECT; STATUS=SUCCESS; DETAILS=Connected to SQLNPROD01A\SQLIDEV,30401
+[2026-05-28 23:39:16.258] ACTION=FILE_EXPLORER_FOLDER; STATUS=SUCCESS; DETAILS=Folder=D:\User Story\Insurance Module
+[2026-05-28 23:52:21.873] ACTION=FILE_EXPLORER_FOLDER; STATUS=SUCCESS; DETAILS=Folder=D:\User Story\36 -- US 157067 - Cashier Denominations
+[2026-05-28 23:55:35.466] ACTION=CONNECT; STATUS=STARTED; DETAILS=Server=SQLNPROD01A\SQLIDEV,30401
+[2026-05-28 23:55:35.978] ACTION=CONNECT; STATUS=SUCCESS; DETAILS=Connected to SQLNPROD01A\SQLIDEV,30401
+[2026-05-28 23:55:40.911] ACTION=FILE_EXPLORER_FOLDER; STATUS=SUCCESS; DETAILS=Folder=D:\User Story\36 -- US 157067 - Cashier Denominations
+[2026-05-28 23:55:44.356] ACTION=FILE_EXPLORER_RESET; STATUS=SUCCESS; DETAILS=File explorer reset by user.
+[2026-05-28 23:55:46.855] ACTION=FILE_EXPLORER_FOLDER; STATUS=SUCCESS; DETAILS=Folder=D:\User Story\36 -- US 157067 - Cashier Denominations
+[2026-05-28 23:55:48.291] ACTION=FILE_EXPLORER_RESET; STATUS=SUCCESS; DETAILS=File explorer reset by user.
+[2026-05-28 23:55:52.507] ACTION=FILE_EXPLORER_FOLDER; STATUS=SUCCESS; DETAILS=Folder=D:\User Story\38 -- US 215055 - 215057 GL Entries for SLIP Transfers - PD NON PD Products
+[2026-05-28 23:55:56.780] ACTION=FILE_EXPLORER_RESET; STATUS=SUCCESS; DETAILS=File explorer reset by user.
+[2026-05-29 00:02:41.806] ACTION=RELEASE_FOLDER; STATUS=SUCCESS; DETAILS=Folder=D:\User Story\38 -- US 215055 - 215057 GL Entries for SLIP Transfers - PD NON PD Products; Files=5
+[2026-05-29 00:02:53.129] ACTION=RELEASE_RESET; STATUS=SUCCESS; DETAILS=Release Executor view reset by user.
