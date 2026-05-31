@@ -9,16 +9,57 @@
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
 
+        <Style x:Key="NavToolTipStyle" TargetType="ToolTip">
+            <Setter Property="Background" Value="#FFFFFF" />
+            <Setter Property="Foreground" Value="#0F172A" />
+            <Setter Property="BorderBrush" Value="#94A3B8" />
+            <Setter Property="BorderThickness" Value="1.2" />
+            <Setter Property="Padding" Value="14,10" />
+            <Setter Property="MinHeight" Value="38" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="HasDropShadow" Value="False" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToolTip">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="9"
+                                SnapsToDevicePixels="True">
+                            <ContentPresenter Margin="{TemplateBinding Padding}"
+                                              HorizontalAlignment="Center"
+                                              VerticalAlignment="Center">
+                                <ContentPresenter.Resources>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="TextTrimming" Value="None"/>
+                                    </Style>
+                                </ContentPresenter.Resources>
+                            </ContentPresenter>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
         <Style x:Key="NavButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="Foreground" Value="#1F1F1F" />
             <Setter Property="BorderBrush" Value="Transparent" />
             <Setter Property="BorderThickness" Value="0" />
-            <Setter Property="Padding" Value="14,12" />
+            <Setter Property="Width" Value="52" />
+            <Setter Property="Height" Value="52" />
+            <Setter Property="Padding" Value="0" />
             <Setter Property="Margin" Value="0,0,0,6" />
-            <Setter Property="HorizontalContentAlignment" Value="Left" />
-            <Setter Property="FontSize" Value="15" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="FontSize" Value="24" />
             <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="FontFamily" Value="Segoe MDL2 Assets" />
+            <Setter Property="ToolTipService.Placement" Value="Right" />
+            <Setter Property="ToolTipService.HorizontalOffset" Value="6" />
+            <Setter Property="ToolTipService.VerticalOffset" Value="0" />
+            <Setter Property="ToolTipService.PlacementRectangle" Value="0,0,0,52" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
@@ -30,65 +71,16 @@
             </Setter>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#E6F4EA" />
+                    <Setter Property="Background" Value="#EEF2F6" />
                 </Trigger>
-                <DataTrigger Binding="{Binding IsNavCollapsed}" Value="True">
-                    <Setter Property="HorizontalContentAlignment" Value="Center" />
-                    <Setter Property="Padding" Value="12" />
-                </DataTrigger>
             </Style.Triggers>
-        </Style>
-
-        <Style x:Key="ToggleNavButtonStyle" TargetType="Button">
-            <Setter Property="Width" Value="38"/>
-            <Setter Property="Height" Value="38"/>
-            <Setter Property="FontSize" Value="17"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="Foreground" Value="#0F172A"/>
-            <Setter Property="Background" Value="#E2E8F0"/>
-            <Setter Property="BorderBrush" Value="#CBD5E1"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="ToggleRoot"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="18">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="ToggleRoot" Property="Background" Value="#D1E3FF"/>
-                                <Setter TargetName="ToggleRoot" Property="BorderBrush" Value="#93C5FD"/>
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="ToggleRoot" Property="Background" Value="#BFDBFE"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
         </Style>
     </UserControl.Resources>
 
     <Grid Background="#F5F5F5">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition>
-                        <ColumnDefinition.Style>
-                            <Style TargetType="ColumnDefinition">
-                                <Setter Property="Width" Value="1*"/>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsNavCollapsed}" Value="True">
-                                        <Setter Property="Width" Value="70"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </ColumnDefinition.Style>
-                    </ColumnDefinition>
+                    <ColumnDefinition Width="64"/>
                     <ColumnDefinition Width="7*"/>
                 </Grid.ColumnDefinitions>
 
@@ -97,17 +89,26 @@
                         <Button DockPanel.Dock="Bottom"
                             Content="{Binding LogoutNavContent}"
                                 Margin="0,10,0,0"
-                                FontSize="16"
+                                FontSize="24"
                                 HorizontalContentAlignment="Center"
                                 VerticalContentAlignment="Center"
-                                Command="{Binding LogoutCommand}">
+                                Command="{Binding LogoutCommand}"
+                                ToolTipService.Placement="Right"
+                                ToolTipService.HorizontalOffset="10">
+                            <Button.ToolTip>
+                                <ToolTip Style="{StaticResource NavToolTipStyle}" Content="Logout"/>
+                            </Button.ToolTip>
                             <Button.Style>
                                 <Style TargetType="Button" BasedOn="{StaticResource NavButtonStyle}">
-                                    <Setter Property="Background" Value="#D92D20" />
-                                    <Setter Property="Foreground" Value="White" />
+                                    <Setter Property="Background" Value="Transparent" />
+                                    <Setter Property="Foreground" Value="#D92D20" />
+                                    <Setter Property="BorderBrush" Value="#D92D20" />
+                                    <Setter Property="BorderThickness" Value="1.4" />
                                     <Style.Triggers>
                                         <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Background" Value="#B42318" />
+                                            <Setter Property="Background" Value="#FEE4E2" />
+                                            <Setter Property="Foreground" Value="#B42318" />
+                                            <Setter Property="BorderBrush" Value="#B42318" />
                                         </Trigger>
                                     </Style.Triggers>
                                 </Style>
@@ -115,27 +116,20 @@
                         </Button>
 
                         <StackPanel>
-
-            <Button Content="{Binding ToggleNavIcon}"
-                Style="{StaticResource ToggleNavButtonStyle}"
-                Command="{Binding ToggleNavCommand}"
-                HorizontalAlignment="Left"
-                Margin="2,0,0,10"
-                ToolTip="Expand/Collapse"/>
-
-            <Border BorderBrush="#E5E7EB"
-                BorderThickness="0,0,0,1"
-                Margin="0,0,0,10"/>
-
             <Button Content="{Binding FileExplorerNavContent}"
                                 Command="{Binding NavigateMenuCommand}"
                                 CommandParameter="File Explorer">
+                            <Button.ToolTip>
+                                <ToolTip Style="{StaticResource NavToolTipStyle}" Content="File Explorer"/>
+                            </Button.ToolTip>
                             <Button.Style>
                                 <Style TargetType="Button" BasedOn="{StaticResource NavButtonStyle}">
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding IsFileExplorerSelected}" Value="True">
-                                            <Setter Property="Background" Value="#107C10" />
-                                            <Setter Property="Foreground" Value="White" />
+                                            <Setter Property="Background" Value="#E5E7EB" />
+                                            <Setter Property="Foreground" Value="#0F172A" />
+                                            <Setter Property="BorderBrush" Value="#CBD5E1" />
+                                            <Setter Property="BorderThickness" Value="1" />
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
@@ -144,12 +138,17 @@
                         <Button Content="{Binding ObjectExplorerNavContent}"
                                 Command="{Binding NavigateMenuCommand}"
                                 CommandParameter="Object Explorer">
+                            <Button.ToolTip>
+                                <ToolTip Style="{StaticResource NavToolTipStyle}" Content="Object Explorer"/>
+                            </Button.ToolTip>
                             <Button.Style>
                                 <Style TargetType="Button" BasedOn="{StaticResource NavButtonStyle}">
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding IsObjectExplorerSelected}" Value="True">
-                                            <Setter Property="Background" Value="#107C10" />
-                                            <Setter Property="Foreground" Value="White" />
+                                            <Setter Property="Background" Value="#E5E7EB" />
+                                            <Setter Property="Foreground" Value="#0F172A" />
+                                            <Setter Property="BorderBrush" Value="#CBD5E1" />
+                                            <Setter Property="BorderThickness" Value="1" />
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
@@ -158,12 +157,17 @@
                         <Button Content="{Binding ReleaseExecutorNavContent}"
                                 Command="{Binding NavigateMenuCommand}"
                                 CommandParameter="Release Executor">
+                            <Button.ToolTip>
+                                <ToolTip Style="{StaticResource NavToolTipStyle}" Content="Release Executor"/>
+                            </Button.ToolTip>
                             <Button.Style>
                                 <Style TargetType="Button" BasedOn="{StaticResource NavButtonStyle}">
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding IsReleaseExecutorSelected}" Value="True">
-                                            <Setter Property="Background" Value="#107C10" />
-                                            <Setter Property="Foreground" Value="White" />
+                                            <Setter Property="Background" Value="#E5E7EB" />
+                                            <Setter Property="Foreground" Value="#0F172A" />
+                                            <Setter Property="BorderBrush" Value="#CBD5E1" />
+                                            <Setter Property="BorderThickness" Value="1" />
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
@@ -172,12 +176,17 @@
                         <Button Content="{Binding ComparisonToolNavContent}"
                                 Command="{Binding NavigateMenuCommand}"
                                 CommandParameter="Comparison Tool">
+                            <Button.ToolTip>
+                                <ToolTip Style="{StaticResource NavToolTipStyle}" Content="Comparison Tool"/>
+                            </Button.ToolTip>
                             <Button.Style>
                                 <Style TargetType="Button" BasedOn="{StaticResource NavButtonStyle}">
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding IsComparisonToolSelected}" Value="True">
-                                            <Setter Property="Background" Value="#107C10" />
-                                            <Setter Property="Foreground" Value="White" />
+                                            <Setter Property="Background" Value="#E5E7EB" />
+                                            <Setter Property="Foreground" Value="#0F172A" />
+                                            <Setter Property="BorderBrush" Value="#CBD5E1" />
+                                            <Setter Property="BorderThickness" Value="1" />
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>

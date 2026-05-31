@@ -30,6 +30,46 @@ namespace Database_Hub.ViewModels.ConnectedMode
         public string ObjectType { get; set; } = string.Empty;
     }
 
+    public class ObjectExplorerTab : BindableBase
+    {
+        private string _title = string.Empty;
+        private string _content = string.Empty;
+        private string _error = string.Empty;
+
+        public bool IsHomeTab { get; set; }
+        public bool IsClosable { get; set; }
+
+        public string SchemaName { get; set; } = string.Empty;
+        public string ObjectName { get; set; } = string.Empty;
+        public string ObjectTypeCode { get; set; } = string.Empty;
+
+        public string Title
+        {
+            get => _title;
+            set => SetProperty(ref _title, value);
+        }
+
+        public string Content
+        {
+            get => _content;
+            set => SetProperty(ref _content, value);
+        }
+
+        public string Error
+        {
+            get => _error;
+            set
+            {
+                if (SetProperty(ref _error, value))
+                {
+                    RaisePropertyChanged(nameof(HasError));
+                }
+            }
+        }
+
+        public bool HasError => !string.IsNullOrWhiteSpace(Error);
+    }
+
     public class ObjectExplorerViewModel : BindableBase
     {
         private readonly Database_Hub.Services.SessionService _sessionService;
@@ -42,9 +82,11 @@ namespace Database_Hub.ViewModels.ConnectedMode
         private bool _isUpdatingSelection;
         private string _objectExplorerStatus = "Select a database to search objects.";
         private CancellationTokenSource? _searchCancellationTokenSource;
+        private ObjectExplorerTab? _selectedTab;
 
         public ObservableCollection<string> DatabaseList { get; } = new ObservableCollection<string>();
         public ObservableCollection<DatabaseObjectInfo> DatabaseObjects { get; } = new ObservableCollection<DatabaseObjectInfo>();
+        public ObservableCollection<ObjectExplorerTab> Tabs { get; } = new ObservableCollection<ObjectExplorerTab>();
 
         public string SelectedDatabase
         {
@@ -102,11 +144,19 @@ namespace Database_Hub.ViewModels.ConnectedMode
             set => SetProperty(ref _objectExplorerStatus, value);
         }
 
+        public ObjectExplorerTab? SelectedTab
+        {
+            get => _selectedTab;
+            set => SetProperty(ref _selectedTab, value);
+        }
+
         public DelegateCommand SearchObjectsCommand { get; }
         public DelegateCommand CancelSearchCommand { get; }
         public DelegateCommand<DatabaseObjectInfo> DownloadObjectScriptCommand { get; }
         public DelegateCommand ResetSelectionCommand { get; }
         public DelegateCommand DownloadSelectedScriptsCommand { get; }
+        public DelegateCommand<DatabaseObjectInfo> OpenScriptAsCreateCommand { get; }
+        public DelegateCommand<ObjectExplorerTab> CloseTabCommand { get; }
 
         public ObjectExplorerViewModel(
             Database_Hub.Services.SessionService sessionService,
@@ -122,6 +172,17 @@ namespace Database_Hub.ViewModels.ConnectedMode
                 .ObservesProperty(() => IsAllObjectsSelected);
             DownloadSelectedScriptsCommand = new DelegateCommand(async () => await DownloadSelectedScriptsAsync(), () => HasSelectedObjects)
                 .ObservesProperty(() => IsAllObjectsSelected);
+            OpenScriptAsCreateCommand = new DelegateCommand<DatabaseObjectInfo>(async item => await OpenScriptAsCreateAsync(item));
+            CloseTabCommand = new DelegateCommand<ObjectExplorerTab>(CloseTab);
+
+            var homeTab = new ObjectExplorerTab
+            {
+                Title = "Object Explorer",
+                IsHomeTab = true,
+                IsClosable = false
+            };
+            Tabs.Add(homeTab);
+            SelectedTab = homeTab;
         }
 
         private bool CanSearchObjects()
@@ -152,6 +213,7 @@ namespace Database_Hub.ViewModels.ConnectedMode
         {
             if (DatabaseList.Count > 0)
             {
+                _actionLogger.LogAction("OBJECT_EXPLORER_LOAD", "SKIPPED", "Database list already loaded.");
                 return;
             }
 
@@ -159,11 +221,13 @@ namespace Database_Hub.ViewModels.ConnectedMode
             if (string.IsNullOrWhiteSpace(serverAddress))
             {
                 ObjectExplorerStatus = "No active server session found. Please reconnect.";
+                _actionLogger.LogAction("OBJECT_EXPLORER_LOAD", "FAILED", "No active server session found.");
                 return;
             }
 
             IsObjectExplorerBusy = true;
             ObjectExplorerStatus = "Loading databases...";
+            _actionLogger.LogAction("OBJECT_EXPLORER_LOAD", "STARTED", $"Server={serverAddress}");
 
             try
             {
@@ -183,11 +247,13 @@ namespace Database_Hub.ViewModels.ConnectedMode
                 ObjectExplorerStatus = DatabaseList.Count > 0
                     ? "Databases loaded. Select a database and search."
                     : "No online databases found.";
+                _actionLogger.LogAction("OBJECT_EXPLORER_LOAD", "SUCCESS", $"DatabaseCount={DatabaseList.Count}");
             }
             catch (Exception ex)
             {
                 DatabaseList.Clear();
                 ObjectExplorerStatus = $"Failed to load databases: {ex.Message}";
+                _actionLogger.LogException("OBJECT_EXPLORER_LOAD", ex, $"Server={serverAddress}");
             }
             finally
             {
@@ -532,6 +598,102 @@ WHERE o.is_ms_shipped = 0
                 ObjectExplorerStatus = $"Download failed: {ex.Message}";
                 _actionLogger.LogException("DOWNLOAD", ex, $"Mode=Bulk; SelectedCount={selectedObjects.Count}; Database={SelectedDatabase}");
             }
+        }
+
+        private async Task OpenScriptAsCreateAsync(DatabaseObjectInfo? item)
+        {
+            if (item == null)
+            {
+                return;
+            }
+
+            var serverAddress = _sessionService.CurrentServerAddress;
+            if (string.IsNullOrWhiteSpace(serverAddress) || string.IsNullOrWhiteSpace(SelectedDatabase))
+            {
+                ObjectExplorerStatus = "Missing active connection or selected database.";
+                return;
+            }
+
+            var existingTab = Tabs.FirstOrDefault(t =>
+                !t.IsHomeTab
+                && string.Equals(t.SchemaName, item.SchemaName, StringComparison.OrdinalIgnoreCase)
+                && string.Equals(t.ObjectName, item.ObjectName, StringComparison.OrdinalIgnoreCase)
+                && string.Equals(t.ObjectTypeCode, item.ObjectTypeCode, StringComparison.OrdinalIgnoreCase));
+
+            if (existingTab != null)
+            {
+                SelectedTab = existingTab;
+                return;
+            }
+
+            var tab = new ObjectExplorerTab
+            {
+                Title = item.ObjectName,
+                IsHomeTab = false,
+                IsClosable = true,
+                SchemaName = item.SchemaName,
+                ObjectName = item.ObjectName,
+                ObjectTypeCode = item.ObjectTypeCode
+            };
+
+            Tabs.Add(tab);
+            SelectedTab = tab;
+
+            try
+            {
+                using var connection = new SqlConnection(BuildConnectionString(serverAddress, SelectedDatabase));
+                await connection.OpenAsync();
+
+                var script = await BuildObjectCreateScriptAsync(connection, item);
+                if (string.IsNullOrWhiteSpace(script))
+                {
+                    tab.Error = "No script body found for selected object.";
+                    tab.Content = string.Empty;
+                    return;
+                }
+
+                tab.Content = script;
+                tab.Error = string.Empty;
+            }
+            catch (Exception ex)
+            {
+                tab.Content = string.Empty;
+                tab.Error = $"Failed to load create script. {ex.Message}";
+                _actionLogger.LogException("SCRIPT_AS_CREATE", ex, $"Object={item.SchemaName}.{item.ObjectName}; Database={SelectedDatabase}");
+            }
+        }
+
+        private void CloseTab(ObjectExplorerTab? tab)
+        {
+            if (tab == null || tab.IsHomeTab)
+            {
+                return;
+            }
+
+            var removedIndex = Tabs.IndexOf(tab);
+            if (removedIndex < 0)
+            {
+                return;
+            }
+
+            var wasSelected = ReferenceEquals(SelectedTab, tab);
+            Tabs.RemoveAt(removedIndex);
+
+            var homeTab = Tabs.FirstOrDefault(t => t.IsHomeTab);
+
+            if (Tabs.Count == 1 && homeTab != null)
+            {
+                SelectedTab = homeTab;
+                return;
+            }
+
+            if (!wasSelected)
+            {
+                return;
+            }
+
+            var nextIndex = Math.Min(removedIndex, Tabs.Count - 1);
+            SelectedTab = Tabs[nextIndex];
         }
 
         private static async Task<string> BuildObjectCreateScriptAsync(SqlConnection connection, DatabaseObjectInfo item)

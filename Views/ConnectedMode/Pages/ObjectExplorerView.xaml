@@ -1,4 +1,5 @@
 <UserControl x:Class="Database_Hub.Views.ConnectedMode.Pages.ObjectExplorerView"
+             x:Name="Root"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -174,8 +175,8 @@
         </Style>
 
         <Style x:Key="ModernComboItemStyle" TargetType="ComboBoxItem">
-            <Setter Property="Padding" Value="8,6"/>
-            <Setter Property="Margin" Value="4,2"/>
+            <Setter Property="Padding" Value="10,8"/>
+            <Setter Property="Margin" Value="5,3"/>
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderBrush" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="1"/>
@@ -187,7 +188,7 @@
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="8"
+                            CornerRadius="10"
                                 Padding="{TemplateBinding Padding}">
                             <ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
                         </Border>
@@ -210,8 +211,8 @@
             <Setter Property="Background" Value="White"/>
             <Setter Property="BorderBrush" Value="#D0D7DE"/>
             <Setter Property="BorderThickness" Value="1.5"/>
-            <Setter Property="CornerRadius" Value="12"/>
-            <Setter Property="Padding" Value="8,2"/>
+            <Setter Property="CornerRadius" Value="14"/>
+            <Setter Property="Padding" Value="10,3"/>
         </Style>
 
         <Style x:Key="ModernTextBoxStyle" TargetType="TextBox">
@@ -233,8 +234,8 @@
         </Style>
 
         <Style x:Key="RoundedButtonStyle" TargetType="Button">
-            <Setter Property="Height" Value="30"/>
-            <Setter Property="Padding" Value="12,4"/>
+            <Setter Property="Height" Value="32"/>
+            <Setter Property="Padding" Value="14,5"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
             <Setter Property="FontSize" Value="12"/>
@@ -242,7 +243,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="10">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="12">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                     </ControlTemplate>
@@ -275,7 +276,7 @@
             <Setter Property="CellStyle">
                 <Setter.Value>
                     <Style TargetType="DataGridCell">
-                        <Setter Property="Padding" Value="8,6"/>
+                        <Setter Property="Padding" Value="10,8"/>
                         <Setter Property="BorderThickness" Value="0"/>
                         <Style.Triggers>
                             <Trigger Property="IsSelected" Value="True">
@@ -378,171 +379,502 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <Style x:Key="ObjectExplorerTabControlStyle" TargetType="TabControl">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabControl">
+                        <Border Background="#FFFFFF"
+                                BorderBrush="#CBD5E1"
+                                BorderThickness="1"
+                                CornerRadius="14"
+                                Padding="10">
+                            <Grid KeyboardNavigation.TabNavigation="Local">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+
+                                <TabPanel Grid.Row="0"
+                                          IsItemsHost="True"
+                                          KeyboardNavigation.TabIndex="1"
+                                          Background="Transparent"
+                                      Margin="0,0,0,6"/>
+
+                                <ContentPresenter Grid.Row="1"
+                                                  x:Name="PART_SelectedContentHost"
+                                          Margin="0,4,0,0"
+                                                  ContentSource="SelectedContent"/>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ObjectExplorerTabItemStyle" TargetType="TabItem">
+            <Setter Property="Foreground" Value="#334155"/>
+            <Setter Property="Background" Value="#E2E8F0"/>
+            <Setter Property="BorderBrush" Value="#CBD5E1"/>
+            <Setter Property="BorderThickness" Value="1,1,1,0"/>
+            <Setter Property="Margin" Value="0,0,8,0"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabItem">
+                        <Border x:Name="TabBorder"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="10,10,0,0"
+                                Margin="0,0,0,0"
+                                Padding="10,7">
+                            <ContentPresenter ContentSource="Header"
+                                              RecognizesAccessKey="True"
+                                              VerticalAlignment="Center"
+                                              HorizontalAlignment="Left"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="TabBorder" Property="Background" Value="#FFFFFF"/>
+                                <Setter TargetName="TabBorder" Property="BorderBrush" Value="#94A3B8"/>
+                                <Setter TargetName="TabBorder" Property="BorderThickness" Value="1,1,1,0"/>
+                                <Setter Property="Foreground" Value="#0F172A"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="TabBorder" Property="Background" Value="#F8FAFC"/>
+                            </Trigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsHomeTab}" Value="True"/>
+                                    <Condition Binding="{Binding DataContext.Tabs.Count, RelativeSource={RelativeSource AncestorType=TabControl}}" Value="1"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter TargetName="TabBorder" Property="Background" Value="Transparent"/>
+                                <Setter TargetName="TabBorder" Property="BorderBrush" Value="Transparent"/>
+                                <Setter TargetName="TabBorder" Property="BorderThickness" Value="0"/>
+                            </MultiDataTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding IsHomeTab}" Value="True"/>
+                        <Condition Binding="{Binding DataContext.Tabs.Count, RelativeSource={RelativeSource AncestorType=TabControl}}" Value="1"/>
+                    </MultiDataTrigger.Conditions>
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="BorderBrush" Value="Transparent"/>
+                    <Setter Property="BorderThickness" Value="0"/>
+                </MultiDataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="TabStripThumbStyle" TargetType="Thumb">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Thumb">
+                        <Border Background="#94A3B8" CornerRadius="6" Margin="2" MinWidth="18"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ObjectExplorerScrollableTabControlStyle"
+               TargetType="TabControl"
+               BasedOn="{StaticResource ObjectExplorerTabControlStyle}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabControl">
+                        <Border Background="#FFFFFF"
+                                BorderBrush="#CBD5E1"
+                                BorderThickness="1"
+                                CornerRadius="14"
+                                Padding="10">
+                            <Grid KeyboardNavigation.TabNavigation="Local">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+
+                                <ScrollViewer Grid.Row="0"
+                                              HorizontalScrollBarVisibility="Auto"
+                                              VerticalScrollBarVisibility="Disabled"
+                                              CanContentScroll="True"
+                                              Focusable="False"
+                                              Margin="0,0,0,6">
+                                    <ScrollViewer.Resources>
+                                        <Style TargetType="ScrollBar">
+                                            <Setter Property="Height" Value="10"/>
+                                            <Setter Property="Background" Value="#E2E8F0"/>
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="ScrollBar">
+                                                        <Grid Background="{TemplateBinding Background}">
+                                                            <Track x:Name="PART_Track" IsDirectionReversed="False">
+                                                                <Track.DecreaseRepeatButton>
+                                                                    <RepeatButton Command="ScrollBar.PageLeftCommand" Opacity="0" Focusable="False"/>
+                                                                </Track.DecreaseRepeatButton>
+                                                                <Track.Thumb>
+                                                                    <Thumb Style="{StaticResource TabStripThumbStyle}"/>
+                                                                </Track.Thumb>
+                                                                <Track.IncreaseRepeatButton>
+                                                                    <RepeatButton Command="ScrollBar.PageRightCommand" Opacity="0" Focusable="False"/>
+                                                                </Track.IncreaseRepeatButton>
+                                                            </Track>
+                                                        </Grid>
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger Property="Orientation" Value="Vertical">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                            </Trigger>
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </ScrollViewer.Resources>
+                                    <TabPanel IsItemsHost="True"
+                                              KeyboardNavigation.TabIndex="1"
+                                              Background="Transparent"/>
+                                </ScrollViewer>
+
+                                <ContentPresenter Grid.Row="1"
+                                                  x:Name="PART_SelectedContentHost"
+                                                  Margin="0,4,0,0"
+                                                  ContentSource="SelectedContent"/>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ObjectActionContextMenuStyle" TargetType="ContextMenu">
+            <Setter Property="Background" Value="#FFFFFF"/>
+            <Setter Property="BorderBrush" Value="#94A3B8"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="6"/>
+            <Setter Property="HasDropShadow" Value="True"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ContextMenu">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="10"
+                                Padding="{TemplateBinding Padding}">
+                            <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ObjectActionMenuItemStyle" TargetType="MenuItem">
+            <Setter Property="Foreground" Value="#1E293B"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="10,7"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="MenuItem">
+                        <Border x:Name="ItemRoot"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="7"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter ContentSource="Header" RecognizesAccessKey="True"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsHighlighted" Value="True">
+                                <Setter TargetName="ItemRoot" Property="Background" Value="#EEF2FF"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </UserControl.Resources>
 
-    <Grid Background="#F8F8F8" Margin="8">
-        <Border Background="#F8F8F8" CornerRadius="12" Padding="20" BorderBrush="#E3E8EF" BorderThickness="1">
+    <Grid Background="#F8F8F8" Margin="5">
+        <Border Background="#F8F8F8"
+            Margin="8"
+            CornerRadius="12"
+            Padding="10"
+            BorderBrush="#E3E8EF"
+            BorderThickness="1">
             <Grid>
-                <Grid Margin="0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-
-                        <Grid Grid.Row="0" Margin="0,0,0,8">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="20" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-
-                            <StackPanel Grid.Column="0">
-                                <TextBlock FontSize="12" Margin="0,0,0,3">
-                                    <Run Text="Database" />
-                                    <Run Text=" *" Foreground="#C62828" />
-                                </TextBlock>
-                                <Border Margin="0,0,0,2" Background="#FFFFFF" BorderBrush="#D0D7DE" BorderThickness="1" CornerRadius="12" Padding="6">
-                                    <Border.Effect>
-                                        <DropShadowEffect BlurRadius="8" ShadowDepth="1" Opacity="0.06"/>
-                                    </Border.Effect>
-                                    <ComboBox Style="{StaticResource ServerComboStyle}"
-                                            ItemsSource="{Binding DatabaseList}"
-                                            SelectedItem="{Binding SelectedDatabase, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                            IsEditable="True"
-                                            ItemContainerStyle="{StaticResource ModernComboItemStyle}">
-                                    </ComboBox>
-                                </Border>
+                <TabControl ItemsSource="{Binding Tabs}"
+                            SelectedItem="{Binding SelectedTab, Mode=TwoWay}"
+                            Padding="0"
+                            Style="{StaticResource ObjectExplorerScrollableTabControlStyle}"
+                            ItemContainerStyle="{StaticResource ObjectExplorerTabItemStyle}">
+                    <TabControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <TextBlock Text="{Binding Title}"
+                                          Margin="0,0,8,0"
+                                          FontWeight="Bold"
+                                          Foreground="#334155"/>
+                                <Button Content="✕"
+                                        Width="18"
+                                        Height="18"
+                                        Padding="0"
+                                        FontSize="11"
+                                        FontWeight="Bold"
+                                        Foreground="#475569"
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        Cursor="Hand"
+                                        Command="{Binding DataContext.CloseTabCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                        CommandParameter="{Binding}"
+                                        Visibility="{Binding IsClosable, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                             </StackPanel>
+                        </DataTemplate>
+                    </TabControl.ItemTemplate>
 
-                            <StackPanel Grid.Column="2">
-                                <TextBlock Text="Schema (Optional)" FontSize="12" Margin="0,0,0,3" />
-                                <Border Style="{StaticResource ModernInputBorderStyle}">
-                                    <TextBox Text="{Binding SchemaFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                            Style="{StaticResource ModernTextBoxStyle}" />
-                                </Border>
-                            </StackPanel>
-                        </Grid>
+                    <TabControl.ContentTemplate>
+                        <DataTemplate>
+                            <Grid Margin="0">
+                                <Grid x:Name="HomeTabContent" Visibility="Collapsed" Margin="0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
 
-                        <Grid Grid.Row="1" Margin="0,0,0,10">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="8" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
+                                    <Grid Grid.Row="0" Margin="0,12,0,8">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="20" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
 
-                            <StackPanel Grid.Column="0">
-                                <TextBlock Text="Keyword (Optional)" FontSize="12" Margin="0,0,0,3" />
-                                <Border Style="{StaticResource ModernInputBorderStyle}">
-                                    <TextBox Text="{Binding KeywordFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                            Style="{StaticResource ModernTextBoxStyle}" />
-                                </Border>
-                            </StackPanel>
+                                        <StackPanel Grid.Column="0">
+                                            <TextBlock FontSize="12" Margin="0,0,0,3">
+                                                <Run Text="Database" />
+                                                <Run Text=" *" Foreground="#C62828" />
+                                            </TextBlock>
+                                            <Border Margin="0,0,0,2" Background="#FFFFFF" BorderBrush="#D0D7DE" BorderThickness="1" CornerRadius="12" Padding="6">
+                                                <Border.Effect>
+                                                    <DropShadowEffect BlurRadius="8" ShadowDepth="1" Opacity="0.06"/>
+                                                </Border.Effect>
+                                                <ComboBox Style="{StaticResource ServerComboStyle}"
+                                                          ItemsSource="{Binding DataContext.DatabaseList, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                          SelectedItem="{Binding DataContext.SelectedDatabase, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                          IsEditable="True"
+                                                          ItemContainerStyle="{StaticResource ModernComboItemStyle}"/>
+                                            </Border>
+                                        </StackPanel>
 
-                            <Button Grid.Column="1"
-                                    Content="Search"
-                                    Width="90"
-                                    Margin="8,18,0,0"
-                                    Background="#1D4ED8"
-                                    Foreground="White"
-                                    BorderBrush="#1D4ED8"
-                                    Style="{StaticResource RoundedButtonStyle}"
-                                    Command="{Binding SearchObjectsCommand}" />
+                                        <StackPanel Grid.Column="2">
+                                            <TextBlock Text="Schema (Optional)" FontSize="12" Margin="0,0,0,3" />
+                                            <Border Style="{StaticResource ModernInputBorderStyle}">
+                                                <TextBox Text="{Binding DataContext.SchemaFilter, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                         Style="{StaticResource ModernTextBoxStyle}" />
+                                            </Border>
+                                        </StackPanel>
+                                    </Grid>
 
-                            <Button Grid.Column="3"
-                                    Content="Cancel"
-                                    Width="90"
-                                    Margin="0,18,0,0"
-                                    Background="#D92D20"
-                                    Foreground="White"
-                                    BorderBrush="#D92D20"
-                                    Style="{StaticResource RoundedButtonStyle}"
-                                    Command="{Binding CancelSearchCommand}" />
-                        </Grid>
+                                    <Grid Grid.Row="1" Margin="0,0,0,10">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="8" />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="8" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
 
-                        <DataGrid Grid.Row="2"
-                                ItemsSource="{Binding DatabaseObjects}"
-                                AutoGenerateColumns="False"
-                                IsReadOnly="True"
-                                Style="{StaticResource StyledDataGridStyle}"
-                                CanUserAddRows="False"
-                                SelectionMode="Extended"
-                                GridLinesVisibility="Horizontal"
-                            ScrollViewer.VerticalScrollBarVisibility="Auto"
-                            ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                                Margin="0,0,0,10">
-                            <DataGrid.Resources>
-                                <Style TargetType="ScrollBar" BasedOn="{StaticResource TableScrollBarStyle}"/>
-                            </DataGrid.Resources>
-                            <DataGrid.Columns>
-                                <DataGridTemplateColumn Header="" Width="70">
-                                    <DataGridTemplateColumn.HeaderTemplate>
-                                        <DataTemplate>
-                                            <CheckBox Style="{StaticResource RoundedCheckBoxStyle}"
-                                                    HorizontalAlignment="Center"
-                                                    VerticalAlignment="Center"
-                                                    IsChecked="{Binding DataContext.IsAllObjectsSelected, RelativeSource={RelativeSource AncestorType=DataGrid}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.HeaderTemplate>
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <CheckBox Style="{StaticResource RoundedCheckBoxStyle}"
-                                                    IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                    HorizontalAlignment="Center"
-                                                    VerticalAlignment="Center"/>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                                <DataGridTextColumn Header="Schema" Binding="{Binding SchemaName}" Width="*" />
-                                <DataGridTextColumn Header="Object" Binding="{Binding ObjectName}" Width="2*" />
-                                <DataGridTextColumn Header="Type" Binding="{Binding ObjectType}" Width="*" />
-                                <DataGridTemplateColumn Header="Action" Width="90">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <Button Content="⬇"
-                                                    Width="34"
-                                                    Height="28"
-                                                    Background="#F8FAFC"
-                                                    Foreground="#1D4ED8"
-                                                    BorderBrush="#CBD5E1"
-                                                    Style="{StaticResource RoundedButtonStyle}"
-                                                    ToolTip="Download create script"
-                                                    Command="{Binding DataContext.DownloadObjectScriptCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
-                                                    CommandParameter="{Binding}" />
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                            </DataGrid.Columns>
-                        </DataGrid>
+                                        <StackPanel Grid.Column="0">
+                                            <TextBlock Text="Keyword (Optional)" FontSize="12" Margin="0,0,0,3" />
+                                            <Border Style="{StaticResource ModernInputBorderStyle}">
+                                                <TextBox Text="{Binding DataContext.KeywordFilter, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                         Style="{StaticResource ModernTextBoxStyle}" />
+                                            </Border>
+                                        </StackPanel>
 
-                        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,5">
-                            <Button Content="Reset"
-                                Width="88"
-                                    Background="#6B7280"
-                                    Foreground="White"
-                                    BorderBrush="#6B7280"
-                                    Style="{StaticResource RoundedButtonStyle}"
-                                    Command="{Binding ResetSelectionCommand}" />
+                                        <Button Grid.Column="1"
+                                                Content="Search"
+                                                Width="90"
+                                                Margin="8,18,0,0"
+                                                Background="#1D4ED8"
+                                                Foreground="White"
+                                                BorderBrush="#1D4ED8"
+                                                Style="{StaticResource RoundedButtonStyle}"
+                                                Command="{Binding DataContext.SearchObjectsCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
 
-                            <Button Content="Download"
-                                Width="96"
-                                Margin="8,0,0,0"
-                                    Background="#0F766E"
-                                    Foreground="White"
-                                    BorderBrush="#0F766E"
-                                    Style="{StaticResource RoundedButtonStyle}"
-                                    Visibility="{Binding HasSelectedObjects, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                    Command="{Binding DownloadSelectedScriptsCommand}" />
-                        </StackPanel>
+                                        <Button Grid.Column="3"
+                                                Content="Cancel"
+                                                Width="90"
+                                                Margin="0,18,0,0"
+                                                Background="#D92D20"
+                                                Foreground="White"
+                                                BorderBrush="#D92D20"
+                                                Style="{StaticResource RoundedButtonStyle}"
+                                                Command="{Binding DataContext.CancelSearchCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
 
-                        <TextBlock Grid.Row="4"
-                                Text="{Binding ObjectExplorerStatus}"
-                                Foreground="#555555"
-                                FontStyle="Italic" />
-                </Grid>
+                                        <Button Grid.Column="5"
+                                                Content="Reset"
+                                                Width="88"
+                                                Margin="0,18,0,0"
+                                                Background="#6B7280"
+                                                Foreground="White"
+                                                BorderBrush="#6B7280"
+                                                Style="{StaticResource RoundedButtonStyle}"
+                                                                                                Command="{Binding DataContext.ResetSelectionCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                                    </Grid>
+
+                                    <DataGrid Grid.Row="2"
+                                                                                            ItemsSource="{Binding DataContext.DatabaseObjects, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                              AutoGenerateColumns="False"
+                                              IsReadOnly="True"
+                                              Style="{StaticResource StyledDataGridStyle}"
+                                              CanUserAddRows="False"
+                                              SelectionMode="Extended"
+                                              GridLinesVisibility="Horizontal"
+                                              ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                              ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                                              Margin="0,0,0,10">
+                                        <DataGrid.Resources>
+                                            <Style TargetType="ScrollBar" BasedOn="{StaticResource TableScrollBarStyle}"/>
+                                        </DataGrid.Resources>
+                                        <DataGrid.Columns>
+                                            <DataGridTemplateColumn Header="" Width="70">
+                                                <DataGridTemplateColumn.HeaderTemplate>
+                                                    <DataTemplate>
+                                                        <CheckBox Style="{StaticResource RoundedCheckBoxStyle}"
+                                                                  HorizontalAlignment="Center"
+                                                                  VerticalAlignment="Center"
+                                                                  IsChecked="{Binding DataContext.IsAllObjectsSelected, RelativeSource={RelativeSource AncestorType=DataGrid}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.HeaderTemplate>
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <CheckBox Style="{StaticResource RoundedCheckBoxStyle}"
+                                                                  IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                                  HorizontalAlignment="Center"
+                                                                  VerticalAlignment="Center"/>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                            <DataGridTextColumn Header="Schema" Binding="{Binding SchemaName}" Width="*" />
+                                            <DataGridTemplateColumn Header="Object" Width="2*">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding ObjectName}"
+                                                                   VerticalAlignment="Center"
+                                                                   Tag="{Binding DataContext.OpenScriptAsCreateCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">
+                                                            <TextBlock.ContextMenu>
+                                                                <ContextMenu Style="{StaticResource ObjectActionContextMenuStyle}">
+                                                                    <MenuItem Header="Script as create"
+                                                                              Style="{StaticResource ObjectActionMenuItemStyle}"
+                                                                              Command="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
+                                                                              CommandParameter="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                                                </ContextMenu>
+                                                            </TextBlock.ContextMenu>
+                                                        </TextBlock>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                            <DataGridTextColumn Header="Type" Binding="{Binding ObjectType}" Width="*" />
+                                            <DataGridTemplateColumn Header="Action" Width="90">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <Button Content="⬇"
+                                                                Width="34"
+                                                                Height="28"
+                                                                Background="#F8FAFC"
+                                                                Foreground="#1D4ED8"
+                                                                BorderBrush="#CBD5E1"
+                                                                Style="{StaticResource RoundedButtonStyle}"
+                                                                ToolTip="Download create script"
+                                                                Command="{Binding DataContext.DownloadObjectScriptCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                                CommandParameter="{Binding}" />
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+
+                                    <Grid Grid.Row="3">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock Grid.Column="0"
+                                                   Text="{Binding DataContext.ObjectExplorerStatus, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                   Foreground="#555555"
+                                                   FontStyle="Italic"
+                                                   VerticalAlignment="Center"/>
+
+                                        <Button Grid.Column="1"
+                                                Content="Download"
+                                                Width="96"
+                                                Margin="8,0,0,0"
+                                                Background="#0F766E"
+                                                Foreground="White"
+                                                BorderBrush="#0F766E"
+                                                Style="{StaticResource RoundedButtonStyle}"
+                                                Visibility="{Binding DataContext.HasSelectedObjects, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                                Command="{Binding DataContext.DownloadSelectedScriptsCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                                    </Grid>
+                                </Grid>
+
+                                <Grid x:Name="ScriptTabContent" Visibility="Collapsed" Margin="0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+
+                                    <Border Grid.Row="0"
+                                            Visibility="{Binding HasError, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                            Background="#FEF2F2"
+                                            BorderBrush="#FCA5A5"
+                                            BorderThickness="1"
+                                            CornerRadius="6"
+                                            Padding="8"
+                                            Margin="0,0,0,8">
+                                        <TextBlock Text="{Binding Error}"
+                                                   Foreground="#B91C1C"
+                                                   FontSize="12"
+                                                   TextWrapping="Wrap"/>
+                                    </Border>
+
+                                    <TextBox Grid.Row="1"
+                                             Text="{Binding Content}"
+                                             IsReadOnly="True"
+                                             AcceptsReturn="True"
+                                             AcceptsTab="True"
+                                             TextWrapping="NoWrap"
+                                             VerticalScrollBarVisibility="Auto"
+                                             HorizontalScrollBarVisibility="Auto"
+                                             FontFamily="Consolas"
+                                             FontSize="12"
+                                             Background="White"
+                                             BorderBrush="#94A3B8"
+                                             BorderThickness="1"
+                                             Padding="10"/>
+                                </Grid>
+                            </Grid>
+
+                            <DataTemplate.Triggers>
+                                <DataTrigger Binding="{Binding IsHomeTab}" Value="True">
+                                    <Setter TargetName="HomeTabContent" Property="Visibility" Value="Visible"/>
+                                    <Setter TargetName="ScriptTabContent" Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding IsHomeTab}" Value="False">
+                                    <Setter TargetName="HomeTabContent" Property="Visibility" Value="Collapsed"/>
+                                    <Setter TargetName="ScriptTabContent" Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </DataTemplate.Triggers>
+                        </DataTemplate>
+                    </TabControl.ContentTemplate>
+                </TabControl>
             </Grid>
         </Border>
     </Grid>

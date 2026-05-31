@@ -1,0 +1,189 @@
+[2026-05-31 10:27:48.473] ACTION=CONNECT; STATUS=STARTED; DETAILS=Server=SQLNPROD01A\SQLIDEV,30401
+[2026-05-31 10:27:49.326] ACTION=CONNECT; STATUS=SUCCESS; DETAILS=Connected to SQLNPROD01A\SQLIDEV,30401
+[2026-05-31 10:27:54.408] ACTION=FILE_EXPLORER_FOLDER; STATUS=SUCCESS; DETAILS=Folder=D:\Eclipse.Database; Nodes=12696; SkippedFolders=0; Truncated=False
+[2026-05-31 11:02:24.323] ACTION=CONNECT; STATUS=STARTED; DETAILS=Server=SQLNPROD01A\SQLIDEV,30401
+[2026-05-31 11:02:25.043] ACTION=CONNECT; STATUS=SUCCESS; DETAILS=Connected to SQLNPROD01A\SQLIDEV,30401
+[2026-05-31 11:02:37.094] ACTION=FILE_EXPLORER_FOLDER; STATUS=SUCCESS; DETAILS=Folder=D:\Eclipse.Database; Nodes=12696; SkippedFolders=0; Truncated=False
+[2026-05-31 11:14:20.348] ACTION=CONNECT; STATUS=STARTED; DETAILS=Server=SQLNPROD01A\SQLIDEV,30401
+[2026-05-31 11:14:20.964] ACTION=CONNECT; STATUS=SUCCESS; DETAILS=Connected to SQLNPROD01A\SQLIDEV,30401
+[2026-05-31 11:16:04.899] ACTION=CONNECT; STATUS=STARTED; DETAILS=Server=SQLNPROD01A\SQLIDEV,30401
+[2026-05-31 11:16:05.417] ACTION=CONNECT; STATUS=SUCCESS; DETAILS=Connected to SQLNPROD01A\SQLIDEV,30401
+[2026-05-31 11:16:41.707] ACTION=CONNECT; STATUS=STARTED; DETAILS=Server=SQLNPROD01A\SQLIDEV,30401
+[2026-05-31 11:16:42.312] ACTION=CONNECT; STATUS=SUCCESS; DETAILS=Connected to SQLNPROD01A\SQLIDEV,30401
+[2026-05-31 11:18:25.707] ACTION=CONNECT; STATUS=STARTED; DETAILS=Server=SQLNPROD01A\SQLIDEV,30401
+[2026-05-31 11:18:26.208] ACTION=CONNECT; STATUS=SUCCESS; DETAILS=Connected to SQLNPROD01A\SQLIDEV,30401
+[2026-05-31 11:19:09.818] ACTION=CONNECT; STATUS=STARTED; DETAILS=Server=SQLNPROD01A\SQLIDEV,30401
+[2026-05-31 11:19:10.291] ACTION=CONNECT; STATUS=SUCCESS; DETAILS=Connected to SQLNPROD01A\SQLIDEV,30401
+[2026-05-31 11:20:53.212] ACTION=CONNECT; STATUS=STARTED; DETAILS=Server=SQLNPROD01A\SQLIDEV,30401
+[2026-05-31 11:20:53.794] ACTION=CONNECT; STATUS=SUCCESS; DETAILS=Connected to SQLNPROD01A\SQLIDEV,30401
+[2026-05-31 11:22:26.655] ACTION=CONNECT; STATUS=STARTED; DETAILS=Server=SQLNPROD01A\SQLIDEV,30401
+[2026-05-31 11:22:27.157] ACTION=CONNECT; STATUS=SUCCESS; DETAILS=Connected to SQLNPROD01A\SQLIDEV,30401
+[2026-05-31 11:25:05.033] ACTION=CONNECT; STATUS=STARTED; DETAILS=Server=SQLNPROD01A\SQLIDEV,30401
+[2026-05-31 11:25:05.475] ACTION=CONNECT; STATUS=SUCCESS; DETAILS=Connected to SQLNPROD01A\SQLIDEV,30401
+[2026-05-31 11:25:22.964] ACTION=SEARCH; STATUS=STARTED; DETAILS=Database=EclipseDev; Schema=(none); Keyword=(none)
+[2026-05-31 11:25:22.965] ACTION=FILTER; STATUS=APPLIED; DETAILS=Database=EclipseDev; Schema=(none); Keyword=(none)
+[2026-05-31 11:25:33.607] ACTION=SEARCH; STATUS=SUCCESS; DETAILS=Database=EclipseDev; Count=12296
+[2026-05-31 11:32:45.890] ACTION=CONNECT; STATUS=STARTED; DETAILS=Server=SQLNPROD01A\SQLIDEV,30401
+[2026-05-31 11:32:46.755] ACTION=CONNECT; STATUS=SUCCESS; DETAILS=Connected to SQLNPROD01A\SQLIDEV,30401
+[2026-05-31 11:37:41.153] ACTION=CONNECT; STATUS=STARTED; DETAILS=Server=SQLNPROD01A\SQLIDEV,30401
+[2026-05-31 11:37:41.679] ACTION=CONNECT; STATUS=SUCCESS; DETAILS=Connected to SQLNPROD01A\SQLIDEV,30401
+[2026-05-31 11:39:36.002] ACTION=CONNECT; STATUS=STARTED; DETAILS=Server=SQLNPROD01A\SQLIDEV,30401
+[2026-05-31 11:39:36.478] ACTION=CONNECT; STATUS=SUCCESS; DETAILS=Connected to SQLNPROD01A\SQLIDEV,30401
+[2026-05-31 11:45:18.602] ACTION=CONNECT; STATUS=STARTED; DETAILS=Server=SQLNPROD01A\SQLIDEV,30401
+[2026-05-31 11:45:25.997] ACTION=CONNECT; STATUS=FAILED; DETAILS=SqlException Message=A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: TCP Provider, error: 0 - No such host is known.)
+[2026-05-31 11:45:25.998] EXCEPTION=CONNECT; STACK=   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, SqlCommand command, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.Connect(ServerInfo serverInfo, SqlInternalConnectionTds connHandler, TimeoutTimer timeout, SqlConnectionString connectionOptions, Boolean withFailover)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.AttemptOneLogin(ServerInfo serverInfo, String newPassword, SecureString newSecurePassword, TimeoutTimer timeout, Boolean withFailover)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.LoginNoFailover(ServerInfo serverInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString connectionOptions, SqlCredential credential, TimeoutTimer timeout)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.OpenLoginEnlist(TimeoutTimer timeout, SqlConnectionString connectionOptions, SqlCredential credential, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds..ctor(DbConnectionPoolIdentity identity, SqlConnectionString connectionOptions, SqlCredential credential, Object providerInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString userConnectionOptions, SessionData reconnectSessionData, Boolean applyTransientFaultHandling, String accessToken, DbConnectionPool pool, Func`3 accessTokenCallback)
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.CreateConnection(DbConnectionOptions options, DbConnectionPoolKey poolKey, Object poolGroupProviderInfo, DbConnectionPool pool, DbConnection owningConnection, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionFactory.CreatePooledConnection(DbConnectionPool pool, DbConnection owningObject, DbConnectionOptions options, DbConnectionPoolKey poolKey, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.CreateObject(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.UserCreateRequest(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.WaitForPendingOpen()
+--- End of stack trace from previous location ---
+   at Database_Hub.ViewModels.DatabaseConnectionViewModel.Connect() in D:\My Projects\Database Hub\ViewModels\DatabaseConnectionViewModel.cs:line 244
+[2026-05-31 11:56:24.341] ACTION=CONNECT; STATUS=STARTED; DETAILS=Server=SQLSNPT2,40202
+[2026-05-31 11:56:25.165] ACTION=CONNECT; STATUS=FAILED; DETAILS=SqlException Message=Login failed for user 'LBFINANCE\janithk'. Reason: The account is disabled.
+[2026-05-31 11:56:25.166] EXCEPTION=CONNECT; STACK=   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, SqlCommand command, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.CompleteLogin(Boolean enlistOK)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.AttemptOneLogin(ServerInfo serverInfo, String newPassword, SecureString newSecurePassword, TimeoutTimer timeout, Boolean withFailover)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.LoginNoFailover(ServerInfo serverInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString connectionOptions, SqlCredential credential, TimeoutTimer timeout)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.OpenLoginEnlist(TimeoutTimer timeout, SqlConnectionString connectionOptions, SqlCredential credential, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds..ctor(DbConnectionPoolIdentity identity, SqlConnectionString connectionOptions, SqlCredential credential, Object providerInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString userConnectionOptions, SessionData reconnectSessionData, Boolean applyTransientFaultHandling, String accessToken, DbConnectionPool pool, Func`3 accessTokenCallback)
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.CreateConnection(DbConnectionOptions options, DbConnectionPoolKey poolKey, Object poolGroupProviderInfo, DbConnectionPool pool, DbConnection owningConnection, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionFactory.CreatePooledConnection(DbConnectionPool pool, DbConnection owningObject, DbConnectionOptions options, DbConnectionPoolKey poolKey, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.CreateObject(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.UserCreateRequest(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.WaitForPendingOpen()
+--- End of stack trace from previous location ---
+   at Database_Hub.ViewModels.DatabaseConnectionViewModel.Connect() in D:\My Projects\Database Hub\ViewModels\DatabaseConnectionViewModel.cs:line 263
+[2026-05-31 11:56:27.490] ACTION=CONNECT; STATUS=STARTED; DETAILS=Server=SQLSNPT2,40202
+[2026-05-31 11:56:27.494] ACTION=CONNECT; STATUS=FAILED; DETAILS=SqlException Message=Login failed for user 'LBFINANCE\janithk'. Reason: The account is disabled.
+[2026-05-31 11:56:27.495] EXCEPTION=CONNECT; STACK=   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.InternalOpenAsync(CancellationToken cancellationToken)
+--- End of stack trace from previous location ---
+   at Database_Hub.ViewModels.DatabaseConnectionViewModel.Connect() in D:\My Projects\Database Hub\ViewModels\DatabaseConnectionViewModel.cs:line 263
+[2026-05-31 11:56:33.698] ACTION=CONNECT; STATUS=STARTED; DETAILS=Server=SQLNPROD01A\SQLIDEV,30401
+[2026-05-31 11:56:34.018] ACTION=CONNECT; STATUS=SUCCESS; DETAILS=Connected to SQLNPROD01A\SQLIDEV,30401
+[2026-05-31 12:01:12.533] ACTION=SEARCH; STATUS=STARTED; DETAILS=Database=EclipseDev; Schema=ins; Keyword=(none)
+[2026-05-31 12:01:12.534] ACTION=FILTER; STATUS=APPLIED; DETAILS=Database=EclipseDev; Schema=ins; Keyword=(none)
+[2026-05-31 12:01:22.370] ACTION=SEARCH; STATUS=SUCCESS; DETAILS=Database=EclipseDev; Count=476
+[2026-05-31 12:20:47.794] ACTION=CONNECT; STATUS=STARTED; DETAILS=Server=SQLNPROD01A\SQLIDEV,30401
+[2026-05-31 12:20:48.363] ACTION=CONNECT; STATUS=SUCCESS; DETAILS=Connected to SQLNPROD01A\SQLIDEV,30401
+[2026-05-31 12:21:51.568] ACTION=SEARCH; STATUS=STARTED; DETAILS=Database=EclipseDev; Schema=ins; Keyword=(none)
+[2026-05-31 12:21:51.569] ACTION=FILTER; STATUS=APPLIED; DETAILS=Database=EclipseDev; Schema=ins; Keyword=(none)
+[2026-05-31 12:21:59.875] ACTION=SEARCH; STATUS=SUCCESS; DETAILS=Database=EclipseDev; Count=476
+[2026-05-31 20:20:42.453] ACTION=CONNECT; STATUS=STARTED; DETAILS=Server=SQLNPROD01A\SQLIDEV,30401
+[2026-05-31 20:20:49.921] ACTION=CONNECT; STATUS=FAILED; DETAILS=SqlException Message=A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: TCP Provider, error: 0 - No such host is known.)
+[2026-05-31 20:20:49.921] EXCEPTION=CONNECT; STACK=   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, SqlCommand command, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.Connect(ServerInfo serverInfo, SqlInternalConnectionTds connHandler, TimeoutTimer timeout, SqlConnectionString connectionOptions, Boolean withFailover)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.AttemptOneLogin(ServerInfo serverInfo, String newPassword, SecureString newSecurePassword, TimeoutTimer timeout, Boolean withFailover)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.LoginNoFailover(ServerInfo serverInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString connectionOptions, SqlCredential credential, TimeoutTimer timeout)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.OpenLoginEnlist(TimeoutTimer timeout, SqlConnectionString connectionOptions, SqlCredential credential, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds..ctor(DbConnectionPoolIdentity identity, SqlConnectionString connectionOptions, SqlCredential credential, Object providerInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString userConnectionOptions, SessionData reconnectSessionData, Boolean applyTransientFaultHandling, String accessToken, DbConnectionPool pool, Func`3 accessTokenCallback)
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.CreateConnection(DbConnectionOptions options, DbConnectionPoolKey poolKey, Object poolGroupProviderInfo, DbConnectionPool pool, DbConnection owningConnection, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionFactory.CreatePooledConnection(DbConnectionPool pool, DbConnection owningObject, DbConnectionOptions options, DbConnectionPoolKey poolKey, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.CreateObject(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.UserCreateRequest(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.WaitForPendingOpen()
+--- End of stack trace from previous location ---
+   at Database_Hub.ViewModels.DatabaseConnectionViewModel.Connect() in D:\My Projects\Database Hub\ViewModels\DatabaseConnectionViewModel.cs:line 263
+[2026-05-31 20:22:16.853] ACTION=CONNECT; STATUS=STARTED; DETAILS=Server=SQLNPROD01A\SQLIDEV,30401
+[2026-05-31 20:22:17.353] ACTION=CONNECT; STATUS=SUCCESS; DETAILS=Connected to SQLNPROD01A\SQLIDEV,30401
+[2026-05-31 20:28:11.742] ACTION=CONNECT; STATUS=STARTED; DETAILS=Server=SQLNPROD01A\SQLIDEV,30401
+[2026-05-31 20:28:12.307] ACTION=CONNECT; STATUS=SUCCESS; DETAILS=Connected to SQLNPROD01A\SQLIDEV,30401
+[2026-05-31 20:39:02.297] ACTION=CONNECT; STATUS=STARTED; DETAILS=Server=SQLNPROD01A\SQLIDEV,30401
+[2026-05-31 20:39:02.943] ACTION=CONNECT; STATUS=SUCCESS; DETAILS=Connected to SQLNPROD01A\SQLIDEV,30401
+[2026-05-31 20:39:18.606] ACTION=RELEASE_FOLDER; STATUS=SUCCESS; DETAILS=Folder=D:\Eclipse.Database; Files=9594; Nodes=10512; SkippedFolders=0; Truncated=False
+[2026-05-31 21:15:17.402] ACTION=CONNECT; STATUS=STARTED; DETAILS=Server=SQLNPROD01A\SQLIDEV,30401
+[2026-05-31 21:15:18.030] ACTION=CONNECT; STATUS=SUCCESS; DETAILS=Connected to SQLNPROD01A\SQLIDEV,30401
+[2026-05-31 21:15:32.106] ACTION=FILE_EXPLORER_FOLDER; STATUS=SUCCESS; DETAILS=Folder=D:\Eclipse.Database; Nodes=12696; SkippedFolders=0; Truncated=False
+[2026-05-31 21:15:47.316] ACTION=OBJECT_EXPLORER_LOAD; STATUS=STARTED; DETAILS=Server=SQLNPROD01A\SQLIDEV,30401
+[2026-05-31 21:15:47.740] ACTION=OBJECT_EXPLORER_LOAD; STATUS=SUCCESS; DETAILS=DatabaseCount=52
+[2026-05-31 21:26:17.117] ACTION=CONNECT; STATUS=STARTED; DETAILS=Server=SQLNPROD01A\SQLIDEV,30401
+[2026-05-31 21:26:17.684] ACTION=CONNECT; STATUS=SUCCESS; DETAILS=Connected to SQLNPROD01A\SQLIDEV,30401
+[2026-05-31 21:26:24.915] ACTION=FILE_EXPLORER_FOLDER; STATUS=SUCCESS; DETAILS=Folder=D:\Eclipse.Database; Nodes=12696; SkippedFolders=0; Truncated=False
+[2026-05-31 21:26:30.756] ACTION=FILE_EXPLORER_RESET; STATUS=SUCCESS; DETAILS=File explorer reset by user.
+[2026-05-31 21:26:32.076] ACTION=OBJECT_EXPLORER_LOAD; STATUS=STARTED; DETAILS=Server=SQLNPROD01A\SQLIDEV,30401
+[2026-05-31 21:26:32.453] ACTION=OBJECT_EXPLORER_LOAD; STATUS=SUCCESS; DETAILS=DatabaseCount=52
+[2026-05-31 21:26:49.370] ACTION=SEARCH; STATUS=STARTED; DETAILS=Database=EclipseDev; Schema=ins; Keyword=(none)
+[2026-05-31 21:26:49.371] ACTION=FILTER; STATUS=APPLIED; DETAILS=Database=EclipseDev; Schema=ins; Keyword=(none)
+[2026-05-31 21:26:58.081] ACTION=SEARCH; STATUS=SUCCESS; DETAILS=Database=EclipseDev; Count=476
+[2026-05-31 21:37:19.654] ACTION=FILTER; STATUS=SUCCESS; DETAILS=Filters cleared by user cancel action.
+[2026-05-31 21:37:34.762] ACTION=RELEASE_FOLDER; STATUS=SUCCESS; DETAILS=Folder=D:\Eclipse.Database; Files=9594; Nodes=10512; SkippedFolders=0; Truncated=False
+[2026-05-31 21:38:41.600] ACTION=RELEASE_RESET; STATUS=SUCCESS; DETAILS=Release Executor view reset by user.
+[2026-05-31 21:38:50.682] ACTION=RELEASE_FOLDER; STATUS=SUCCESS; DETAILS=Folder=D:\Eclipse.Database; Files=9594; Nodes=10512; SkippedFolders=0; Truncated=False
+[2026-05-31 21:41:21.065] ACTION=RELEASE_RESET; STATUS=SUCCESS; DETAILS=Release Executor view reset by user.
+[2026-05-31 21:44:31.805] ACTION=CONNECT; STATUS=STARTED; DETAILS=Server=SQLNPROD01A\SQLIDEV,30401
+[2026-05-31 21:44:32.399] ACTION=CONNECT; STATUS=SUCCESS; DETAILS=Connected to SQLNPROD01A\SQLIDEV,30401
+[2026-05-31 21:44:36.086] ACTION=FILE_EXPLORER_FOLDER; STATUS=SUCCESS; DETAILS=Folder=D:\Eclipse.Database; Nodes=12696; SkippedFolders=0; Truncated=False
+[2026-05-31 21:44:44.691] ACTION=OBJECT_EXPLORER_LOAD; STATUS=STARTED; DETAILS=Server=SQLNPROD01A\SQLIDEV,30401
+[2026-05-31 21:44:45.059] ACTION=OBJECT_EXPLORER_LOAD; STATUS=SUCCESS; DETAILS=DatabaseCount=52
+[2026-05-31 21:46:04.236] ACTION=RELEASE_FOLDER; STATUS=SUCCESS; DETAILS=Folder=D:\Eclipse.Database; SqlFiles=9594; TotalFiles=11778; Nodes=12696; SkippedFolders=0; Truncated=False
+[2026-05-31 21:52:24.904] ACTION=CONNECT; STATUS=STARTED; DETAILS=Server=SQLNPROD01A\SQLIDEV,30401
+[2026-05-31 21:52:25.480] ACTION=CONNECT; STATUS=SUCCESS; DETAILS=Connected to SQLNPROD01A\SQLIDEV,30401
+[2026-05-31 21:52:30.725] ACTION=RELEASE_FOLDER; STATUS=SUCCESS; DETAILS=Folder=D:\Eclipse.Database; SqlFiles=9594; TotalFiles=11778; Nodes=12696; SkippedFolders=0; Truncated=False
+[2026-05-31 21:56:04.962] ACTION=CONNECT; STATUS=STARTED; DETAILS=Server=SQLNPROD01A\SQLIDEV,30401
+[2026-05-31 21:56:05.484] ACTION=CONNECT; STATUS=SUCCESS; DETAILS=Connected to SQLNPROD01A\SQLIDEV,30401
+[2026-05-31 21:56:11.732] ACTION=RELEASE_FOLDER; STATUS=SUCCESS; DETAILS=Folder=D:\Eclipse.Database; SqlFiles=9594; TotalFiles=11778; Nodes=12696; SkippedFolders=0; Truncated=False
+[2026-05-31 21:56:42.562] ACTION=RELEASE_RESET; STATUS=SUCCESS; DETAILS=Release Executor view reset by user.
+[2026-05-31 21:56:45.019] ACTION=OBJECT_EXPLORER_LOAD; STATUS=STARTED; DETAILS=Server=SQLNPROD01A\SQLIDEV,30401
+[2026-05-31 21:56:45.517] ACTION=OBJECT_EXPLORER_LOAD; STATUS=SUCCESS; DETAILS=DatabaseCount=52
+[2026-05-31 21:56:51.697] ACTION=CONNECT; STATUS=STARTED; DETAILS=Server=SQLNPROD01A\SQLIDEV,30401
+[2026-05-31 21:56:51.699] ACTION=CONNECT; STATUS=SUCCESS; DETAILS=Connected to SQLNPROD01A\SQLIDEV,30401
+[2026-05-31 21:58:11.166] ACTION=CONNECT; STATUS=STARTED; DETAILS=Server=SQLNPROD01A\SQLIDEV,30401
+[2026-05-31 21:58:11.695] ACTION=CONNECT; STATUS=SUCCESS; DETAILS=Connected to SQLNPROD01A\SQLIDEV,30401
+[2026-05-31 22:03:40.660] ACTION=OBJECT_EXPLORER_LOAD; STATUS=STARTED; DETAILS=Server=SQLNPROD01A\SQLIDEV,30401
+[2026-05-31 22:03:40.956] ACTION=OBJECT_EXPLORER_LOAD; STATUS=SUCCESS; DETAILS=DatabaseCount=52
+[2026-05-31 22:03:48.001] ACTION=OBJECT_EXPLORER_LOAD; STATUS=SKIPPED; DETAILS=Database list already loaded.
+[2026-05-31 22:04:14.621] ACTION=RELEASE_FOLDER; STATUS=SUCCESS; DETAILS=Folder=D:\User Story\37 -- US 220770 Savings  GL Bulk External  add mCash GL account with approval process; SqlFiles=3; TotalFiles=4; Nodes=4; SkippedFolders=0; Truncated=False
+[2026-05-31 22:04:43.269] ACTION=RELEASE_EXECUTE; STATUS=STARTED; DETAILS=Folder=D:\User Story\37 -- US 220770 Savings  GL Bulk External  add mCash GL account with approval process; Files=3
+[2026-05-31 22:04:43.756] ACTION=RELEASE_EXECUTE_FILE; STATUS=FAILED; DETAILS=File=2.workflow_level_1_level_2.sql Message=Invalid object name 'wfm.TargetParameter'.
+[2026-05-31 22:04:43.756] EXCEPTION=RELEASE_EXECUTE_FILE; STACK=   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, SqlCommand command, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlCommand.InternalEndExecuteNonQuery(IAsyncResult asyncResult, Boolean isInternal, String endMethod)
+   at Microsoft.Data.SqlClient.SqlCommand.EndExecuteNonQueryInternal(IAsyncResult asyncResult)
+   at Microsoft.Data.SqlClient.SqlCommand.EndExecuteNonQueryAsync(IAsyncResult asyncResult)
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<InternalExecuteNonQueryAsync>b__193_1(IAsyncResult asyncResult)
+   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)
+--- End of stack trace from previous location ---
+   at Database_Hub.ViewModels.ConnectedMode.ReleaseExecutorViewModel.ExecuteSqlFileAsync(String filePath, String serverAddress) in D:\My Projects\Database Hub\ViewModels\ConnectedMode\ReleaseExecutorViewModel.cs:line 537
+   at Database_Hub.ViewModels.ConnectedMode.ReleaseExecutorViewModel.ExecuteScriptsAsync() in D:\My Projects\Database Hub\ViewModels\ConnectedMode\ReleaseExecutorViewModel.cs:line 401
+[2026-05-31 22:04:43.897] ACTION=RELEASE_EXECUTE_FILE; STATUS=FAILED; DETAILS=File=3.business_process_bill_collection_dialog_tv.sql Message=Invalid object name 'msd.BusinessProcess'.
+[2026-05-31 22:04:43.897] EXCEPTION=RELEASE_EXECUTE_FILE; STACK=   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, SqlCommand command, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlCommand.InternalEndExecuteNonQuery(IAsyncResult asyncResult, Boolean isInternal, String endMethod)
+   at Microsoft.Data.SqlClient.SqlCommand.EndExecuteNonQueryInternal(IAsyncResult asyncResult)
+   at Microsoft.Data.SqlClient.SqlCommand.EndExecuteNonQueryAsync(IAsyncResult asyncResult)
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<InternalExecuteNonQueryAsync>b__193_1(IAsyncResult asyncResult)
+   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)
+--- End of stack trace from previous location ---
+   at Database_Hub.ViewModels.ConnectedMode.ReleaseExecutorViewModel.ExecuteSqlFileAsync(String filePath, String serverAddress) in D:\My Projects\Database Hub\ViewModels\ConnectedMode\ReleaseExecutorViewModel.cs:line 537
+   at Database_Hub.ViewModels.ConnectedMode.ReleaseExecutorViewModel.ExecuteScriptsAsync() in D:\My Projects\Database Hub\ViewModels\ConnectedMode\ReleaseExecutorViewModel.cs:line 401
+[2026-05-31 22:04:43.898] ACTION=RELEASE_EXECUTE; STATUS=PARTIAL; DETAILS=Folder=D:\User Story\37 -- US 220770 Savings  GL Bulk External  add mCash GL account with approval process; Success=1; Failed=2
+[2026-05-31 22:04:58.244] ACTION=RELEASE_EXEC_LOG; STATUS=CANCELED; DETAILS=Execution log download canceled.
+[2026-05-31 22:04:59.859] ACTION=RELEASE_RESET; STATUS=SUCCESS; DETAILS=Release Executor view reset by user.
+[2026-05-31 22:05:24.956] ACTION=FILE_EXPLORER_FOLDER; STATUS=SUCCESS; DETAILS=Folder=D:\User Story\37 -- US 220770 Savings  GL Bulk External  add mCash GL account with approval process; Nodes=5; SkippedFolders=0; Truncated=False
+[2026-05-31 22:05:37.362] ACTION=OBJECT_EXPLORER_LOAD; STATUS=SKIPPED; DETAILS=Database list already loaded.
+[2026-05-31 22:06:04.929] ACTION=OBJECT_EXPLORER_LOAD; STATUS=SKIPPED; DETAILS=Database list already loaded.
+[2026-05-31 22:06:10.494] ACTION=RELEASE_FOLDER; STATUS=SUCCESS; DETAILS=Folder=D:\User Story\37 -- US 220770 Savings  GL Bulk External  add mCash GL account with approval process; SqlFiles=2; TotalFiles=3; Nodes=3; SkippedFolders=0; Truncated=False
+[2026-05-31 22:06:16.385] ACTION=RELEASE_FOLDER; STATUS=SUCCESS; DETAILS=Folder=D:\Eclipse.Database; SqlFiles=9594; TotalFiles=11778; Nodes=12696; SkippedFolders=0; Truncated=False

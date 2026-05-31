@@ -58,6 +58,8 @@ namespace Database_Hub.ViewModels.ConnectedMode
     public class FileExplorerViewModel : BindableBase
     {
         private const long PreviewMaxBytes = 2 * 1024 * 1024;
+        private const int MaxTreeDepth = 40;
+        private const int MaxTreeNodes = 25000;
 
         private readonly Database_Hub.Services.ActionLoggerService _actionLogger;
         private string _selectedFolderPath = string.Empty;
@@ -115,6 +117,8 @@ namespace Database_Hub.ViewModels.ConnectedMode
         public DelegateCommand<FileExplorerNode> PreviewFileCommand { get; }
         public DelegateCommand<FilePreviewTab> ClosePreviewTabCommand { get; }
         public DelegateCommand ResetExplorerCommand { get; }
+        public DelegateCommand ExpandAllCommand { get; }
+        public DelegateCommand CollapseAllCommand { get; }
 
         public FileExplorerViewModel(Database_Hub.Services.ActionLoggerService actionLogger)
         {
@@ -124,6 +128,8 @@ namespace Database_Hub.ViewModels.ConnectedMode
             PreviewFileCommand = new DelegateCommand<FileExplorerNode>(async node => await PreviewFileAsync(node));
             ClosePreviewTabCommand = new DelegateCommand<FilePreviewTab>(ClosePreviewTab);
             ResetExplorerCommand = new DelegateCommand(ResetExplorer);
+            ExpandAllCommand = new DelegateCommand(() => SetFolderExpansion(true));
+            CollapseAllCommand = new DelegateCommand(() => SetFolderExpansion(false));
         }
 
         private void OpenFolder()
@@ -187,8 +193,17 @@ namespace Database_Hub.ViewModels.ConnectedMode
             RootNodes.Clear();
             PreviewTabs.Clear();
             SelectedPreviewTab = null;
-            BuildTree(new DirectoryInfo(folderPath), RootNodes);
-            _actionLogger.LogAction(actionName, "SUCCESS", $"Folder={folderPath}");
+
+            var stats = new FileTreeBuildStats();
+            BuildTree(new DirectoryInfo(folderPath), RootNodes, 0, stats);
+
+            var detail = $"Folder={folderPath}; Nodes={stats.NodeCount}; SkippedFolders={stats.SkippedFolders}; Truncated={stats.WasTruncated}";
+            _actionLogger.LogAction(actionName, "SUCCESS", detail);
+
+            if (stats.WasTruncated)
+            {
+                _actionLogger.LogAction("FILE_EXPLORER_TREE", "PARTIAL", "Tree truncated due to depth/node safety limits.");
+            }
         }
 
         private void ResetExplorer()
@@ -289,15 +304,35 @@ namespace Database_Hub.ViewModels.ConnectedMode
             SelectedPreviewTab = PreviewTabs[nextIndex];
         }
 
-        private static void BuildTree(DirectoryInfo directory, ObservableCollection<FileExplorerNode> target)
+        private static void BuildTree(
+            DirectoryInfo directory,
+            ObservableCollection<FileExplorerNode> target,
+            int depth,
+            FileTreeBuildStats stats)
         {
-            var subDirectories = directory
-                .GetDirectories()
-                .OrderBy(d => d.Name, StringComparer.OrdinalIgnoreCase)
-                .ToList();
+            if (depth >= MaxTreeDepth || stats.NodeCount >= MaxTreeNodes)
+            {
+                stats.WasTruncated = true;
+                return;
+            }
+
+            var subDirectories = GetSafeDirectories(directory)
+                .OrderBy(d => d.Name, StringComparer.OrdinalIgnoreCase);
 
             foreach (var subDirectory in subDirectories)
             {
+                if (stats.NodeCount >= MaxTreeNodes)
+                {
+                    stats.WasTruncated = true;
+                    return;
+                }
+
+                if (!CanTraverseDirectory(subDirectory))
+                {
+                    stats.SkippedFolders++;
+                    continue;
+                }
+
                 var folderNode = new FileExplorerNode
                 {
                     Name = subDirectory.Name,
@@ -306,23 +341,112 @@ namespace Database_Hub.ViewModels.ConnectedMode
                     IsExpanded = false
                 };
 
-                BuildTree(subDirectory, folderNode.Children);
+                stats.NodeCount++;
+                BuildTree(subDirectory, folderNode.Children, depth + 1, stats);
                 target.Add(folderNode);
             }
 
-            var files = directory
-                .GetFiles("*", SearchOption.TopDirectoryOnly)
-                .OrderBy(f => f.Name, StringComparer.OrdinalIgnoreCase)
-                .ToList();
+            var files = GetSafeFiles(directory)
+                .OrderBy(f => f.Name, StringComparer.OrdinalIgnoreCase);
 
             foreach (var file in files)
             {
+                if (stats.NodeCount >= MaxTreeNodes)
+                {
+                    stats.WasTruncated = true;
+                    return;
+                }
+
                 target.Add(new FileExplorerNode
                 {
                     Name = file.Name,
                     FullPath = file.FullName,
                     IsFolder = false
                 });
+
+                stats.NodeCount++;
+            }
+        }
+
+        private static IEnumerable<DirectoryInfo> GetSafeDirectories(DirectoryInfo directory)
+        {
+            try
+            {
+                return directory.EnumerateDirectories("*", SearchOption.TopDirectoryOnly);
+            }
+            catch (IOException)
+            {
+                return Enumerable.Empty<DirectoryInfo>();
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Enumerable.Empty<DirectoryInfo>();
+            }
+            catch
+            {
+                return Enumerable.Empty<DirectoryInfo>();
+            }
+        }
+
+        private static IEnumerable<FileInfo> GetSafeFiles(DirectoryInfo directory)
+        {
+            try
+            {
+                return directory.EnumerateFiles("*", SearchOption.TopDirectoryOnly);
+            }
+            catch (IOException)
+            {
+                return Enumerable.Empty<FileInfo>();
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Enumerable.Empty<FileInfo>();
+            }
+            catch
+            {
+                return Enumerable.Empty<FileInfo>();
+            }
+        }
+
+        private static bool CanTraverseDirectory(DirectoryInfo directory)
+        {
+            try
+            {
+                return (directory.Attributes & FileAttributes.ReparsePoint) == 0;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        private sealed class FileTreeBuildStats
+        {
+            public int NodeCount { get; set; }
+            public int SkippedFolders { get; set; }
+            public bool WasTruncated { get; set; }
+        }
+
+        private void SetFolderExpansion(bool isExpanded)
+        {
+            foreach (var node in RootNodes)
+            {
+                SetFolderExpansionRecursive(node, isExpanded);
+            }
+        }
+
+        private static void SetFolderExpansionRecursive(FileExplorerNode node, bool isExpanded)
+        {
+            if (!node.IsFolder)
+            {
+                return;
+            }
+
+            node.IsExpanded = isExpanded;
+
+            foreach (var child in node.Children)
+            {
+                SetFolderExpansionRecursive(child, isExpanded);
             }
         }
     }

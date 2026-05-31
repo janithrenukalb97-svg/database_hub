@@ -75,7 +75,13 @@ namespace Database_Hub.ViewModels
         public bool IsConnecting
         {
             get => _isConnecting;
-            set => SetProperty(ref _isConnecting, value);
+            set
+            {
+                if (SetProperty(ref _isConnecting, value))
+                {
+                    ConnectCommand?.RaiseCanExecuteChanged();
+                }
+            }
         }
 
         private readonly SessionService _sessionService;
@@ -85,7 +91,7 @@ namespace Database_Hub.ViewModels
             _regionManager = regionManager;
             _sessionService = sessionService;
             _actionLogger = actionLogger;
-            ConnectCommand = new DelegateCommand(Connect);
+            ConnectCommand = new DelegateCommand(Connect, CanConnect);
             BackCommand = new DelegateCommand(NavigateBack);
             AddServerCommand = new DelegateCommand(AddServer);
             ResetSelectionCommand = new DelegateCommand(ResetSelection);
@@ -93,6 +99,17 @@ namespace Database_Hub.ViewModels
             DeleteServerCommand = new DelegateCommand<ServerInfo>(DeleteServer);
             ViewLatestLogCommand = new DelegateCommand(ViewLatestLog);
             LoadServerList();
+        }
+
+        private bool CanConnect()
+        {
+            if (IsConnecting)
+            {
+                return false;
+            }
+
+            var address = (SelectedServer?.Address ?? ServerName) ?? string.Empty;
+            return !string.IsNullOrWhiteSpace(address);
         }
 
         private void ResetSelection()
@@ -201,6 +218,7 @@ namespace Database_Hub.ViewModels
                 {
                     _actionLogger.LogAction("CONNECT", "FAILED", "Address is empty or whitespace.");
                     ShowErrorDialog("Please select or enter a server name.");
+                    ResetConnectionState();
                     return;
                 }
                 // Basic validation: must contain at least a letter or digit
@@ -208,6 +226,7 @@ namespace Database_Hub.ViewModels
                 {
                     _actionLogger.LogAction("CONNECT", "FAILED", $"Address '{address}' does not contain letters or digits.");
                     ShowErrorDialog("The server address appears invalid.");
+                    ResetConnectionState();
                     return;
                 }
 
@@ -243,7 +262,7 @@ namespace Database_Hub.ViewModels
                     {
                         await conn.OpenAsync();
                     }
-                    catch (NullReferenceException ex)
+                    catch (NullReferenceException)
                     {
                         _actionLogger.LogAction("CONNECT", "INFO", "OpenAsync NullReferenceException, retrying with Open().");
                         conn.Open();
@@ -260,17 +279,25 @@ namespace Database_Hub.ViewModels
             catch (SqlException ex)
             {
                 _actionLogger.LogException("CONNECT", ex, "SqlException");
+                ResetConnectionState();
                 ShowErrorDialog($"Connection failed: {ex.Message}", "Connection Error");
             }
             catch (Exception ex)
             {
                 _actionLogger.LogException("CONNECT", ex, "Unexpected error");
+                ResetConnectionState();
                 ShowErrorDialog($"Unexpected error: {ex.Message}");
             }
             finally
             {
-                IsConnecting = false;
+                ResetConnectionState();
             }
+        }
+
+        private void ResetConnectionState()
+        {
+            IsConnecting = false;
+            ConnectCommand?.RaiseCanExecuteChanged();
         }
 
 

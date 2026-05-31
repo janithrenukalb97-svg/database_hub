@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,6 +22,7 @@ namespace Database_Hub.ViewModels.ConnectedMode
         public string Name { get; set; } = string.Empty;
         public string FullPath { get; set; } = string.Empty;
         public bool IsFolder { get; set; }
+        public bool IsSqlFile { get; set; }
         public ObservableCollection<ReleaseTreeNode> Children { get; } = new ObservableCollection<ReleaseTreeNode>();
 
         public bool IsExpanded
@@ -32,6 +34,9 @@ namespace Database_Hub.ViewModels.ConnectedMode
 
     public class ReleaseExecutorViewModel : BindableBase
     {
+        private const int MaxTreeDepth = 80;
+        private const int MaxTreeNodes = 100000;
+
         private readonly Database_Hub.Services.ActionLoggerService _actionLogger;
         private readonly Database_Hub.Services.SessionService _sessionService;
         private string _releaseExecutorStatus = "Select a folder to load SQL files.";
@@ -45,6 +50,7 @@ namespace Database_Hub.ViewModels.ConnectedMode
         private string _previewScriptContent = string.Empty;
         private GridLength _treePaneWidth = new GridLength(1, GridUnitType.Star);
         private GridLength _previewPaneWidth = new GridLength(0, GridUnitType.Pixel);
+        private int _previewRequestVersion;
 
         public ObservableCollection<ReleaseTreeNode> ReleaseRootNodes { get; } = new ObservableCollection<ReleaseTreeNode>();
         public ObservableCollection<string> ExecutionConsoleLines { get; } = new ObservableCollection<string>();
@@ -139,6 +145,8 @@ namespace Database_Hub.ViewModels.ConnectedMode
         public DelegateCommand DownloadExecutionLogCommand { get; }
         public DelegateCommand<ReleaseTreeNode> PreviewScriptCommand { get; }
         public DelegateCommand ClosePreviewCommand { get; }
+        public DelegateCommand ExpandAllFoldersCommand { get; }
+        public DelegateCommand CollapseAllFoldersCommand { get; }
 
         public ReleaseExecutorViewModel(
             Database_Hub.Services.ActionLoggerService actionLogger,
@@ -153,6 +161,8 @@ namespace Database_Hub.ViewModels.ConnectedMode
             DownloadExecutionLogCommand = new DelegateCommand(DownloadExecutionLog, CanDownloadExecutionLog);
             PreviewScriptCommand = new DelegateCommand<ReleaseTreeNode>(async node => await PreviewScriptAsync(node));
             ClosePreviewCommand = new DelegateCommand(ClosePreview);
+            ExpandAllFoldersCommand = new DelegateCommand(() => SetTreeExpansion(true));
+            CollapseAllFoldersCommand = new DelegateCommand(() => SetTreeExpansion(false));
             ExecutionPanelHeight = 0;
         }
 
@@ -247,18 +257,27 @@ namespace Database_Hub.ViewModels.ConnectedMode
             ClosePreview();
 
             var rootDirectory = new DirectoryInfo(selectedFolder);
-            var sqlFileCount = BuildTree(rootDirectory, ReleaseRootNodes);
+            var stats = new ReleaseTreeBuildStats();
+            var sqlFileCount = BuildTree(rootDirectory, ReleaseRootNodes, 0, stats);
+            var otherFileCount = Math.Max(0, stats.TotalFileCount - sqlFileCount);
 
             if (sqlFileCount == 0)
             {
-                ReleaseExecutorStatus = "No .sql files found in the selected folder.";
+                ReleaseExecutorStatus = $"No .sql files found in the selected folder. {stats.TotalFileCount} total file(s) loaded.";
             }
             else
             {
-                ReleaseExecutorStatus = $"Loaded {sqlFileCount} .sql file(s) from {selectedFolder}";
+                ReleaseExecutorStatus = $"Loaded {sqlFileCount} .sql file(s) and {otherFileCount} other file(s) from {selectedFolder}";
             }
 
-            _actionLogger.LogAction(actionName, "SUCCESS", $"Folder={selectedFolder}; Files={sqlFileCount}");
+            var detail = $"Folder={selectedFolder}; SqlFiles={sqlFileCount}; TotalFiles={stats.TotalFileCount}; Nodes={stats.NodeCount}; SkippedFolders={stats.SkippedFolders}; Truncated={stats.WasTruncated}";
+            _actionLogger.LogAction(actionName, "SUCCESS", detail);
+
+            if (stats.WasTruncated)
+            {
+                _actionLogger.LogAction("RELEASE_TREE", "PARTIAL", "Tree truncated due to depth/node safety limits.");
+            }
+
             ExecuteScriptsCommand.RaiseCanExecuteChanged();
         }
 
@@ -266,7 +285,7 @@ namespace Database_Hub.ViewModels.ConnectedMode
         {
             return !IsExecuting
                 && !string.IsNullOrWhiteSpace(ReleaseSelectedFolder)
-                && FlattenFileNodes(ReleaseRootNodes).Any();
+                && FlattenSqlFileNodes(ReleaseRootNodes).Any();
         }
 
         private bool CanDownloadExecutionLog()
@@ -276,10 +295,12 @@ namespace Database_Hub.ViewModels.ConnectedMode
 
         private async Task PreviewScriptAsync(ReleaseTreeNode? node)
         {
-            if (node == null || node.IsFolder)
+            if (node == null || node.IsFolder || !node.IsSqlFile)
             {
                 return;
             }
+
+            var requestVersion = Interlocked.Increment(ref _previewRequestVersion);
 
             if (!File.Exists(node.FullPath))
             {
@@ -290,6 +311,13 @@ namespace Database_Hub.ViewModels.ConnectedMode
             try
             {
                 var content = await File.ReadAllTextAsync(node.FullPath);
+
+                // If user clicked another item while this file was loading, skip stale updates.
+                if (requestVersion != _previewRequestVersion)
+                {
+                    return;
+                }
+
                 PreviewScriptTitle = node.Name;
                 PreviewScriptContent = content;
                 IsPreviewVisible = true;
@@ -327,7 +355,7 @@ namespace Database_Hub.ViewModels.ConnectedMode
                 return;
             }
 
-            var filesToExecute = FlattenFileNodes(ReleaseRootNodes).ToList();
+            var filesToExecute = FlattenSqlFileNodes(ReleaseRootNodes).ToList();
             if (filesToExecute.Count == 0)
             {
                 ReleaseExecutorStatus = "No SQL files available for execution.";
@@ -401,7 +429,7 @@ namespace Database_Hub.ViewModels.ConnectedMode
             {
                 var rootDirectory = new DirectoryInfo(ReleaseSelectedFolder);
                 ReleaseRootNodes.Clear();
-                BuildTree(rootDirectory, ReleaseRootNodes);
+                BuildTree(rootDirectory, ReleaseRootNodes, 0, new ReleaseTreeBuildStats());
             }
             catch (Exception ex)
             {
@@ -468,18 +496,18 @@ namespace Database_Hub.ViewModels.ConnectedMode
             return builder.ConnectionString;
         }
 
-        private static IEnumerable<ReleaseTreeNode> FlattenFileNodes(IEnumerable<ReleaseTreeNode> nodes)
+        private static IEnumerable<ReleaseTreeNode> FlattenSqlFileNodes(IEnumerable<ReleaseTreeNode> nodes)
         {
             foreach (var node in nodes)
             {
                 if (node.IsFolder)
                 {
-                    foreach (var child in FlattenFileNodes(node.Children))
+                    foreach (var child in FlattenSqlFileNodes(node.Children))
                     {
                         yield return child;
                     }
                 }
-                else
+                else if (node.IsSqlFile)
                 {
                     yield return node;
                 }
@@ -567,53 +595,167 @@ namespace Database_Hub.ViewModels.ConnectedMode
             ExecutionConsoleLines.Add(message);
         }
 
-        private static int BuildTree(DirectoryInfo directory, ObservableCollection<ReleaseTreeNode> target)
+        private static int BuildTree(
+            DirectoryInfo directory,
+            ObservableCollection<ReleaseTreeNode> target,
+            int depth,
+            ReleaseTreeBuildStats stats)
         {
+            if (depth >= MaxTreeDepth || stats.NodeCount >= MaxTreeNodes)
+            {
+                stats.WasTruncated = true;
+                return 0;
+            }
+
             var sqlCount = 0;
 
-            var directories = directory
-                .GetDirectories()
+            var directories = GetSafeDirectories(directory)
                 .Where(d =>
                     !d.Name.Equals("Excution Done", StringComparison.OrdinalIgnoreCase)
                     && !d.Name.Equals("Done", StringComparison.OrdinalIgnoreCase))
-                .OrderBy(d => d.Name, StringComparer.OrdinalIgnoreCase)
-                .ToList();
+                .OrderBy(d => d.Name, StringComparer.OrdinalIgnoreCase);
 
             foreach (var subDirectory in directories)
             {
+                if (stats.NodeCount >= MaxTreeNodes)
+                {
+                    stats.WasTruncated = true;
+                    return sqlCount;
+                }
+
+                if (!CanTraverseDirectory(subDirectory))
+                {
+                    stats.SkippedFolders++;
+                    continue;
+                }
+
                 var folderNode = new ReleaseTreeNode
                 {
                     Name = subDirectory.Name,
                     FullPath = subDirectory.FullName,
                     IsFolder = true,
-                    IsExpanded = true
+                    IsExpanded = false
                 };
 
-                var childSqlCount = BuildTree(subDirectory, folderNode.Children);
-                if (childSqlCount > 0)
-                {
-                    target.Add(folderNode);
-                    sqlCount += childSqlCount;
-                }
+                stats.NodeCount++;
+                var childSqlCount = BuildTree(subDirectory, folderNode.Children, depth + 1, stats);
+                target.Add(folderNode);
+                sqlCount += childSqlCount;
             }
 
-            var sqlFiles = directory
-                .GetFiles("*.sql", SearchOption.TopDirectoryOnly)
-                .OrderBy(f => f.Name, StringComparer.OrdinalIgnoreCase)
-                .ToList();
+            var sqlFiles = GetSafeFiles(directory)
+                .OrderBy(f => f.Name, StringComparer.OrdinalIgnoreCase);
 
             foreach (var file in sqlFiles)
             {
+                if (stats.NodeCount >= MaxTreeNodes)
+                {
+                    stats.WasTruncated = true;
+                    return sqlCount;
+                }
+
+                var isSqlFile = string.Equals(file.Extension, ".sql", StringComparison.OrdinalIgnoreCase);
+
                 target.Add(new ReleaseTreeNode
                 {
                     Name = file.Name,
                     FullPath = file.FullName,
-                    IsFolder = false
+                    IsFolder = false,
+                    IsSqlFile = isSqlFile
                 });
+
+                stats.NodeCount++;
+                stats.TotalFileCount++;
+
+                if (isSqlFile)
+                {
+                    sqlCount++;
+                }
+            }
+            return sqlCount;
+        }
+
+        private static IEnumerable<DirectoryInfo> GetSafeDirectories(DirectoryInfo directory)
+        {
+            try
+            {
+                return directory.EnumerateDirectories("*", SearchOption.TopDirectoryOnly);
+            }
+            catch (IOException)
+            {
+                return Enumerable.Empty<DirectoryInfo>();
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Enumerable.Empty<DirectoryInfo>();
+            }
+            catch
+            {
+                return Enumerable.Empty<DirectoryInfo>();
+            }
+        }
+
+        private static IEnumerable<FileInfo> GetSafeFiles(DirectoryInfo directory)
+        {
+            try
+            {
+                return directory.EnumerateFiles("*", SearchOption.TopDirectoryOnly);
+            }
+            catch (IOException)
+            {
+                return Enumerable.Empty<FileInfo>();
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Enumerable.Empty<FileInfo>();
+            }
+            catch
+            {
+                return Enumerable.Empty<FileInfo>();
+            }
+        }
+
+        private static bool CanTraverseDirectory(DirectoryInfo directory)
+        {
+            try
+            {
+                return (directory.Attributes & FileAttributes.ReparsePoint) == 0;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        private sealed class ReleaseTreeBuildStats
+        {
+            public int NodeCount { get; set; }
+            public int TotalFileCount { get; set; }
+            public int SkippedFolders { get; set; }
+            public bool WasTruncated { get; set; }
+        }
+
+        private void SetTreeExpansion(bool isExpanded)
+        {
+            foreach (var node in ReleaseRootNodes)
+            {
+                SetTreeExpansionRecursive(node, isExpanded);
+            }
+        }
+
+        private static void SetTreeExpansionRecursive(ReleaseTreeNode node, bool isExpanded)
+        {
+            if (!node.IsFolder)
+            {
+                return;
             }
 
-            sqlCount += sqlFiles.Count;
-            return sqlCount;
+            node.IsExpanded = isExpanded;
+
+            foreach (var child in node.Children)
+            {
+                SetTreeExpansionRecursive(child, isExpanded);
+            }
         }
     }
 }

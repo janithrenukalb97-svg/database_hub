@@ -122,12 +122,22 @@
                         <TextBlock.Style>
                             <Style TargetType="TextBlock">
                                 <Setter Property="FontSize" Value="13"/>
-                                <Setter Property="FontWeight" Value="SemiBold"/>
-                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Setter Property="FontWeight" Value="Normal"/>
+                                <Setter Property="Visibility" Value="Visible"/>
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding IsFolder}" Value="True">
-                                        <Setter Property="Visibility" Value="Visible"/>
+                                        <Setter Property="FontWeight" Value="SemiBold"/>
                                     </DataTrigger>
+                                    <DataTrigger Binding="{Binding IsSqlFile}" Value="False">
+                                        <Setter Property="Foreground" Value="#475569"/>
+                                    </DataTrigger>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding IsFolder}" Value="False"/>
+                                            <Condition Binding="{Binding IsSqlFile}" Value="True"/>
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    </MultiDataTrigger>
                                 </Style.Triggers>
                             </Style>
                         </TextBlock.Style>
@@ -136,21 +146,32 @@
                     <Button Content="{Binding Name}"
                             Command="{Binding DataContext.PreviewScriptCommand, RelativeSource={RelativeSource AncestorType=TreeView}}"
                             CommandParameter="{Binding}"
+                            PreviewMouseLeftButtonDown="ScriptButton_PreviewMouseLeftButtonDown"
                             Background="Transparent"
                             BorderThickness="0"
                             Padding="0"
                             Foreground="#1F2937"
                             HorizontalAlignment="Left"
+                            Focusable="False"
                             Cursor="Hand">
                         <Button.Style>
                             <Style TargetType="Button">
-                                <Setter Property="Visibility" Value="Visible"/>
+                                    <Setter Property="Visibility" Value="Collapsed"/>
                                 <Setter Property="FontSize" Value="13"/>
                                 <Setter Property="FontWeight" Value="Normal"/>
+                                <Setter Property="Padding" Value="2,1"/>
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsFolder}" Value="True">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                    </DataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding IsFolder}" Value="False"/>
+                                                <Condition Binding="{Binding IsSqlFile}" Value="True"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </MultiDataTrigger>
+                                        <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=TreeViewItem}}" Value="True">
+                                            <Setter Property="Background" Value="#DBEAFE"/>
+                                            <Setter Property="Foreground" Value="#1E3A8A"/>
+                                        </DataTrigger>
                                 </Style.Triggers>
                             </Style>
                         </Button.Style>
@@ -241,23 +262,43 @@
                                 Padding="8">
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="1*"/>
-                                    <ColumnDefinition Width="8"/>
-                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="{Binding TreePaneWidth}"/>
+                                    <ColumnDefinition Width="{Binding PreviewPaneWidth}"/>
                                 </Grid.ColumnDefinitions>
 
                                 <Grid Grid.Column="0">
                                     <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
                                         <RowDefinition Height="*"/>
                                         <RowDefinition Height="Auto"/>
                                     </Grid.RowDefinitions>
 
-                                    <TreeView Grid.Row="0"
+                                    <StackPanel Grid.Row="0"
+                                                Orientation="Horizontal"
+                                                HorizontalAlignment="Right"
+                                                Margin="0,0,0,6">
+                                        <Button Content="⌃"
+                                            Width="30"
+                                            Height="30"
+                                            Padding="0"
+                                                Background="#E2E8F0"
+                                                Foreground="#0F172A"
+                                                BorderBrush="#CBD5E1"
+                                                Style="{StaticResource ActionButtonStyle}"
+                                            FontSize="14"
+                                            FontWeight="Bold"
+                                            ToolTip="Collapse all folders"
+                                                Command="{Binding CollapseAllFoldersCommand}"/>
+                                    </StackPanel>
+
+                                        <TreeView x:Name="ReleaseTreeView"
+                                            Grid.Row="1"
                                             ItemsSource="{Binding ReleaseRootNodes}"
                                             ItemTemplate="{StaticResource ReleaseTreeNodeTemplate}"
                                             ItemContainerStyle="{StaticResource ReleaseTreeItemStyle}"
                                             BorderThickness="0"
                                             Background="Transparent"
+                                            SelectedItemChanged="ReleaseTreeView_SelectedItemChanged"
                                             ScrollViewer.VerticalScrollBarVisibility="Auto"
                                             ScrollViewer.HorizontalScrollBarVisibility="Auto">
                                         <TreeView.Resources>
@@ -265,7 +306,7 @@
                                         </TreeView.Resources>
                                     </TreeView>
 
-                                    <Border Grid.Row="1"
+                                        <Border Grid.Row="2"
                                             Margin="0,8,0,0"
                                             Height="{Binding ExecutionPanelHeight}"
                                             Background="#0F172A"
@@ -304,12 +345,13 @@
                                     </Border>
                                 </Grid>
 
-                                <Border Grid.Column="2"
+                                <Border Grid.Column="1"
                                         Background="#F8FAFC"
                                         BorderBrush="#D0D7DE"
                                         BorderThickness="1"
                                         CornerRadius="8"
-                                        Padding="8"
+                                    Padding="8"
+                                    Margin="8,0,0,0"
                                         Visibility="{Binding IsPreviewVisible, Converter={StaticResource BoolToVisibilityConverter}}">
                                     <Grid>
                                         <Grid.RowDefinitions>

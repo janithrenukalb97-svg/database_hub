@@ -10,7 +10,6 @@ namespace Database_Hub.ViewModels.ConnectedMode
         private readonly Database_Hub.Services.SessionService _sessionService;
         private string _serverName = string.Empty;
         private string _selectedMenuItem = "File Explorer";
-        private bool _isNavCollapsed;
 
         public string ServerName
         {
@@ -38,34 +37,16 @@ namespace Database_Hub.ViewModels.ConnectedMode
             }
         }
 
-        public bool IsNavCollapsed
-        {
-            get => _isNavCollapsed;
-            set
-            {
-                if (SetProperty(ref _isNavCollapsed, value))
-                {
-                    RaisePropertyChanged(nameof(ToggleNavIcon));
-                    RaisePropertyChanged(nameof(ObjectExplorerNavContent));
-                    RaisePropertyChanged(nameof(ReleaseExecutorNavContent));
-                    RaisePropertyChanged(nameof(FileExplorerNavContent));
-                    RaisePropertyChanged(nameof(ComparisonToolNavContent));
-                    RaisePropertyChanged(nameof(LogoutNavContent));
-                }
-            }
-        }
-
         public bool IsObjectExplorerSelected => SelectedMenuItem == "Object Explorer";
         public bool IsReleaseExecutorSelected => SelectedMenuItem == "Release Executor";
         public bool IsFileExplorerSelected => SelectedMenuItem == "File Explorer";
         public bool IsComparisonToolSelected => SelectedMenuItem == "Comparison Tool";
 
-        public string ToggleNavIcon => "☰";
-        public string ObjectExplorerNavContent => IsNavCollapsed ? "◎" : "◎  Object Explorer";
-        public string ReleaseExecutorNavContent => IsNavCollapsed ? "⇅" : "⇅  Release Executor";
-        public string FileExplorerNavContent => IsNavCollapsed ? "▦" : "▦  File Explorer";
-        public string ComparisonToolNavContent => IsNavCollapsed ? "≍" : "≍  Comparison Tool";
-        public string LogoutNavContent => IsNavCollapsed ? "⎋" : "⎋  Logout";
+        public string ObjectExplorerNavContent => "\uE946";
+        public string ReleaseExecutorNavContent => "\uE777";
+        public string FileExplorerNavContent => "\uE8B7";
+        public string ComparisonToolNavContent => "\uE81E";
+        public string LogoutNavContent => "\uE8AC";
 
         public ObjectExplorerViewModel ObjectExplorerViewModel { get; }
         public ReleaseExecutorViewModel ReleaseExecutorViewModel { get; }
@@ -73,7 +54,6 @@ namespace Database_Hub.ViewModels.ConnectedMode
         public ComparisonToolViewModel ComparisonToolViewModel { get; }
 
         public DelegateCommand LogoutCommand { get; }
-        public DelegateCommand ToggleNavCommand { get; }
         public DelegateCommand<string> NavigateMenuCommand { get; }
 
         public MainFunctionHomeViewModel(
@@ -91,14 +71,8 @@ namespace Database_Hub.ViewModels.ConnectedMode
             ComparisonToolViewModel = new ComparisonToolViewModel();
 
             LogoutCommand = new DelegateCommand(Logout);
-            ToggleNavCommand = new DelegateCommand(ToggleNav);
             NavigateMenuCommand = new DelegateCommand<string>(NavigateMenu);
             SelectedMenuItem = "File Explorer";
-        }
-
-        private void ToggleNav()
-        {
-            IsNavCollapsed = !IsNavCollapsed;
         }
 
         private void Logout()
